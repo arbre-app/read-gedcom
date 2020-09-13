@@ -1,7 +1,7 @@
 import { Node } from './Node';
 import { Header } from './Header';
 import { Individual } from './Individual';
-import { Tag } from '../parse';
+import { Tag } from '../tag';
 
 export class Gedcom extends Node {
     constructor(data) {

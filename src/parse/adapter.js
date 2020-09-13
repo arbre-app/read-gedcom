@@ -1,4 +1,4 @@
-import { Tag } from './Tag';
+import { Tag } from '../tag';
 import { Gedcom } from '../model';
 
 export function createLinks(input) {

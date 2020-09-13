@@ -1,6 +1,6 @@
 import { Node } from './Node';
 import { Address } from './Address';
-import { Tag } from '../parse';
+import { Tag } from '../tag';
 
 export class GedcomSource extends Node {
     constructor(data) {

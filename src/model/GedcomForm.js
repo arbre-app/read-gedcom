@@ -1,5 +1,5 @@
 import { Node } from './Node';
-import { Tag } from '../parse';
+import { Tag } from '../tag';
 
 export class GedcomForm extends Node {
     static LINEAGE_LINKED = 'LINEAGE-LINKED';

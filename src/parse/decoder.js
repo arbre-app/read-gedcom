@@ -1,4 +1,4 @@
-import { Tag } from './Tag';
+import { Tag } from '../tag';
 import { tokenize } from './tokenizer';
 import { makeTree } from './structurer';
 import { Node, Header } from '../model';

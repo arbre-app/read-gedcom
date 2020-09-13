@@ -1,4 +1,4 @@
-import { Tag } from './Tag';
+import { Tag } from '../tag';
 
 export function makeTree(input) {
     let currentLevel = -1; // Current level

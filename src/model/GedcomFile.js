@@ -1,7 +1,7 @@
 import { Node } from './Node';
 import { GedcomForm } from './GedcomForm';
 import { GedcomVersion } from './GedcomVersion';
-import { Tag } from '../parse';
+import { Tag } from '../tag';
 
 export class GedcomFile extends Node {
     constructor(data) {

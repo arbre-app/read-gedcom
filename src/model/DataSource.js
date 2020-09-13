@@ -1,6 +1,6 @@
 import { Node } from './Node';
 import { Date } from './Date';
-import { Tag } from '../parse';
+import { Tag } from '../tag';
 
 export class DataSource extends Node {
     constructor(data) {

@@ -1,6 +1,6 @@
 require('mocha');
 const assert = require('assert');
-const { tokenize } = require('../dist/parse/tokenizer');
+import { tokenize } from '../src/parse/tokenizer';
 
 
 describe('Gedcom tokenizer', function () {
