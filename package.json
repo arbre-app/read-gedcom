@@ -1,0 +1,29 @@
+{
+  "name": "read-gedcom",
+  "description": "Gedcom file reader",
+  "version": "0.0.1",
+  "main": "index.js",
+  "keywords": [
+    "gedcom",
+    "genealogy"
+  ],
+  "author": "Florian Cassayre",
+  "scripts": {
+    "test": "npm run build && mocha",
+    "build": "babel src -d dist"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:arbre-app/read-gedcom.git"
+    }
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
+    "assert": "^2.0.0",
+    "mocha": "^8.1.3"
+  }
+}
