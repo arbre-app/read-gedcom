@@ -1,5 +1,6 @@
 export { Address } from './Address';
 export { CharacterEncoding } from './CharacterEncoding';
+export { Corporation } from './Corporation';
 export { DataSource } from './DataSource';
 export { Date } from './Date';
 export { Gedcom } from './Gedcom';
@@ -7,7 +8,7 @@ export { GedcomFile } from './GedcomFile';
 export { GedcomForm } from './GedcomForm';
 export { GedcomVersion } from './GedcomVersion';
 export { Header } from './Header';
-export { Individual } from './Individual';
+export { IndividualRecord } from './IndividualRecord';
 export { Node } from './Node';
 export { Sex } from './Sex';
 export { GedcomSource } from './GedcomSource';

@@ -20,12 +20,26 @@ export const Tag = {
     LANGUAGE: 'LANG',
     SUBMITTER: 'SUBM',
     FILE_NAME: 'FILE',
+    DESTINATION_SYSTEM: 'DEST',
 
     // Common
     NAME: 'NAME',
     DATE: 'DATE',
     TIME: 'TIME',
     NOTE: 'NOTE',
+    ADDRESS: 'ADDR',
+    ADDRESS_1: 'ADR1',
+    ADDRESS_2: 'ADR2',
+    ADDRESS_3: 'ADR3',
+    CITY: 'CITY',
+    STATE: 'STAE',
+    POSTAL_CODE: 'POST',
+    COUNTRY: 'CTRY',
+    PHONE_NUMBER: 'PHON',
+    EMAIL_ADDRESS: 'EMAIL',
+    FAX_ADDRESS: 'FAX',
+    WEB_ADDRESS: 'WWW',
+
 
     // Records
     EVENT: 'EVEN',

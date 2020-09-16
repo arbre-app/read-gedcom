@@ -1,6 +1,7 @@
 import { Node } from './Node';
-import { Address } from './Address';
 import { Tag } from '../tag';
+import { Corporation } from './Corporation';
+import { DataSource } from './DataSource';
 
 export class GedcomSource extends Node {
     constructor(data) {
@@ -16,8 +17,10 @@ export class GedcomSource extends Node {
     }
 
     getCorporation() {
-        return this.getByTag(Tag.CORPORATION, Address);
+        return this.getByTag(Tag.CORPORATION, Corporation);
     }
 
-
+    getDataSource() {
+        return this.getByTag(Tag.DATA_SOURCE, DataSource);
+    }
 }

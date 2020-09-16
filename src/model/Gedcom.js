@@ -1,6 +1,6 @@
 import { Node } from './Node';
 import { Header } from './Header';
-import { Individual } from './Individual';
+import { IndividualRecord } from './IndividualRecord';
 import { Tag } from '../tag';
 
 export class Gedcom extends Node {
@@ -16,7 +16,7 @@ export class Gedcom extends Node {
     }
 
     getIndividual(id) {
-        return this.getByTagPointer(Tag.INDIVIDUAL, id, Individual);
+        return this.getByTagPointer(Tag.INDIVIDUAL, id, IndividualRecord);
     }
 
     getFamily(id) {

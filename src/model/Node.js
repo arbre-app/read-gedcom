@@ -67,6 +67,23 @@ export class Node {
         return this._newInstance(Adapter, arrayChildren, arrayParents, this);
     }
 
+    getByTagPointers(tag, pointers, Adapter = Node) {
+        const data = this._data;
+        const tree = data.tree;
+        const arrayTree = data.unit ? [tree] : tree;
+        const arrayChildren = [], arrayParents = [];
+        arrayTree.forEach((tr, i) => {
+            pointers.forEach(pointer => {
+                const element = _get(_get(tr.by_tag_pointer, tag, {}), pointer, null);
+                if(element !== null) {
+                    arrayChildren.push(element);
+                    arrayParents.push(i);
+                }
+            });
+        });
+        return this._newInstance(Adapter, arrayChildren, arrayParents, this);
+    }
+
     value() {
         const tree = this._data.tree;
         return this._data.unit ? tree.value : tree.map(t => t.value);

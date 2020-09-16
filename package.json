@@ -2,7 +2,7 @@
   "name": "read-gedcom",
   "description": "Gedcom file reader",
   "version": "0.0.2",
-  "main": "dist/index.js",
+  "main": "gedcom.min.js",
   "keywords": [
     "gedcom",
     "genealogy"

@@ -1,9 +1,9 @@
 import { Node } from './Node';
 import { Tag } from '../tag';
 
-export class Individual extends Node {
+export class IndividualRecord extends Node {
     constructor(data) {
-        super(data, Individual);
+        super(data, IndividualRecord);
     }
 
     /*
