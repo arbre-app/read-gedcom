@@ -1,5 +1,5 @@
-require('mocha');
-const assert = require('assert');
+import 'mocha';
+import assert from 'assert';
 import { tokenize } from '../src/parse/tokenizer';
 
 

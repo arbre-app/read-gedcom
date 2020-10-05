@@ -2,43 +2,40 @@ import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 
-export default [
-    {
-        input: 'src/index.js',
-        output: {
+import pkg from './package.json';
+
+export default {
+    input: 'src/index.js',
+    output: [
+        {
+            file: pkg.main,
             format: 'cjs',
-            file: 'lib/gedcom.js'
+            exports: 'named',
+            sourcemap: true,
+            strict: false
         },
-        plugins: [
-            commonjs(),
-            babel({ babelHelpers: 'bundled' })
-        ]
-    },
-    {
-        input: 'src/index.js',
-        output: {
-            format: 'iife',
-            file: 'lib/gedcom.bundle.min.js',
-            name: 'gedcom'
+        {
+            file: pkg.module,
+            format: 'esm',
+            exports: 'named',
+            sourcemap: true
         },
-        plugins: [
-            commonjs(),
-            babel({ babelHelpers: 'bundled' }),
-            terser({
-                keep_classnames: true,
-                compress: {
-                    unsafe: true,
-                }
-            })
-        ]
-    },
-    {
-        input: 'test/parsing.js',
-        output: {
-            file: 'lib/tests.bundle.js',
-        },
-        plugins: [
-            commonjs()
-        ]
-    }
-];
+        {
+            file: pkg.browser,
+            format: 'umd',
+            name: 'gedcom',
+            sourcemap: true
+        }
+    ],
+    plugins: [
+        babel({ babelHelpers: 'bundled' }),
+        terser({
+            keep_classnames: true, // Preserve class & function names
+            keep_fnames: true,
+            compress: {
+                unsafe: true,
+            }
+        }),
+        commonjs()
+    ]
+};

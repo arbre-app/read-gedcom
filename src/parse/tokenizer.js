@@ -19,20 +19,39 @@ const gTag = `[${ccAlphanum}]+|_[${ccAlphanum}]+`; // TODO
 const gTerminator = `${cCR}?${cLF}`;
 const gGedcomLine = `(${gLevel})(?:${cDelim}(${gXRefId}))?${cDelim}(${gTag})(?:${cDelim}(${gLineValue}))?(?:${gTerminator})`
 
-export function* tokenize(input, strict = true) {
-    const rGedcomLines = new RegExp(`^${gGedcomLine}`, 'gym'); // Must be newly created
+export function tokenize(input, strict = true) {
+    return {
+        [Symbol.iterator]() { // Refactor?
+            const rGedcomLines = new RegExp(`^${gGedcomLine}`, 'gym'); // Must be newly created
 
-    let result, linesRead = 0, charactersRead = 0;
-    while((result = rGedcomLines.exec(input)) !== null) {
-        charactersRead += result[0].length; // Includes terminator
-        linesRead++;
-        yield result;
-    }
+            let result, linesRead = 0, charactersRead = 0;
+            let done = false;
 
-    const success = charactersRead === input.length;
-    if(strict && !success) {
-        const printCharactersMax = 256; // Avoid printing a super long line
-        const errorLine = input.substring(charactersRead, Math.min(charactersRead + printCharactersMax, input.length)).split(/[\r\n]+/, 1)[0];
-        throw new Error(`Invalid format for line ${linesRead + 1}: "${errorLine}"`);
+            return {
+                next: () => {
+                    if (done) {
+                        return {done: true};
+                    } else {
+                        result = rGedcomLines.exec(input);
+                        if (result === null) {
+                            done = true;
+
+                            const success = charactersRead === input.length;
+                            if (strict && !success) {
+                                const printCharactersMax = 256; // Avoid printing a super long line
+                                const errorLine = input.substring(charactersRead, Math.min(charactersRead + printCharactersMax, input.length)).split(/[\r\n]+/, 1)[0];
+                                throw new Error(`Invalid format for line ${linesRead + 1}: "${errorLine}"`);
+                            }
+
+                            return {done: true};
+                        } else {
+                            charactersRead += result[0].length; // Includes terminator
+                            linesRead++;
+                            return {value: result, done: false};
+                        }
+                    }
+                }
+            };
+        }
     }
 }
