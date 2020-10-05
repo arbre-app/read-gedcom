@@ -1,8 +1,8 @@
 {
   "name": "read-gedcom",
   "description": "Gedcom file reader",
-  "version": "0.0.2",
-  "main": "gedcom.min.js",
+  "version": "0.0.3",
+  "main": "lib/gedcom.js",
   "keywords": [
     "gedcom",
     "genealogy"

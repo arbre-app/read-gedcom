@@ -1,1 +1,1 @@
-export { _get } from './utils';
+export { _get, _first } from './utils';

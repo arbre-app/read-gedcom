@@ -1,8 +1,23 @@
 import { tokenize } from './tokenizer';
 import { makeTree } from './structurer';
 import { createLinks } from './adapter';
+import { detectCharset, FileEncoding } from './decoder';
+import { decodeUtf8, decodeCp1252, decodeAnsel } from './decoding';
 
-export function readGedcom(input) {
+export function readGedcom(buffer) {
+    const charset = detectCharset(buffer);
+
+    let input;
+    if(charset === FileEncoding.UTF_8) {
+        input = decodeUtf8(buffer);
+    } else if(charset === FileEncoding.CP1252) {
+        input = decodeCp1252(buffer);
+    } else if(charset === FileEncoding.ANSEL) {
+        input = decodeAnsel(buffer);
+    } else {
+        throw `Unrecognized charset: ${charset}`;
+    }
+
     const it = tokenize(input);
 
     const array = [];

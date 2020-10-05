@@ -1,13 +1,24 @@
 import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
-import {terser} from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 
 export default [
     {
         input: 'src/index.js',
         output: {
+            format: 'cjs',
+            file: 'lib/gedcom.js'
+        },
+        plugins: [
+            commonjs(),
+            babel({ babelHelpers: 'bundled' })
+        ]
+    },
+    {
+        input: 'src/index.js',
+        output: {
             format: 'iife',
-            file: 'lib/gedcom.min.js',
+            file: 'lib/gedcom.bundle.min.js',
             name: 'gedcom'
         },
         plugins: [
