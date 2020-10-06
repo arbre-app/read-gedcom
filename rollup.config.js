@@ -1,6 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
-import { terser } from 'rollup-plugin-terser';
+//import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
@@ -29,13 +29,13 @@ export default {
     ],
     plugins: [
         babel({ babelHelpers: 'bundled' }),
-        terser({
+        /*terser({
             keep_classnames: true, // Preserve class & function names
             keep_fnames: true,
             compress: {
                 unsafe: true,
             }
-        }),
+        }),*/
         commonjs()
     ]
 };
