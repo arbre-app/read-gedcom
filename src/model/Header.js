@@ -19,7 +19,7 @@ export class Header extends Node {
         return this.getByTag(Tag.CHARACTER_ENCODING, CharacterEncoding);
     }
 
-    getSource() {
+    getSourceSystem() {
         return this.getByTag(Tag.SOURCE, GedcomSource);
     }
 

@@ -29,7 +29,7 @@ function getFileMetadata(buffer) {
     const gedcom = new Gedcom(tree); // Bypass checks
     const header = gedcom.getHeader();
     const charOpt = header.getByTags([Tag.CHARACTER_ENCODING, Tag.CHARACTER_ENCODING_ALT]).option().value();
-    const source = header.getSource();
+    const source = header.getSourceSystem();
     const sourceOpt = source.option().value();
     const versionOpt = source.getVersion().option().value();
 

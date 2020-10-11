@@ -44,7 +44,31 @@ export const Tag = {
     // Records
     EVENT: 'EVEN',
     TYPE: 'TYPE',
+    PLACE: 'PLAC',
 
     INDIVIDUAL: 'INDI',
     FAMILY: 'FAM',
+
+    HUSBAND: 'HUSB',
+    WIFE: 'WIFE',
+    CHILD: 'CHIL',
+    CHILDREN_COUNT: 'NCHI',
+    REFERENCE_NUMBER: 'REFN',
+    AGE: 'AGE',
+    ANNULMENT: 'ANUL',
+
+    PHONETIC: 'FONE',
+    ROMANISED: 'ROMN',
+    MAP: 'MAP',
+    LATITUDE: 'LATI',
+    LONGITUDE: 'LONG',
+
+    NAME_PREFIX: 'NPFX',
+    NAME_GIVEN: 'GIVN',
+    NAME_NICK: 'NICK',
+    SURNAME_PREFIX: 'SPFX',
+    SURNAME: 'SURN',
+    SURNAME_SUFFIX: 'NSFX',
+
+    SEX: 'SEX'
 }
