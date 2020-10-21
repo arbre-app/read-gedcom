@@ -1,8 +1,8 @@
 import { Reference } from './Reference';
 
 export class MultimediaReference extends Reference {
-    constructor(data) {
-        super(data, MultimediaReference);
+    constructor(data, clazz) {
+        super(data, clazz || MultimediaReference);
     }
 
     // TODO

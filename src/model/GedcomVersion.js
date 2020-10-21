@@ -3,8 +3,8 @@ import { Node } from './Node';
 const rVersion = /^(0|[1-9][0-9]{0,2})\.(0|[1-9][0-9]{0,2})(?:\.(0|[1-9][0-9]{0,2}))?$/
 
 export class GedcomVersion extends Node {
-    constructor(data) {
-        super(data, GedcomVersion);
+    constructor(data, clazz) {
+        super(data, clazz || GedcomVersion);
     }
 
     valueAsVersion() {

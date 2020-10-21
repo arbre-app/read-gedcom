@@ -7,47 +7,47 @@ import { DateExact } from './DateExact';
 import { SubmitterReference } from './SubmitterReference';
 
 export class Header extends Node {
-    constructor(data) {
-        super(data, Header);
+    constructor(data, clazz) {
+        super(data, clazz || Header);
     }
 
     getGedcomFile() {
-        return this.getByTag(Tag.GEDCOM, GedcomFile);
+        return this.get(Tag.GEDCOM, GedcomFile);
     }
 
     getCharacterEncoding() {
-        return this.getByTag(Tag.CHARACTER, CharacterEncoding);
+        return this.get(Tag.CHARACTER, CharacterEncoding);
     }
 
     getSourceSystem() {
-        return this.getByTag(Tag.SOURCE, GedcomSource);
+        return this.get(Tag.SOURCE, GedcomSource);
     }
 
     getDestinationSystem() {
-        return this.getByTag(Tag.DESTINATION)
+        return this.get(Tag.DESTINATION)
     }
 
     getFileCreationDate() {
-        return this.getByTag(Tag.DATE, DateExact);
+        return this.get(Tag.DATE, DateExact);
     }
 
     getLanguage() {
-        return this.getByTag(Tag.LANGUAGE);
+        return this.get(Tag.LANGUAGE);
     }
 
     getSubmitterReference() {
-        return this.getByTag(Tag.SUBMITTER, SubmitterReference);
+        return this.get(Tag.SUBMITTER, SubmitterReference);
     }
 
     getFilename() {
-        return this.getByTag(Tag.FILE);
+        return this.get(Tag.FILE);
     }
 
     getCopyright() {
-        return this.getByTag(Tag.COPYRIGHT);
+        return this.get(Tag.COPYRIGHT);
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE);
+        return this.get(Tag.NOTE);
     }
 }

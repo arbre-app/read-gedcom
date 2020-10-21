@@ -5,7 +5,7 @@ export class Adoption extends Node {
     WIFE = 'WIFE';
     BOTH = 'BOTH';
 
-    constructor(data) {
-        super(data, Adoption);
+    constructor(data, clazz) {
+        super(data, clazz || Adoption);
     }
 }

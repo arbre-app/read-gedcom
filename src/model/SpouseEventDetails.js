@@ -2,11 +2,11 @@ import { Node } from './Node';
 import { Tag } from '../tag';
 
 export class SpouseEventDetails extends Node {
-    constructor(data) {
-        super(data, SpouseEventDetails);
+    constructor(data, clazz) {
+        super(data, clazz || SpouseEventDetails);
     }
 
     getAge() {
-        return this.getByTag(Tag.AGE);
+        return this.get(Tag.AGE);
     }
 }

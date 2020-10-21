@@ -8,8 +8,8 @@ export class NameType extends Node {
     static MAIDEN_NAME = 'maiden';
     static MARRIED_NAME = 'married';
 
-    constructor(data) {
-        super(data, NameType);
+    constructor(data, clazz) {
+        super(data, clazz || NameType);
     }
 
 }

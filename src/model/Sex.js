@@ -7,7 +7,7 @@ export class Sex extends Node {
     static UNKNOWN = 'U';
     static NOT_RECORDED = 'N';
 
-    constructor(data) {
-        super(data, Sex);
+    constructor(data, clazz) {
+        super(data, clazz || Sex);
     }
 }

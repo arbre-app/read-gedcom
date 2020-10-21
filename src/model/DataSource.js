@@ -3,15 +3,15 @@ import { Date } from './Date';
 import { Tag } from '../tag';
 
 export class DataSource extends Node {
-    constructor(data) {
-        super(data, DataSource);
+    constructor(data, clazz) {
+        super(data, clazz || DataSource);
     }
 
     getDate() {
-        return this.getByTag(Tag.DATE, Date);
+        return this.get(Tag.DATE, Date);
     }
 
     getCopyright() {
-        return this.getByTag(Tag.COPYRIGHT);
+        return this.get(Tag.COPYRIGHT);
     }
 }

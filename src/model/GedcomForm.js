@@ -4,15 +4,15 @@ import { Tag } from '../tag';
 export class GedcomForm extends Node {
     static LINEAGE_LINKED = 'LINEAGE-LINKED';
 
-    constructor(data) {
-        super(data, GedcomForm);
+    constructor(data, clazz) {
+        super(data, clazz || GedcomForm);
     }
 
     getVersion() {
-        return this.getByTag(Tag.VERSION);
+        return this.get(Tag.VERSION);
     }
 
     getName() {
-        return this.getByTag(Tag.NAME)
+        return this.get(Tag.NAME)
     }
 }

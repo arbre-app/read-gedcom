@@ -1,9 +1,9 @@
 import { _get } from '../utils';
 
 export class Node {
-    constructor(tree, Clazz = Node) {
-        if(!tree || !Clazz) { // Validation
-            if(!tree) {
+    constructor(tree, clazz = Node) {
+        if (!tree || !clazz) { // Validation
+            if (!tree) {
                 throw 'Undefined tree';
             } else {
                 throw 'Undefined adapter class';
@@ -11,8 +11,8 @@ export class Node {
         }
         this._data = {
             tree: tree,
-            Clazz: Clazz,
-            unit: !Array.isArray(tree)
+            Clazz: clazz,
+            unit: !Array.isArray(tree),
         };
     }
 
@@ -24,62 +24,29 @@ export class Node {
         return instance;
     }
 
-    getByTag(tag, Adapter = Node) {
-        const tree = this._data.tree;
-        const arrayTree = this._data.unit ? [tree] : tree;
-        const arrayChildren = [], arrayParents = [];
-        arrayTree.forEach((t, i) => {
-            _get(t.by_tag, tag, []).forEach(v => {
-               arrayChildren.push(v);
-               arrayParents.push(i);
-            });
-        });
-        return this._newInstance(Adapter, arrayChildren, arrayParents, this);
-    }
+    get(tag, Adapter = Node) {
+        const tagArray = tag != null ? (Array.isArray(tag) ? tag : [tag]) : null;
 
-    getByTags(tags, Adapter = Node) {
         const tree = this._data.tree;
         const arrayTree = this._data.unit ? [tree] : tree;
         const arrayChildren = [], arrayParents = [];
         arrayTree.forEach((tr, i) => {
-            tags.forEach(tg => {
-                _get(tr.by_tag, tg, []).forEach(v => {
-                    arrayChildren.push(v);
-                    arrayParents.push(i);
+            if (tagArray !== null) { // Array of tags
+                tagArray.forEach(tg => {
+                    _get(tr.by_tag, tg, []).forEach(v => {
+                        arrayChildren.push(v);
+                        arrayParents.push(i);
+                    });
                 });
-            });
-        });
-        return this._newInstance(Adapter, arrayChildren, arrayParents, this);
-    }
-
-    getByTagPointer(tag, pointer, Adapter = Node) {
-        const data = this._data;
-        const tree = data.tree;
-        const arrayTree = data.unit ? [tree] : tree;
-        const arrayChildren = [], arrayParents = [];
-        arrayTree.forEach((tr, i) => {
-            const element = _get(_get(tr.by_tag_pointer, tag, {}), pointer, null);
-            if(element !== null) {
-                arrayChildren.push(element);
-                arrayParents.push(i);
-            }
-        });
-        return this._newInstance(Adapter, arrayChildren, arrayParents, this);
-    }
-
-    getByTagPointers(tag, pointers, Adapter = Node) {
-        const data = this._data;
-        const tree = data.tree;
-        const arrayTree = data.unit ? [tree] : tree;
-        const arrayChildren = [], arrayParents = [];
-        arrayTree.forEach((tr, i) => {
-            pointers.forEach(pointer => {
-                const element = _get(_get(tr.by_tag_pointer, tag, {}), pointer, null);
-                if(element !== null) {
-                    arrayChildren.push(element);
-                    arrayParents.push(i);
+            } else { // All tags
+                for (const tag in tr.by_tag) {
+                    const objects = tr.by_tag[tag];
+                    objects.forEach(v => {
+                        arrayChildren.push(v);
+                        arrayParents.push(i);
+                    });
                 }
-            });
+            }
         });
         return this._newInstance(Adapter, arrayChildren, arrayParents, this);
     }
@@ -101,14 +68,14 @@ export class Node {
 
     nth(n) {
         const data = this._data;
-        if(data.unit) {
-            if(n !== 0) {
+        if (data.unit) {
+            if (n !== 0) {
                 throw `Undefined index: ${n}`;
             }
             return this;
         } else {
             const tree = data.tree[n];
-            if(!tree) {
+            if (tree === undefined) {
                 throw `Undefined index: ${n}`;
             }
             return this._newInstance(data.Clazz, tree, [data.parentIndices[n]], data.parent);
@@ -125,7 +92,7 @@ export class Node {
 
     option() {
         const data = this._data;
-        if(data.unit) {
+        if (data.unit) {
             return this._newInstance(data.Clazz, [data.tree], data.parentIndices, data.parent);
         } else {
             return this._newInstance(data.Clazz, data.tree.slice(0, 1), data.parentIndices.slice(0, 1), data.parent);
@@ -157,11 +124,11 @@ export class Node {
 
     parent() {
         const data = this._data;
-        if(!data.parent) {
+        if (!data.parent) {
             throw 'Root node has no parent';
         }
         const parent = data.parent;
-        if(data.unit) {
+        if (data.unit) {
             return this._newInstance(parent._data.Clazz, parent._data.unit ? parent._data.tree : parent._data.tree[data.parentIndices[0]],
                 [parent._data.parentIndices[data.parentIndices[0]]], parent._data.parent);
         } else {
@@ -170,7 +137,7 @@ export class Node {
             data.parentIndices.forEach((v, i) => {
                 const parentIndex = parent._data.parentIndices[v];
                 const parentTree = parent._data.unit ? parent._data.tree : parent._data.tree[parentIndex];
-                if(!treesSet.has(parentTree)) { // New unique parent
+                if (!treesSet.has(parentTree)) { // New unique parent
                     treesSet.add(parentTree);
                     parentTrees.push(parentTree);
                     parentIndices.push(parentIndex);

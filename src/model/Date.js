@@ -1,9 +1,9 @@
 import { Node } from './Node';
-import { parseDate } from '../parse';
+import { parseDate } from '../parse/date'; // Needed to avoid circular dependency
 
 export class Date extends Node {
-    constructor(data) {
-        super(data, Date);
+    constructor(data, clazz) {
+        super(data, clazz || Date);
     }
 
     valueAsDate() {

@@ -4,46 +4,46 @@ import { Tag } from '../tag';
 import { MultimediaReference } from './MultimediaReference';
 import { NoteReferenceMixin } from './NoteReferenceMixin';
 import { Place } from './Place';
-import { SourceReference } from './SourceReference';
+import { SourceCitation } from './SourceCitation';
 
 export class Event extends AddressStructure {
-    constructor(data) {
-        super(data, Event);
+    constructor(data, clazz) {
+        super(data, clazz || Event);
     }
 
     getType() {
-        return this.getByTag(Tag.TYPE, undefined);
+        return this.get(Tag.TYPE);
     }
 
     getDate() {
-        return this.getByTag(Tag.DATE, Date);
+        return this.get(Tag.DATE, Date);
     }
 
     getPlace() {
-        return this.getByTag(Tag.PLACE, Place);
+        return this.get(Tag.PLACE, Place);
     }
 
     getResponsibleAgency() {
-        return this.getByTag(Tag.AGENCY);
+        return this.get(Tag.AGENCY);
     }
 
     getReligiousAffiliation() {
-        return this.getByTag(Tag.RELIGION);
+        return this.get(Tag.RELIGION);
     }
 
     getCause() {
-        return this.getByTag(Tag.CAUSE);
+        return this.get(Tag.CAUSE);
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, NoteReferenceMixin);
     }
 
-    getSource() {
-        return this.getByTag(Tag.SOURCE, SourceReference);
+    getSourceCitation() {
+        return this.get(Tag.SOURCE, SourceCitation);
     }
 
     getMultimedia() {
-        return this.getByTag(Tag.OBJECT, MultimediaReference);
+        return this.get(Tag.OBJECT, MultimediaReference);
     }
 }

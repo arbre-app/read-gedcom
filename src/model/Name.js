@@ -7,8 +7,8 @@ import { Tag } from '../tag';
 const rNameParts = /^(?:([^\/]*)|(?:(?:([^\/]*) )?\/([^\/]*)\/(?: ([^\/]*))?))$/;
 
 export class Name extends NamePieces {
-    constructor(data) {
-        super(data, Name);
+    constructor(data, clazz) {
+        super(data, clazz || Name);
     }
 
     valueAsParts() {
@@ -29,14 +29,14 @@ export class Name extends NamePieces {
     }
 
     getType() {
-        return this.getByTag(Tag.TYPE, NameType);
+        return this.get(Tag.TYPE, NameType);
     }
 
     getNamePhonetization() {
-        return this.getByTag(Tag.PHONETIC, NamePhonetization);
+        return this.get(Tag.PHONETIC, NamePhonetization);
     }
 
     getNameRomanization() {
-        return this.getByTag(Tag.PHONETIC, NameRomanization);
+        return this.get(Tag.PHONETIC, NameRomanization);
     }
 }

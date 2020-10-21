@@ -6,23 +6,23 @@ import { Phonetization } from './Phonetization';
 import { Romanization } from './Romanization';
 
 export class Place extends Node {
-    constructor(data) {
-        super(data, Place);
+    constructor(data, clazz) {
+        super(data, clazz || Place);
     }
 
     getPhonetization() {
-        return this.getByTag(Tag.PHONETIC, Phonetization);
+        return this.get(Tag.PHONETIC, Phonetization);
     }
 
     getRomanization() {
-        return this.getByTag(Tag.ROMANIZED, Romanization);
+        return this.get(Tag.ROMANIZED, Romanization);
     }
 
     getCoordinates() {
-        return this.getByTag(Tag.MAP, Coordinates);
+        return this.get(Tag.MAP, Coordinates);
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, NoteReferenceMixin);
     }
 }

@@ -4,23 +4,23 @@ import { Corporation } from './Corporation';
 import { DataSource } from './DataSource';
 
 export class GedcomSource extends Node {
-    constructor(data) {
-        super(data, GedcomSource);
+    constructor(data, clazz) {
+        super(data, clazz || GedcomSource);
     }
 
     getVersion() {
-        return this.getByTag(Tag.VERSION);
+        return this.get(Tag.VERSION);
     }
 
     getName() {
-        return this.getByTag(Tag.NAME);
+        return this.get(Tag.NAME);
     }
 
     getCorporation() {
-        return this.getByTag(Tag.CORPORATE, Corporation);
+        return this.get(Tag.CORPORATE, Corporation);
     }
 
     getDataSource() {
-        return this.getByTag(Tag.DATA, DataSource);
+        return this.get(Tag.DATA, DataSource);
     }
 }

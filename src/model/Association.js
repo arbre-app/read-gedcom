@@ -1,22 +1,22 @@
 import { Tag } from '../tag';
 import { Node } from './Node';
 import { NoteReferenceMixin } from './NoteReferenceMixin';
-import { SourceReference } from './SourceReference';
+import { SourceCitation } from './SourceCitation';
 
 export class Association extends Node {
-    constructor(data) {
-        super(data, Association);
+    constructor(data, clazz) {
+        super(data, clazz || Association);
     }
 
     getRelation() {
-        return this.getByTag(Tag.RELATIONSHIP);
+        return this.get(Tag.RELATIONSHIP);
     }
 
-    getSource() {
-        return this.getByTag(Tag.SOURCE, SourceReference);
+    getSourceCitation() {
+        return this.get(Tag.SOURCE, SourceCitation);
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, NoteReferenceMixin);
     }
 }

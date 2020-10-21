@@ -3,27 +3,27 @@ import { Tag } from "../tag";
 import { Address } from './Address';
 
 export class AddressStructure extends Node {
-    constructor(data) {
-        super(data, AddressStructure);
+    constructor(data, clazz) {
+        super(data, clazz || AddressStructure);
     }
 
     getAddress() {
-        return this.getByTag(Tag.ADDRESS, Address);
+        return this.get(Tag.ADDRESS, Address);
     }
 
     getPhoneNumber() {
-        return this.getByTag(Tag.PHONE);
+        return this.get(Tag.PHONE);
     }
 
     getEmailAddress() {
-        return this.getByTag(Tag.EMAIL);
+        return this.get(Tag.EMAIL);
     }
 
     getFaxAddress() {
-        return this.getByTag(Tag.FAX);
+        return this.get(Tag.FAX);
     }
 
     getWebAddress() {
-        return this.getByTag(Tag.WEB);
+        return this.get(Tag.WEB);
     }
 }

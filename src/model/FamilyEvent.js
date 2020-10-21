@@ -3,15 +3,15 @@ import { Tag } from '../tag';
 import { SpouseEventDetails } from './SpouseEventDetails';
 
 export class FamilyEvent extends Event {
-    constructor(data) {
-        super(data, FamilyEvent);
+    constructor(data, clazz) {
+        super(data, clazz || FamilyEvent);
     }
 
     getHusbandDetails() {
-        return this.getByTag(Tag.HUSBAND, SpouseEventDetails);
+        return this.get(Tag.HUSBAND, SpouseEventDetails);
     }
 
     getWifeDetails() {
-        return this.getByTag(Tag.WIFE, SpouseEventDetails);
+        return this.get(Tag.WIFE, SpouseEventDetails);
     }
 }

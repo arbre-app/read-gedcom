@@ -47,12 +47,14 @@ export function makeTree(input) {
                 tag: tag,
                 value: value,
                 children: [],
-                by_tag: {},
-                by_tag_pointer: {}
+                by_tag: {}
             };
             siblings.push(child);
 
             if(pointer) {
+                if(level > 0) {
+                    throw new Error(`Record must be a top-level definition at line ${i + 1}`);
+                }
                 let by_tag_pointer = parent.by_tag_pointer[tag];
                 if(!by_tag_pointer) {
                     by_tag_pointer = {};

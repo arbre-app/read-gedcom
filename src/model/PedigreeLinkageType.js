@@ -5,7 +5,7 @@ export class PedigreeLinkageType extends Node {
     BIRTH = 'birth';
     FOSTER = 'foster';
 
-    constructor(data) {
-        super(data, PedigreeLinkageType);
+    constructor(data, clazz) {
+        super(data, clazz || PedigreeLinkageType);
     }
 }

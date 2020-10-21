@@ -1,9 +1,11 @@
 import { Node } from './Node';
-import { Tag } from '../tag';
 
 export class NoteReferenceMixin extends Node {
-    constructor(data) {
-        super(data, NoteReferenceMixin);
+    constructor(data, clazz) {
+        super(data, clazz || NoteReferenceMixin);
     }
 
+    getNoteRecord() {
+        return this.getGedcom().getNoteRecord(this.value());
+    }
 }

@@ -3,11 +3,11 @@ import { FamilyReferenceAdoption } from './FamilyReferenceAdoption';
 import { IndividualEvent } from './IndividualEvent';
 
 export class IndividualEventFamilyAdoption extends IndividualEvent {
-    constructor(data) {
-        super(data, IndividualEventFamilyAdoption);
+    constructor(data, clazz) {
+        super(data, clazz || IndividualEventFamilyAdoption);
     }
 
     getFamilyAsChildReference() {
-        return this.getByTag(Tag.FAMILY_CHILD, FamilyReferenceAdoption);
+        return this.get(Tag.FAMILY_CHILD, FamilyReferenceAdoption);
     }
 }

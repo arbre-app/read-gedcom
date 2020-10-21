@@ -140,4 +140,7 @@ export const Tag = {
     WEB: 'WWW',
     WIFE: 'WIFE',
     WILL: 'WILL',
+
+    // Non-official
+    CHARACTER_ALT: 'CHARACTER',
 };

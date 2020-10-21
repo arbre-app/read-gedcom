@@ -1,13 +1,11 @@
-import { IndividualRecord } from './IndividualRecord';
-import { Tag } from '../tag';
 import { Reference } from './Reference';
 
 export class IndividualReference extends Reference {
-    constructor(data) {
-        super(data, IndividualReference);
+    constructor(data, clazz) {
+        super(data, clazz || IndividualReference);
     }
 
     getIndividualRecord() {
-        return this.getGedcom().getByTagPointers(Tag.INDIVIDUAL, this.array().map(o => o.value()), IndividualRecord);
+        return this.getGedcom().getIndividualRecord(this.value());
     }
 }

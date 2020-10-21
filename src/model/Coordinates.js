@@ -2,15 +2,15 @@ import { Node } from './Node';
 import { Tag } from '../tag';
 
 export class Coordinates extends Node {
-    constructor(data) {
-        super(data, Coordinates);
+    constructor(data, clazz) {
+        super(data, clazz || Coordinates);
     }
 
     getLatitude() {
-        return this.getByTag(Tag.LATITUDE);
+        return this.get(Tag.LATITUDE);
     }
 
     getLongitude() {
-        return this.getByTag(Tag.LONGITUDE);
+        return this.get(Tag.LONGITUDE);
     }
 }

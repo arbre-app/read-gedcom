@@ -3,11 +3,11 @@ import { NamePieces } from './NamePieces';
 import { RomanizationMethod } from './RomanizationMethod';
 
 export class NameRomanization extends NamePieces {
-    constructor(data) {
-        super(data, NameRomanization);
+    constructor(data, clazz) {
+        super(data, clazz || NameRomanization);
     }
 
     getMethod() {
-        return this.getByTag(Tag.TYPE, RomanizationMethod);
+        return this.get(Tag.TYPE, RomanizationMethod);
     }
 }

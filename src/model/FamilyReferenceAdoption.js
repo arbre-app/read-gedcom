@@ -3,11 +3,11 @@ import { FamilyReference } from './FamilyReference';
 import { Tag } from '../tag';
 
 export class FamilyReferenceAdoption extends FamilyReference {
-    constructor(data) {
-        super(data, FamilyReferenceAdoption);
+    constructor(data, clazz) {
+        super(data, clazz || FamilyReferenceAdoption);
     }
 
     getAdoptedByWhom() {
-        return this.getByTag(Tag.ADOPTION, Adoption);
+        return this.get(Tag.ADOPTION, Adoption);
     }
 }

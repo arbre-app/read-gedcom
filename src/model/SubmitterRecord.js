@@ -2,12 +2,12 @@ import { Node } from './Node';
 import { Tag } from '../tag';
 
 export class SubmitterRecord extends Node {
-    constructor(data) {
-        super(data, SubmitterRecord);
+    constructor(data, clazz) {
+        super(data, clazz || SubmitterRecord);
     }
 
     getName() {
-        return this.getByTag(Tag.NAME);
+        return this.get(Tag.NAME);
     }
 
 

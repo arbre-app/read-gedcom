@@ -5,7 +5,7 @@ export class RomanizationMethod extends Node {
     static ROMAJI = 'romaji';
     static WADEGILES = 'wadegiles'
 
-    constructor(data) {
-        super(data, RomanizationMethod);
+    constructor(data, clazz) {
+        super(data, clazz || RomanizationMethod);
     }
 }

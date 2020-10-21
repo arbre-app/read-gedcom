@@ -1,23 +1,22 @@
 import { Tag } from '../tag';
-import { FamilyRecord } from './FamilyRecord';
 import { Node } from './Node';
 import { NoteReferenceMixin } from './NoteReferenceMixin';
 import { PedigreeLinkageType } from './PedigreeLinkageType';
 
 export class ChildFamilyLink extends Node {
-    constructor(data) {
-        super(data, ChildFamilyLink);
+    constructor(data, clazz) {
+        super(data, clazz || ChildFamilyLink);
     }
 
     getFamilyRecord() {
-        return this.getGedcom().getByTagPointers(Tag.FAMILY, this.array().map(o => o.value()), FamilyRecord);
+        return this.getGedcom().getFamilyRecord(this.value());
     }
 
     getPedigreeLinkageType() {
-        return this.getByTag(Tag.PEDIGREE, PedigreeLinkageType);
+        return this.get(Tag.PEDIGREE, PedigreeLinkageType);
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, NoteReferenceMixin);
     }
 }

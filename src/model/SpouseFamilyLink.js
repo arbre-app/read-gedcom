@@ -1,18 +1,17 @@
 import { Tag } from '../tag';
-import { FamilyRecord } from './FamilyRecord';
 import { Node } from './Node';
 import { NoteReferenceMixin } from './NoteReferenceMixin';
 
 export class SpouseFamilyLink extends Node {
-    constructor(data) {
-        super(data, SpouseFamilyLink);
+    constructor(data, clazz) {
+        super(data, clazz || SpouseFamilyLink);
     }
 
     getFamilyRecord() {
-        return this.getGedcom().getByTagPointers(Tag.FAMILY, this.array().map(o => o.value()), FamilyRecord);
+        return this.getGedcom().getFamilyRecord(this.value());
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, NoteReferenceMixin);
     }
 }

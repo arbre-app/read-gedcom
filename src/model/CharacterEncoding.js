@@ -7,7 +7,7 @@ export class CharacterEncoding extends Node {
     static ASCII = 'ASCII';
     static ANSI = 'ANSI';
 
-    constructor(data) {
-        super(data, CharacterEncoding);
+    constructor(data, clazz) {
+        super(data, clazz || CharacterEncoding);
     }
 }

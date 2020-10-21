@@ -3,11 +3,11 @@ import { Tag } from '../tag';
 import { PhonetizationMethod } from './PhonetizationMethod';
 
 export class Phonetization extends Node {
-    constructor(data) {
-        super(data, Phonetization);
+    constructor(data, clazz) {
+        super(data, clazz || Phonetization);
     }
 
     getMethod() {
-        return this.getByTag(Tag.TYPE, PhonetizationMethod);
+        return this.get(Tag.TYPE, PhonetizationMethod);
     }
 }

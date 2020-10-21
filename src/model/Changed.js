@@ -3,13 +3,13 @@ import { Node } from './Node';
 import { NoteReferenceMixin } from './NoteReferenceMixin';
 
 export class Changed extends Node {
-    constructor(data) {
-        super(data, Changed);
+    constructor(data, clazz) {
+        super(data, clazz || Changed);
     }
 
     // TODO: date exact
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, NoteReferenceMixin);
     }
 }

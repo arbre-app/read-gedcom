@@ -4,11 +4,11 @@ import { Tag } from '../tag';
 import { AddressStructure } from './AddressStructure';
 
 export class Corporation extends AddressStructure {
-    constructor(data) {
-        super(data, Corporation);
+    constructor(data, clazz) {
+        super(data, clazz || Corporation);
     }
 
     getAddress() {
-        return this.getByTag(Tag.ADDRESS, Address);
+        return this.get(Tag.ADDRESS, Address);
     }
 }

@@ -1,6 +1,5 @@
 import { _get } from '../utils';
 import { Association } from './Association';
-import { Changed } from './Changed';
 import { ChildFamilyLink } from './ChildFamilyLink';
 import { FamilyRecord } from './FamilyRecord';
 import { IndividualAttribute } from './IndividualAttribute';
@@ -8,26 +7,25 @@ import { IndividualEventFamily } from './IndividualEventFamily';
 import { IndividualEventFamilyAdoption } from './IndividualEventFamilyAdoption';
 import { MultimediaReference } from './MultimediaReference';
 import { Name } from './Name';
-import { Node } from './Node';
 import { Tag } from '../tag';
 import { NoteReferenceMixin } from './NoteReferenceMixin';
-import { ReferenceNumber } from './ReferenceNumber';
+import { Record } from './Record';
 import { Sex } from './Sex';
 import { IndividualEvent } from './IndividualEvent';
-import { SourceReference } from './SourceReference';
+import { SourceCitation } from './SourceCitation';
 import { SpouseFamilyLink } from './SpouseFamilyLink';
 
-export class IndividualRecord extends Node {
-    constructor(data) {
-        super(data, IndividualRecord);
+export class IndividualRecord extends Record {
+    constructor(data, clazz) {
+        super(data, clazz || clazz || IndividualRecord);
     }
 
     getName() {
-        return this.getByTag(Tag.NAME, Name);
+        return this.get(Tag.NAME, Name);
     }
 
     getSex() {
-        return this.getByTag(Tag.SEX, Sex);
+        return this.get(Tag.SEX, Sex);
     }
 
     getFamilyAsChild() {
@@ -63,87 +61,87 @@ export class IndividualRecord extends Node {
     /* Events */
 
     getEventBirth() {
-        return this.getByTag(Tag.BIRTH, IndividualEventFamily);
+        return this.get(Tag.BIRTH, IndividualEventFamily);
     }
 
     getEventChristening() {
-        return this.getByTag(Tag.CHRISTENING, IndividualEventFamily);
+        return this.get(Tag.CHRISTENING, IndividualEventFamily);
     }
 
     getEventDeath() {
-        return this.getByTag(Tag.DEATH, IndividualEvent);
+        return this.get(Tag.DEATH, IndividualEvent);
     }
 
     getEventBurial() {
-        return this.getByTag(Tag.BURIAL, IndividualEvent);
+        return this.get(Tag.BURIAL, IndividualEvent);
     }
 
     getEventCremation() {
-        return this.getByTag(Tag.CREMATION, IndividualEvent);
+        return this.get(Tag.CREMATION, IndividualEvent);
     }
 
     getEventAdoption() {
-        return this.getByTag(Tag.ADOPTION, IndividualEventFamilyAdoption);
+        return this.get(Tag.ADOPTION, IndividualEventFamilyAdoption);
     }
 
     getEventBaptism() {
-        return this.getByTag(Tag.BAPTISM, IndividualEvent);
+        return this.get(Tag.BAPTISM, IndividualEvent);
     }
 
     getEventBarMitzvah() {
-        return this.getByTag(Tag.BAR_MITZVAH, IndividualEvent);
+        return this.get(Tag.BAR_MITZVAH, IndividualEvent);
     }
 
     getEventBatMitzvah() {
-        return this.getByTag(Tag.BAT_MITZVAH, IndividualEvent);
+        return this.get(Tag.BAT_MITZVAH, IndividualEvent);
     }
 
     getEventAdultChristening() {
-        return this.getByTag(Tag.ADULT_CHRISTENING, IndividualEvent);
+        return this.get(Tag.ADULT_CHRISTENING, IndividualEvent);
     }
 
     getEventConfirmation() {
-        return this.getByTag(Tag.CONFIRMATION, IndividualEvent);
+        return this.get(Tag.CONFIRMATION, IndividualEvent);
     }
 
     getEventFirstCommunion() {
-        return this.getByTag(Tag.FIRST_COMMUNION, IndividualEvent);
+        return this.get(Tag.FIRST_COMMUNION, IndividualEvent);
     }
 
     getEventNaturalization() {
-        return this.getByTag(Tag.NATURALIZATION, IndividualEvent);
+        return this.get(Tag.NATURALIZATION, IndividualEvent);
     }
 
     getEventEmigration() {
-        return this.getByTag(Tag.EMIGRATION, IndividualEvent);
+        return this.get(Tag.EMIGRATION, IndividualEvent);
     }
 
     getEventImmigration() {
-        return this.getByTag(Tag.IMMIGRATION, IndividualEvent);
+        return this.get(Tag.IMMIGRATION, IndividualEvent);
     }
 
     getEventCensus() {
-        return this.getByTag(Tag.CENSUS, IndividualEvent);
+        return this.get(Tag.CENSUS, IndividualEvent);
     }
 
     getEventProbate() {
-        return this.getByTag(Tag.PROBATE, IndividualEvent);
+        return this.get(Tag.PROBATE, IndividualEvent);
     }
 
     getEventWill() {
-        return this.getByTag(Tag.WILL, IndividualEvent);
+        return this.get(Tag.WILL, IndividualEvent);
     }
 
     getEventGraduation() {
-        return this.getByTag(Tag.GRADUATION, IndividualEvent);
+        return this.get(Tag.GRADUATION, IndividualEvent);
     }
 
     getEventRetirement() {
-        return this.getByTag(Tag.RETIREMENT, IndividualEvent);
+        return this.get(Tag.RETIREMENT, IndividualEvent);
     }
 
     getEventOther() {
-        return this.getByTag(Tag.EVENT, IndividualEvent);
+        return this.get(Tag.EVENT, IndividualEvent);
     }
 
     /* End events */
@@ -151,92 +149,80 @@ export class IndividualRecord extends Node {
     /* Attributes */
 
     getAttributeCaste() {
-        return this.getByTag(Tag.CASTE, IndividualAttribute);
+        return this.get(Tag.CASTE, IndividualAttribute);
     }
 
     getAttributePhysicalDescription() {
-        return this.getByTag(Tag.PHYSICAL_DESCRIPTION, IndividualAttribute);
+        return this.get(Tag.PHYSICAL_DESCRIPTION, IndividualAttribute);
     }
 
     getAttributeScholasticAchievement() {
-        return this.getByTag(Tag.EDUCATION, IndividualAttribute);
+        return this.get(Tag.EDUCATION, IndividualAttribute);
     }
 
     getAttributeIdentificationNumber() {
-        return this.getByTag(Tag.IDENTIFICATION_NUMBER, IndividualAttribute);
+        return this.get(Tag.IDENTIFICATION_NUMBER, IndividualAttribute);
     }
 
     getAttributeNationality() {
-        return this.getByTag(Tag.NATIONALITY, IndividualAttribute);
+        return this.get(Tag.NATIONALITY, IndividualAttribute);
     }
 
     getAttributeChildrenCount() {
-        return this.getByTag(Tag.CHILDREN_COUNT, IndividualAttribute);
+        return this.get(Tag.CHILDREN_COUNT, IndividualAttribute);
     }
 
     getAttributeRelationshipCount() {
-        return this.getByTag(Tag.MARRIAGE_COUNT, IndividualAttribute);
+        return this.get(Tag.MARRIAGE_COUNT, IndividualAttribute);
     }
 
     getAttributeOccupation() {
-        return this.getByTag(Tag.OCCUPATION, IndividualAttribute);
+        return this.get(Tag.OCCUPATION, IndividualAttribute);
     }
 
     getAttributePossessions() {
-        return this.getByTag(Tag.PROPERTY, IndividualAttribute);
+        return this.get(Tag.PROPERTY, IndividualAttribute);
     }
 
     getAttributeReligiousAffiliation() {
-        return this.getByTag(Tag.RELIGION, IndividualAttribute);
+        return this.get(Tag.RELIGION, IndividualAttribute);
     }
 
     getAttributeResidence() {
-        return this.getByTag(Tag.RESIDENCE, IndividualAttribute);
+        return this.get(Tag.RESIDENCE, IndividualAttribute);
     }
 
     getAttributeNobilityTitle() {
-        return this.getByTag(Tag.TITLE, IndividualAttribute);
+        return this.get(Tag.TITLE, IndividualAttribute);
     }
 
     getAttributeFact() {
-        return this.getByTag(Tag.FACT, IndividualAttribute);
+        return this.get(Tag.FACT, IndividualAttribute);
     }
 
     /* End attributes */
 
     getChildFamilyLink() {
-        return this.getByTag(Tag.FAMILY_CHILD, ChildFamilyLink);
+        return this.get(Tag.FAMILY_CHILD, ChildFamilyLink);
     }
 
     getSpouseFamilyLink() {
-        return this.getByTag(Tag.FAMILY_SPOUSE, SpouseFamilyLink);
+        return this.get(Tag.FAMILY_SPOUSE, SpouseFamilyLink);
     }
 
     getAssociation() {
-        return this.getByTag(Tag.ASSOCIATES, Association);
-    }
-
-    getReferenceNumber() {
-        return this.getByTag(Tag.REFERENCE, ReferenceNumber);
-    }
-
-    getRecordIdentificationNumber() {
-        return this.getByTag(Tag.RECORD_ID_NUMBER)
-    }
-
-    getChanged() {
-        return this.getByTag(Tag.CHANGE, Changed);
+        return this.get(Tag.ASSOCIATES, Association);
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, NoteReferenceMixin);
     }
 
-    getSource() {
-        return this.getByTag(Tag.SOURCE, SourceReference);
+    getSourceCitation() {
+        return this.get(Tag.SOURCE, SourceCitation);
     }
 
     getMultimedia() {
-        return this.getByTag(Tag.OBJECT, MultimediaReference);
+        return this.get(Tag.OBJECT, MultimediaReference);
     }
 }

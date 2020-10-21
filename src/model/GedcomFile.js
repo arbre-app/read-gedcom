@@ -4,15 +4,15 @@ import { GedcomVersion } from './GedcomVersion';
 import { Tag } from '../tag';
 
 export class GedcomFile extends Node {
-    constructor(data) {
-        super(data, GedcomFile);
+    constructor(data, clazz) {
+        super(data, clazz || GedcomFile);
     }
 
     getVersion() {
-        return this.getByTag(Tag.VERSION, GedcomVersion);
+        return this.get(Tag.VERSION, GedcomVersion);
     }
 
     getGedcomForm() {
-        return this.getByTag(Tag.FORMAT, GedcomForm);
+        return this.get(Tag.FORMAT, GedcomForm);
     }
 }

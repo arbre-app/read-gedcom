@@ -1,42 +1,42 @@
 import { Tag } from '../tag';
 import { Node } from './Node';
 import { NoteReferenceMixin } from './NoteReferenceMixin';
-import { SourceReference } from './SourceReference';
+import { SourceCitation } from './SourceCitation';
 
 export class NamePieces extends Node {
-    constructor(data) {
-        super(data, NamePieces);
+    constructor(data, clazz) {
+        super(data, clazz || NamePieces);
     }
 
     getPrefixName() {
-        return this.getByTag(Tag.NAME_PREFIX);
+        return this.get(Tag.NAME_PREFIX);
     }
 
     getGivenName() {
-        return this.getByTag(Tag.GIVEN_NAME);
+        return this.get(Tag.GIVEN_NAME);
     }
 
     getNickname() {
-        return this.getByTag(Tag.NICKNAME);
+        return this.get(Tag.NICKNAME);
     }
 
     getPrefixSurname() {
-        return this.getByTag(Tag.SURNAME_PREFIX);
+        return this.get(Tag.SURNAME_PREFIX);
     }
 
     getSurname() {
-        return this.getByTag(Tag.SURNAME);
+        return this.get(Tag.SURNAME);
     }
 
     getNameSuffix() {
-        return this.getByTag(Tag.NAME_SUFFIX);
+        return this.get(Tag.NAME_SUFFIX);
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, NoteReferenceMixin);
     }
 
-    getSource() {
-        return this.getByTag(Tag.SOURCE, SourceReference);
+    getSourceCitation() {
+        return this.get(Tag.SOURCE, SourceCitation);
     }
 }

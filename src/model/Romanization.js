@@ -3,11 +3,11 @@ import { Tag } from '../tag';
 import { RomanizationMethod } from './RomanizationMethod';
 
 export class Romanization extends Node {
-    constructor(data) {
-        super(data, Romanization);
+    constructor(data, clazz) {
+        super(data, clazz || Romanization);
     }
 
     getMethod() {
-        return this.getByTag(Tag.TYPE, RomanizationMethod);
+        return this.get(Tag.TYPE, RomanizationMethod);
     }
 }
