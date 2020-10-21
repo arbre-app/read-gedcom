@@ -9,7 +9,7 @@ export class GedcomSource extends Node {
     }
 
     getVersion() {
-        return this.getByTag(Tag.VERSION_NUMBER);
+        return this.getByTag(Tag.VERSION);
     }
 
     getName() {
@@ -17,10 +17,10 @@ export class GedcomSource extends Node {
     }
 
     getCorporation() {
-        return this.getByTag(Tag.CORPORATION, Corporation);
+        return this.getByTag(Tag.CORPORATE, Corporation);
     }
 
     getDataSource() {
-        return this.getByTag(Tag.DATA_SOURCE, DataSource);
+        return this.getByTag(Tag.DATA, DataSource);
     }
 }

@@ -9,10 +9,10 @@ export class GedcomFile extends Node {
     }
 
     getVersion() {
-        return this.getByTag(Tag.VERSION_NUMBER, GedcomVersion);
+        return this.getByTag(Tag.VERSION, GedcomVersion);
     }
 
     getGedcomForm() {
-        return this.getByTag(Tag.GEDCOM_FORM, GedcomForm);
+        return this.getByTag(Tag.FORMAT, GedcomForm);
     }
 }

@@ -9,7 +9,7 @@ export class GedcomForm extends Node {
     }
 
     getVersion() {
-        return this.getByTag(Tag.VERSION_NUMBER);
+        return this.getByTag(Tag.VERSION);
     }
 
     getName() {

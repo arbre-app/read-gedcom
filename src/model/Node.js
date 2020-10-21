@@ -186,7 +186,7 @@ export class Node {
 
     array() {
         const data = this._data;
-        return data.unit ? [this] : data.tree.map(t => this._newInstance(data.Clazz, t, data.parent));
+        return data.unit ? [this] : data.tree.map((t, i) => this._newInstance(data.Clazz, t, [data.parentIndices[i]], data.parent));
     }
 
     valueMap(f) {

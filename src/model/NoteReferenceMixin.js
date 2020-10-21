@@ -1,9 +1,9 @@
 import { Node } from './Node';
 import { Tag } from '../tag';
 
-export class NoteReference extends Node {
+export class NoteReferenceMixin extends Node {
     constructor(data) {
-        super(data, NoteReference);
+        super(data, NoteReferenceMixin);
     }
 
 }

@@ -12,11 +12,11 @@ export class Header extends Node {
     }
 
     getGedcomFile() {
-        return this.getByTag(Tag.GEDCOM_FILE, GedcomFile);
+        return this.getByTag(Tag.GEDCOM, GedcomFile);
     }
 
     getCharacterEncoding() {
-        return this.getByTag(Tag.CHARACTER_ENCODING, CharacterEncoding);
+        return this.getByTag(Tag.CHARACTER, CharacterEncoding);
     }
 
     getSourceSystem() {
@@ -24,7 +24,7 @@ export class Header extends Node {
     }
 
     getDestinationSystem() {
-        return this.getByTag(Tag.DESTINATION_SYSTEM)
+        return this.getByTag(Tag.DESTINATION)
     }
 
     getFileCreationDate() {
@@ -40,7 +40,7 @@ export class Header extends Node {
     }
 
     getFilename() {
-        return this.getByTag(Tag.FILE_NAME);
+        return this.getByTag(Tag.FILE);
     }
 
     getCopyright() {

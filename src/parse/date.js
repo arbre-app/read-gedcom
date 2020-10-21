@@ -186,6 +186,7 @@ export function parseDate(value) {
                         return null; // Invalid year (or the format is day-month, which is not supported here)
                     }
                 } else if (firstAsYear !== null) { // Format year
+                    i++;
                     return {
                         calendar: calendarProps,
                         year: firstAsYear,

@@ -17,7 +17,7 @@ const gPointer = `${gXRefId}`;
 const gLineValue = `${gPointer}|(?:${gLineItem})`;
 const gTag = `[${ccAlphanum}]+|_[${ccAlphanum}]+`; // TODO
 const gTerminator = `${cCR}?${cLF}`;
-const gGedcomLine = `(${gLevel})(?:${cDelim}(${gXRefId}))?${cDelim}(${gTag})(?:${cDelim}(${gLineValue}))?(?:${gTerminator})`
+const gGedcomLine = `(${gLevel})(?:${cDelim}(${gXRefId}))?${cDelim}(${gTag})(?:${cDelim}(${gLineValue}))?(?:${gTerminator})`;
 
 export function tokenize(input, strict = true) {
     return {

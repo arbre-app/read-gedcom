@@ -2,7 +2,7 @@ import { FamilyEvent } from './FamilyEvent';
 import { IndividualReference } from './IndividualReference';
 import { Node } from './Node';
 import { Tag } from '../tag';
-import { NoteReference } from './NoteReference';
+import { NoteReferenceMixin } from './NoteReferenceMixin';
 
 export class FamilyRecord extends Node {
     constructor(data) {
@@ -13,8 +13,20 @@ export class FamilyRecord extends Node {
         return this.getByTag(tag, FamilyEvent);
     }
 
+    getEventMarriage() {
+        return this.getEventByTag(Tag.MARRIAGE, FamilyEvent);
+    }
+
+    getEventDivorce() {
+        return this.getEventByTag(Tag.DIVORCE, FamilyEvent);
+    }
+
+    getEventDivorceFiled() {
+        return this.getEventByTag(Tag.DIVORCE_FILED, FamilyEvent);
+    }
+
     getEventAnnulment() {
-        return this.getEventByTag(Tag.ANNULMENT);
+        return this.getEventByTag(Tag.ANNULMENT, FamilyEvent);
     }
 
     // TODO
@@ -33,6 +45,6 @@ export class FamilyRecord extends Node {
 
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReference)
+        return this.getByTag(Tag.NOTE, NoteReferenceMixin)
     }
 }

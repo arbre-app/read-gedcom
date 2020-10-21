@@ -7,6 +7,8 @@ export class SourceReference extends Node {
         super(data, SourceReference);
     }
 
+    // TODO: in usage, rename `getSource` to `getSourceCitation`
+
     getSourceRecord() {
         return this.getGedcom().getByTagPointers(Tag.SOURCE, this.array().map(o => o.value()), SourceRecord);
     }

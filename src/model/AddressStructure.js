@@ -12,18 +12,18 @@ export class AddressStructure extends Node {
     }
 
     getPhoneNumber() {
-        return this.getByTag(Tag.PHONE_NUMBER);
+        return this.getByTag(Tag.PHONE);
     }
 
     getEmailAddress() {
-        return this.getByTag(Tag.EMAIL_ADDRESS);
+        return this.getByTag(Tag.EMAIL);
     }
 
     getFaxAddress() {
-        return this.getByTag(Tag.FAX_ADDRESS);
+        return this.getByTag(Tag.FAX);
     }
 
     getWebAddress() {
-        return this.getByTag(Tag.WEB_ADDRESS);
+        return this.getByTag(Tag.WEB);
     }
 }

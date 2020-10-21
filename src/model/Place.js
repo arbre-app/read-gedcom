@@ -1,21 +1,21 @@
 import { Coordinates } from './Coordinates';
 import { Node } from './Node';
 import { Tag } from '../tag';
-import { NoteReference } from './NoteReference';
-import { Phonetisation } from './Phonetisation';
-import { Romanisation } from './Romanisation';
+import { NoteReferenceMixin } from './NoteReferenceMixin';
+import { Phonetization } from './Phonetization';
+import { Romanization } from './Romanization';
 
 export class Place extends Node {
     constructor(data) {
         super(data, Place);
     }
 
-    getPhonetisation() {
-        return this.getByTag(Tag.PHONETIC, Phonetisation);
+    getPhonetization() {
+        return this.getByTag(Tag.PHONETIC, Phonetization);
     }
 
-    getRomanisation() {
-        return this.getByTag(Tag.ROMANISED, Romanisation);
+    getRomanization() {
+        return this.getByTag(Tag.ROMANIZED, Romanization);
     }
 
     getCoordinates() {
@@ -23,6 +23,6 @@ export class Place extends Node {
     }
 
     getNote() {
-        return this.getByTag(Tag.NOTE, NoteReference);
+        return this.getByTag(Tag.NOTE, NoteReferenceMixin);
     }
 }

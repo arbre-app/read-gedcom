@@ -17,6 +17,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && cross-env NODE_ENV=production rollup -c",
+    "build:unsafe": "cross-env NODE_ENV=production rollup -c",
     "test": "mocha test/ -r esm"
   },
   "repository": {
