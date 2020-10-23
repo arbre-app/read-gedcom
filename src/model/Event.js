@@ -7,8 +7,14 @@ import { Place } from './Place';
 import { SourceCitation } from './SourceCitation';
 
 export class Event extends AddressStructure {
+    static YES = 'Y';
+
     constructor(data, clazz) {
         super(data, clazz || Event);
+    }
+
+    valueAsHappened() {
+        this.valueMap(v => v ? (v === Event.YES ? true : null) : false);
     }
 
     getType() {

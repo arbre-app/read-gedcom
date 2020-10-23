@@ -1,5 +1,6 @@
 import { _get } from '../utils';
 import { FamilyRecord } from './FamilyRecord';
+import { MultimediaRecord } from './MultimediaRecord';
 import { Node } from './Node';
 import { Header } from './Header';
 import { IndividualRecord } from './IndividualRecord';
@@ -100,6 +101,10 @@ export class Gedcom extends Node {
 
     getFamilyRecord(id) {
         return this.getRecord(Tag.FAMILY, id, FamilyRecord);
+    }
+
+    getMultimediaRecord(id) {
+        return this.getRecord(Tag.OBJECT, id, MultimediaRecord);
     }
 
     getNoteRecord(id) {

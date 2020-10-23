@@ -174,5 +174,25 @@ export class Node {
         return this._newInstance(Adapter, arrayChildren, arrayParents, this);
     }
 
+    filter(f) {
+        const data = this._data;
+        const tree = data.unit ? [data.tree] : data.tree;
+        const newTree = [], newIndices = [];
+        tree.filter((t, i) => {
+            const parentIndex = data.parentIndices[i];
+            const unitNode = this._newInstance(data.Clazz, t, [parentIndex], data.parent);
+            if(f(unitNode)) {
+                newTree.push(t);
+                newIndices.push(parentIndex);
+            }
+        });
+        return this._newInstance(data.Clazz, newTree, newIndices, data.parent);
+    }
+
+    as(Adapter) {
+        const data = this._data;
+        return this._newInstance(Adapter, data.tree, data.parentIndices, data.parent);
+    }
+
     // TODO
 }

@@ -11,7 +11,7 @@ export class FamilyRecord extends Record {
         super(data, clazz || FamilyRecord);
     }
 
-    /* Event */
+    /* Events */
 
     getEventAnnulment() {
         return this.get(Tag.ANNULMENT, FamilyEvent);
