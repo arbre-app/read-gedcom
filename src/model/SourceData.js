@@ -8,15 +8,15 @@ export class SourceData extends Node {
         super(data, clazz || SourceData);
     }
 
-    getEventsRecorded() {
-        return this.get(Tag.EVENT, EventsRecorded);
+    getEventsRecorded(q) {
+        return this.get(Tag.EVENT, q, EventsRecorded);
     }
 
-    getResponsibleAgency() {
-        return this.get(Tag.AGENCY);
+    getResponsibleAgency(q) {
+        return this.get(Tag.AGENCY, q);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 }

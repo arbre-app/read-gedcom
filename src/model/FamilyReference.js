@@ -5,7 +5,7 @@ export class FamilyReference extends Reference {
         super(data, clazz || FamilyReference);
     }
 
-    getFamilyRecord() {
-        return this.getGedcom().getFamilyRecord(this.value());
+    getFamilyRecord(q) {
+        return this.getGedcom().getFamilyRecord(this.value().all(), q);
     }
 }

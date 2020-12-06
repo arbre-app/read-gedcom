@@ -6,7 +6,7 @@ export class IndividualAttribute extends IndividualEvent {
         super(data, clazz || IndividualAttribute);
     }
 
-    getType() {
-        return this.get(Tag.TYPE);
+    getType(q) {
+        return this.get(Tag.TYPE, q);
     }
 }

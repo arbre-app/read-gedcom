@@ -7,11 +7,11 @@ export class CitationData extends Node {
         super(data, clazz || CitationData);
     }
 
-    getDate() {
-        return this.get(Tag.DATE, Date);
+    getDate(q) {
+        return this.get(Tag.DATE, q, Date);
     }
 
-    getText() {
-        return this.get(Tag.TEXT);
+    getText(q) {
+        return this.get(Tag.TEXT, q);
     }
 }

@@ -7,7 +7,7 @@ export class NameRomanization extends NamePieces {
         super(data, clazz || NameRomanization);
     }
 
-    getMethod() {
-        return this.get(Tag.TYPE, RomanizationMethod);
+    getMethod(q) {
+        return this.get(Tag.TYPE, q, RomanizationMethod);
     }
 }

@@ -4,6 +4,11 @@ import { createLinks } from './adapter';
 import { detectCharset, FileEncoding } from './decoder';
 import { decodeUtf8, decodeCp1252, decodeAnsel } from './decoding';
 
+/**
+ * Reads a gedcom file and returns a traversable model
+ * @param buffer {Buffer} a buffer
+ * @returns {Gedcom} a model representing the parsed file
+ */
 export function readGedcom(buffer) {
     const charset = detectCharset(buffer);
 

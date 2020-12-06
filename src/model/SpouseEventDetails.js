@@ -6,7 +6,7 @@ export class SpouseEventDetails extends Node {
         super(data, clazz || SpouseEventDetails);
     }
 
-    getAge() {
-        return this.get(Tag.AGE);
+    getAge(q) {
+        return this.get(Tag.AGE, q);
     }
 }

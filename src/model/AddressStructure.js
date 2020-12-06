@@ -7,23 +7,23 @@ export class AddressStructure extends Node {
         super(data, clazz || AddressStructure);
     }
 
-    getAddress() {
-        return this.get(Tag.ADDRESS, Address);
+    getAddress(q) {
+        return this.get(Tag.ADDRESS, q, Address);
     }
 
-    getPhoneNumber() {
-        return this.get(Tag.PHONE);
+    getPhoneNumber(q) {
+        return this.get(Tag.PHONE, q);
     }
 
     getEmailAddress() {
-        return this.get(Tag.EMAIL);
+        return this.get(Tag.EMAIL, q);
     }
 
-    getFaxAddress() {
-        return this.get(Tag.FAX);
+    getFaxAddress(q) {
+        return this.get(Tag.FAX, q);
     }
 
-    getWebAddress() {
-        return this.get(Tag.WEB);
+    getWebAddress(q) {
+        return this.get(Tag.WEB, q);
     }
 }

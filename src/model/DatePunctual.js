@@ -7,7 +7,7 @@ export class DatePunctual extends Node {
     }
 
     valueAsDate() {
-        return this.valueMap(v => {
+        return this.value().map(v => {
             const date = parseDate(v);
             if (date !== null && date.isDatePunctual && !date.isDateApproximate) { // TODO check this
                 return date;

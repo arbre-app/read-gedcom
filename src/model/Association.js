@@ -8,15 +8,15 @@ export class Association extends Node {
         super(data, clazz || Association);
     }
 
-    getRelation() {
-        return this.get(Tag.RELATIONSHIP);
+    getRelation(q) {
+        return this.get(Tag.RELATIONSHIP, q);
     }
 
-    getSourceCitation() {
-        return this.get(Tag.SOURCE, SourceCitation);
+    getSourceCitation(q) {
+        return this.get(Tag.SOURCE, q, SourceCitation);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 }

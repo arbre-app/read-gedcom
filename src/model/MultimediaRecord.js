@@ -9,15 +9,15 @@ export class MultimediaRecord extends Record {
         super(data, clazz || MultimediaRecord);
     }
 
-    getFileReference() {
-        return this.get(Tag.FILE, MultimediaFile);
+    getFileReference(q) {
+        return this.get(Tag.FILE, q, MultimediaFile);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 
-    getSourceCitation() {
-        return this.get(Tag.SOURCE, SourceCitation);
+    getSourceCitation(q) {
+        return this.get(Tag.SOURCE, q, SourceCitation);
     }
 }

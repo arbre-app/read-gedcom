@@ -7,7 +7,7 @@ export class IndividualEventFamily extends IndividualEvent {
         super(data, clazz || IndividualEventFamily);
     }
 
-    getFamilyAsChildReference() {
-        return this.get(Tag.FAMILY_CHILD, FamilyReference);
+    getFamilyAsChildReference(q) {
+        return this.get(Tag.FAMILY_CHILD, q, FamilyReference);
     }
 }

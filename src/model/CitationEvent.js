@@ -6,7 +6,7 @@ export class CitationEvent extends MetaEvent {
         super(data, clazz || CitationEvent);
     }
 
-    getRole() {
-        return this.get(Tag.ROLE);
+    getRole(q) {
+        return this.get(Tag.ROLE, q);
     }
 }

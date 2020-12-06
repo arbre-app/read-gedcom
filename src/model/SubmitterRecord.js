@@ -6,8 +6,8 @@ export class SubmitterRecord extends Node {
         super(data, clazz || SubmitterRecord);
     }
 
-    getName() {
-        return this.get(Tag.NAME);
+    getName(q) {
+        return this.get(Tag.NAME, q);
     }
 
 

@@ -26,12 +26,12 @@ function getFileMetadata(buffer) {
         i += 1;
     }
     const tree = makeTree(array);
-    const gedcom = new Gedcom(tree); // Bypass checks
+    const gedcom = new Gedcom([tree]); // Bypass checks
     const header = gedcom.getHeader();
-    const charOpt = header.get([Tag.CHARACTER, Tag.CHARACTER_ALT]).option().value();
+    const charOpt = header.get([Tag.CHARACTER, Tag.CHARACTER_ALT]).value().option();
     const source = header.getSourceSystem();
-    const sourceOpt = source.option().value();
-    const versionOpt = source.getVersion().option().value();
+    const sourceOpt = source.value().option();
+    const versionOpt = source.getVersion().value().option();
 
     return { sourceEncoding: charOpt, sourceProvider: sourceOpt, sourceProviderVersion: versionOpt };
 }
@@ -41,39 +41,39 @@ export function detectCharset(buffer) {
 
     // Estimate an encoding without knowing the provider
     function estimateEncoding() {
-        if(sourceEncoding.every(s => s === CharacterEncoding.UTF_8)) {
+        if(sourceEncoding === CharacterEncoding.UTF_8) {
             return FileEncoding.UTF_8;
-        } else if(sourceEncoding.every(s => s === CharacterEncoding.ANSEL)) {
+        } else if(sourceEncoding === CharacterEncoding.ANSEL) {
             return FileEncoding.ANSEL;
-        } else if(sourceEncoding.every(s => s === CharacterEncoding.ASCII)) {
+        } else if(sourceEncoding === CharacterEncoding.ASCII) {
             return FileEncoding.CP1252;
         } else { // Unknown encoding
             return FileEncoding.UTF_8; // Defaults to UTF-8
         }
     }
 
-    if(sourceProvider.every(s => s === 'GeneWeb')) { // Geneweb
-        if(sourceEncoding.every(s => s === CharacterEncoding.ASCII)) {
+    if(sourceProvider === 'GeneWeb') { // Geneweb
+        if(sourceEncoding === CharacterEncoding.ASCII) {
             return FileEncoding.CP1252;
-        } else if(sourceEncoding.every(s => s === CharacterEncoding.UTF_8)) {
+        } else if(sourceEncoding === CharacterEncoding.UTF_8) {
             return FileEncoding.UTF_8;
         } else {
             return estimateEncoding();
         }
-    } else if(sourceProvider.every(s => s.startsWith('HEREDIS'))) { // Heredis
-        if(sourceEncoding.every(s => s === CharacterEncoding.ANSI)) {
+    } else if(sourceProvider !== null && sourceProvider.startsWith('HEREDIS')) { // Heredis
+        if(sourceEncoding === CharacterEncoding.ANSI) {
             return FileEncoding.CP1252;
         } else {
             return estimateEncoding();
         }
-    } else if(sourceProvider.every(s => s === 'GENEATIQUE')) { // Généatique
-        if(sourceEncoding.every(s => s === CharacterEncoding.ANSEL)) {
+    } else if(sourceProvider === 'GENEATIQUE') { // Généatique
+        if(sourceEncoding === CharacterEncoding.ANSEL) {
             return FileEncoding.ANSEL;
         } else {
             return estimateEncoding();
         }
-    } else if(sourceProvider.every(s => s === 'Gramps')) { // Gramps
-        if(sourceEncoding.every(s => s === CharacterEncoding.UTF_8)) {
+    } else if(sourceProvider === 'Gramps') { // Gramps
+        if(sourceEncoding === CharacterEncoding.UTF_8) {
             return FileEncoding.UTF_8;
         } else {
             return estimateEncoding();

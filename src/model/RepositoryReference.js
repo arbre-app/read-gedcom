@@ -6,11 +6,11 @@ export class RepositoryReference extends Node {
         super(data, clazz || RepositoryReference);
     }
 
-    getRepositoryRecord() {
-        return this.getGedcom().getRepositoryRecord(this.value());
+    getRepositoryRecord(q) {
+        return this.getGedcom().getRepositoryRecord(this.value().all(), q);
     }
 
-    getSourceCallNumber() {
-        return this.get(Tag.CALL_NUMBER);
+    getSourceCallNumber(q) {
+        return this.get(Tag.CALL_NUMBER, q);
     }
 }

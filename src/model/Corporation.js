@@ -8,7 +8,7 @@ export class Corporation extends AddressStructure {
         super(data, clazz || Corporation);
     }
 
-    getAddress() {
-        return this.get(Tag.ADDRESS, Address);
+    getAddress(q) {
+        return this.get(Tag.ADDRESS, q, Address);
     }
 }

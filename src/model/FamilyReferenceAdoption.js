@@ -7,7 +7,7 @@ export class FamilyReferenceAdoption extends FamilyReference {
         super(data, clazz || FamilyReferenceAdoption);
     }
 
-    getAdoptedByWhom() {
-        return this.get(Tag.ADOPTION, Adoption);
+    getAdoptedByWhom(q) {
+        return this.get(Tag.ADOPTION, q, Adoption);
     }
 }

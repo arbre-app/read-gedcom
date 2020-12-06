@@ -25,7 +25,7 @@ export class MultimediaFormat extends Node {
         super(data, clazz || MultimediaFormat);
     }
 
-    getMediaType() {
-        return this.get(Tag.TYPE, MediaType);
+    getMediaType(q) {
+        return this.get(Tag.TYPE, q, MediaType);
     }
 }

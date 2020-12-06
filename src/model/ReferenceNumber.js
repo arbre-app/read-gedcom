@@ -6,7 +6,7 @@ export class ReferenceNumber extends Node {
         super(data, clazz || ReferenceNumber);
     }
 
-    getType() {
-        return this.get(Tag.TYPE);
+    getType(q) {
+        return this.get(Tag.TYPE, q);
     }
 }

@@ -12,7 +12,7 @@ export class Name extends NamePieces {
     }
 
     valueAsParts() {
-        return this.valueMap(v => {
+        return this.value().map(v => {
             if (!v) {
                 return null;
             }
@@ -28,15 +28,15 @@ export class Name extends NamePieces {
         });
     }
 
-    getType() {
-        return this.get(Tag.TYPE, NameType);
+    getType(q) {
+        return this.get(Tag.TYPE, q, NameType);
     }
 
-    getNamePhonetization() {
-        return this.get(Tag.PHONETIC, NamePhonetization);
+    getNamePhonetization(q) {
+        return this.get(Tag.PHONETIC, q, NamePhonetization);
     }
 
-    getNameRomanization() {
-        return this.get(Tag.PHONETIC, NameRomanization);
+    getNameRomanization(q) {
+        return this.get(Tag.PHONETIC, q, NameRomanization);
     }
 }

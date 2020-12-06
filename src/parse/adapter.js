@@ -15,7 +15,7 @@ export function createLinks(input) {
         throw new Error(`Last node is not a trailer (got ${trailer.tag})`);
     }
 
-    const gedcom = new Gedcom(input);
+    const gedcom = new Gedcom([input]);
     gedcom._createRecordBindings();
     return gedcom;
 }

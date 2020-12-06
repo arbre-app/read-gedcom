@@ -5,7 +5,7 @@ export class MultimediaReference extends Reference {
         super(data, clazz || MultimediaReference);
     }
 
-    getMultimediaRecord() {
-        return this.getGedcom().getMultimediaRecord(this.value());
+    getMultimediaRecord(q) {
+        return this.getGedcom().getMultimediaRecord(this.value().all(), q);
     }
 }

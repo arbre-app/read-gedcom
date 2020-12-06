@@ -6,6 +6,6 @@ export class MetaEvent extends Node {
     }
 
     valueAsArray() {
-        return this.valueMap(v => v.split(', ')); // Not a typo, comma is followed by a space
+        return this.value().map(v => v.split(', ')); // Not a typo, comma is followed by a space
     }
 }

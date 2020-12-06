@@ -7,7 +7,7 @@ export class DateExact extends Node {
         super(data, clazz || DateExact);
     }
 
-    getTime() {
-        return this.get(Tag.TIME, Time);
+    getTime(q) {
+        return this.get(Tag.TIME, q, Time);
     }
 }

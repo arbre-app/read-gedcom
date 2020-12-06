@@ -7,11 +7,11 @@ export class EventsRecorded extends MetaEvent {
         super(data, clazz || EventsRecorded);
     }
 
-    getPlace() {
-        return this.get(Tag.PLACE);
+    getPlace(q) {
+        return this.get(Tag.PLACE, q);
     }
 
-    getDate() {
-        return this.get(Tag.DATE, DatePeriod);
+    getDate(q) {
+        return this.get(Tag.DATE, q, DatePeriod);
     }
 }

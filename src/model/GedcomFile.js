@@ -8,11 +8,11 @@ export class GedcomFile extends Node {
         super(data, clazz || GedcomFile);
     }
 
-    getVersion() {
-        return this.get(Tag.VERSION, GedcomVersion);
+    getVersion(q) {
+        return this.get(Tag.VERSION, q, GedcomVersion);
     }
 
-    getGedcomForm() {
-        return this.get(Tag.FORMAT, GedcomForm);
+    getGedcomForm(q) {
+        return this.get(Tag.FORMAT, q, GedcomForm);
     }
 }

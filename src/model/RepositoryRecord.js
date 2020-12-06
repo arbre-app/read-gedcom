@@ -8,33 +8,33 @@ export class RepositoryRecord extends Record {
         super(data, clazz || RepositoryRecord);
     }
 
-    getName() {
-        return this.get(Tag.NAME);
+    getName(q) {
+        return this.get(Tag.NAME, q);
     }
 
     // Address structure borrowed from AddressStructure
 
-    getAddress() {
-        return this.get(Tag.ADDRESS, Address);
+    getAddress(q) {
+        return this.get(Tag.ADDRESS, q, Address);
     }
 
-    getPhoneNumber() {
-        return this.get(Tag.PHONE);
+    getPhoneNumber(q) {
+        return this.get(Tag.PHONE, q);
     }
 
-    getEmailAddress() {
-        return this.get(Tag.EMAIL);
+    getEmailAddress(q) {
+        return this.get(Tag.EMAIL, q);
     }
 
-    getFaxAddress() {
-        return this.get(Tag.FAX);
+    getFaxAddress(q) {
+        return this.get(Tag.FAX, q);
     }
 
-    getWebAddress() {
-        return this.get(Tag.WEB);
+    getWebAddress(q) {
+        return this.get(Tag.WEB, q);
     }
 
     getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 }

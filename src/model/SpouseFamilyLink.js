@@ -7,11 +7,11 @@ export class SpouseFamilyLink extends Node {
         super(data, clazz || SpouseFamilyLink);
     }
 
-    getFamilyRecord() {
-        return this.getGedcom().getFamilyRecord(this.value());
+    getFamilyRecord(q) {
+        return this.getGedcom().getFamilyRecord(this.value().all(), q);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 }

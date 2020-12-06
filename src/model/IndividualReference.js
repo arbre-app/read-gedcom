@@ -5,7 +5,7 @@ export class IndividualReference extends Reference {
         super(data, clazz || IndividualReference);
     }
 
-    getIndividualRecord() {
-        return this.getGedcom().getIndividualRecord(this.value());
+    getIndividualRecord(q) {
+        return this.getGedcom().getIndividualRecord(this.value().all(), q);
     }
 }

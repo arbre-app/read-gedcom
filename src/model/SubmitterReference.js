@@ -5,7 +5,7 @@ export class SubmitterReference extends Reference {
         super(data, clazz || SubmitterReference);
     }
 
-    getSubmitterRecord() {
-        return this.getGedcom().getSubmitterRecord(this.value());
+    getSubmitterRecord(q) {
+        return this.getGedcom().getSubmitterRecord(this.value().all(), q);
     }
 }

@@ -7,11 +7,11 @@ export class DataSource extends Node {
         super(data, clazz || DataSource);
     }
 
-    getDate() {
-        return this.get(Tag.DATE, Date);
+    getDate(q) {
+        return this.get(Tag.DATE, q, Date);
     }
 
-    getCopyright() {
-        return this.get(Tag.COPYRIGHT);
+    getCopyright(q) {
+        return this.get(Tag.COPYRIGHT, q);
     }
 }

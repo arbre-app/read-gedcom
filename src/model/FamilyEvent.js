@@ -7,11 +7,11 @@ export class FamilyEvent extends Event {
         super(data, clazz || FamilyEvent);
     }
 
-    getHusbandDetails() {
-        return this.get(Tag.HUSBAND, SpouseEventDetails);
+    getHusbandDetails(q) {
+        return this.get(Tag.HUSBAND, q, SpouseEventDetails);
     }
 
-    getWifeDetails() {
-        return this.get(Tag.WIFE, SpouseEventDetails);
+    getWifeDetails(q) {
+        return this.get(Tag.WIFE, q, SpouseEventDetails);
     }
 }

@@ -20,35 +20,37 @@ export class IndividualRecord extends Record {
         super(data, clazz || clazz || IndividualRecord);
     }
 
-    getName() {
-        return this.get(Tag.NAME, Name);
+    getName(q) {
+        return this.get(Tag.NAME, q, Name);
     }
 
-    getSex() {
-        return this.get(Tag.SEX, Sex);
+    getSex(q) {
+        return this.get(Tag.SEX, q, Sex);
     }
 
-    getFamilyAsChild() {
+    getFamilyAsChild(q) {
+        // TODO q (and method below)
         const rootData = this._data.root._data;
         const tree = this._data.tree;
-        const arrayTree = this._data.unit ? [tree] : tree;
         const arrayChildren = [], arrayParents = [];
-        arrayTree.forEach((t, i) => {
-            const family = rootData.as_child[t.pointer];
-            if (family !== undefined) {
-                arrayChildren.push(family);
-                arrayParents.push(i);
+        tree.forEach((t, i) => {
+            const families = rootData.as_child[t.pointer];
+            if (families !== undefined) {
+                families.forEach(family => {
+                    arrayChildren.push(family);
+                    arrayParents.push(i);
+                });
             }
         });
         return this._newInstance(FamilyRecord, arrayChildren, arrayParents, this);
     }
 
-    getFamilyAsSpouse() {
+    getFamilyAsSpouse(q) {
+        // TODO
         const rootData = this._data.root._data;
         const tree = this._data.tree;
-        const arrayTree = this._data.unit ? [tree] : tree;
         const arrayChildren = [], arrayParents = [];
-        arrayTree.forEach((t, i) => {
+        tree.forEach((t, i) => {
             const families = _get(rootData.as_spouse, t.pointer, []);
             families.forEach(family => {
                 arrayChildren.push(family);
@@ -60,169 +62,169 @@ export class IndividualRecord extends Record {
 
     /* Events */
 
-    getEventBirth() {
-        return this.get(Tag.BIRTH, IndividualEventFamily);
+    getEventBirth(q) {
+        return this.get(Tag.BIRTH, q, IndividualEventFamily);
     }
 
-    getEventChristening() {
-        return this.get(Tag.CHRISTENING, IndividualEventFamily);
+    getEventChristening(q) {
+        return this.get(Tag.CHRISTENING, q, IndividualEventFamily);
     }
 
-    getEventDeath() {
-        return this.get(Tag.DEATH, IndividualEvent);
+    getEventDeath(q) {
+        return this.get(Tag.DEATH, q, IndividualEvent);
     }
 
-    getEventBurial() {
-        return this.get(Tag.BURIAL, IndividualEvent);
+    getEventBurial(q) {
+        return this.get(Tag.BURIAL, q, IndividualEvent);
     }
 
-    getEventCremation() {
-        return this.get(Tag.CREMATION, IndividualEvent);
+    getEventCremation(q) {
+        return this.get(Tag.CREMATION, q, IndividualEvent);
     }
 
-    getEventAdoption() {
-        return this.get(Tag.ADOPTION, IndividualEventFamilyAdoption);
+    getEventAdoption(q) {
+        return this.get(Tag.ADOPTION, q, IndividualEventFamilyAdoption);
     }
 
-    getEventBaptism() {
-        return this.get(Tag.BAPTISM, IndividualEvent);
+    getEventBaptism(q) {
+        return this.get(Tag.BAPTISM, q, IndividualEvent);
     }
 
-    getEventBarMitzvah() {
-        return this.get(Tag.BAR_MITZVAH, IndividualEvent);
+    getEventBarMitzvah(q) {
+        return this.get(Tag.BAR_MITZVAH, q, IndividualEvent);
     }
 
-    getEventBatMitzvah() {
-        return this.get(Tag.BAT_MITZVAH, IndividualEvent);
+    getEventBatMitzvah(q) {
+        return this.get(Tag.BAT_MITZVAH, q, IndividualEvent);
     }
 
-    getEventAdultChristening() {
-        return this.get(Tag.ADULT_CHRISTENING, IndividualEvent);
+    getEventAdultChristening(q) {
+        return this.get(Tag.ADULT_CHRISTENING, q, IndividualEvent);
     }
 
-    getEventConfirmation() {
-        return this.get(Tag.CONFIRMATION, IndividualEvent);
+    getEventConfirmation(q) {
+        return this.get(Tag.CONFIRMATION, q, IndividualEvent);
     }
 
-    getEventFirstCommunion() {
-        return this.get(Tag.FIRST_COMMUNION, IndividualEvent);
+    getEventFirstCommunion(q) {
+        return this.get(Tag.FIRST_COMMUNION, q, IndividualEvent);
     }
 
-    getEventNaturalization() {
-        return this.get(Tag.NATURALIZATION, IndividualEvent);
+    getEventNaturalization(q) {
+        return this.get(Tag.NATURALIZATION, q, IndividualEvent);
     }
 
-    getEventEmigration() {
-        return this.get(Tag.EMIGRATION, IndividualEvent);
+    getEventEmigration(q) {
+        return this.get(Tag.EMIGRATION, q, IndividualEvent);
     }
 
-    getEventImmigration() {
-        return this.get(Tag.IMMIGRATION, IndividualEvent);
+    getEventImmigration(q) {
+        return this.get(Tag.IMMIGRATION, q, IndividualEvent);
     }
 
-    getEventCensus() {
-        return this.get(Tag.CENSUS, IndividualEvent);
+    getEventCensus(q) {
+        return this.get(Tag.CENSUS, q, IndividualEvent);
     }
 
-    getEventProbate() {
-        return this.get(Tag.PROBATE, IndividualEvent);
+    getEventProbate(q) {
+        return this.get(Tag.PROBATE, q, IndividualEvent);
     }
 
-    getEventWill() {
-        return this.get(Tag.WILL, IndividualEvent);
+    getEventWill(q) {
+        return this.get(Tag.WILL, q, IndividualEvent);
     }
 
-    getEventGraduation() {
-        return this.get(Tag.GRADUATION, IndividualEvent);
+    getEventGraduation(q) {
+        return this.get(Tag.GRADUATION, q, IndividualEvent);
     }
 
-    getEventRetirement() {
-        return this.get(Tag.RETIREMENT, IndividualEvent);
+    getEventRetirement(q) {
+        return this.get(Tag.RETIREMENT, q, IndividualEvent);
     }
 
-    getEventOther() {
-        return this.get(Tag.EVENT, IndividualEvent);
+    getEventOther(q) {
+        return this.get(Tag.EVENT, q, IndividualEvent);
     }
 
     /* End events */
 
     /* Attributes */
 
-    getAttributeCaste() {
-        return this.get(Tag.CASTE, IndividualAttribute);
+    getAttributeCaste(q) {
+        return this.get(Tag.CASTE, q, IndividualAttribute);
     }
 
-    getAttributePhysicalDescription() {
-        return this.get(Tag.PHYSICAL_DESCRIPTION, IndividualAttribute);
+    getAttributePhysicalDescription(q) {
+        return this.get(Tag.PHYSICAL_DESCRIPTION, q, IndividualAttribute);
     }
 
-    getAttributeScholasticAchievement() {
-        return this.get(Tag.EDUCATION, IndividualAttribute);
+    getAttributeScholasticAchievement(q) {
+        return this.get(Tag.EDUCATION, q, IndividualAttribute);
     }
 
-    getAttributeIdentificationNumber() {
-        return this.get(Tag.IDENTIFICATION_NUMBER, IndividualAttribute);
+    getAttributeIdentificationNumber(q) {
+        return this.get(Tag.IDENTIFICATION_NUMBER, q, IndividualAttribute);
     }
 
-    getAttributeNationality() {
-        return this.get(Tag.NATIONALITY, IndividualAttribute);
+    getAttributeNationality(q) {
+        return this.get(Tag.NATIONALITY, q, IndividualAttribute);
     }
 
-    getAttributeChildrenCount() {
-        return this.get(Tag.CHILDREN_COUNT, IndividualAttribute);
+    getAttributeChildrenCount(q) {
+        return this.get(Tag.CHILDREN_COUNT, q, IndividualAttribute);
     }
 
-    getAttributeRelationshipCount() {
-        return this.get(Tag.MARRIAGE_COUNT, IndividualAttribute);
+    getAttributeRelationshipCount(q) {
+        return this.get(Tag.MARRIAGE_COUNT, q, IndividualAttribute);
     }
 
-    getAttributeOccupation() {
-        return this.get(Tag.OCCUPATION, IndividualAttribute);
+    getAttributeOccupation(q) {
+        return this.get(Tag.OCCUPATION, q, IndividualAttribute);
     }
 
-    getAttributePossessions() {
-        return this.get(Tag.PROPERTY, IndividualAttribute);
+    getAttributePossessions(q) {
+        return this.get(Tag.PROPERTY, q, IndividualAttribute);
     }
 
-    getAttributeReligiousAffiliation() {
-        return this.get(Tag.RELIGION, IndividualAttribute);
+    getAttributeReligiousAffiliation(q) {
+        return this.get(Tag.RELIGION, q, IndividualAttribute);
     }
 
-    getAttributeResidence() {
-        return this.get(Tag.RESIDENCE, IndividualAttribute);
+    getAttributeResidence(q) {
+        return this.get(Tag.RESIDENCE, q, IndividualAttribute);
     }
 
-    getAttributeNobilityTitle() {
-        return this.get(Tag.TITLE, IndividualAttribute);
+    getAttributeNobilityTitle(q) {
+        return this.get(Tag.TITLE, q, IndividualAttribute);
     }
 
-    getAttributeFact() {
-        return this.get(Tag.FACT, IndividualAttribute);
+    getAttributeFact(q) {
+        return this.get(Tag.FACT, q, IndividualAttribute);
     }
 
     /* End attributes */
 
-    getChildFamilyLink() {
-        return this.get(Tag.FAMILY_CHILD, ChildFamilyLink);
+    getChildFamilyLink(q) {
+        return this.get(Tag.FAMILY_CHILD, q, ChildFamilyLink);
     }
 
-    getSpouseFamilyLink() {
-        return this.get(Tag.FAMILY_SPOUSE, SpouseFamilyLink);
+    getSpouseFamilyLink(q) {
+        return this.get(Tag.FAMILY_SPOUSE, q, SpouseFamilyLink);
     }
 
-    getAssociation() {
-        return this.get(Tag.ASSOCIATES, Association);
+    getAssociation(q) {
+        return this.get(Tag.ASSOCIATES, q, Association);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 
-    getSourceCitation() {
-        return this.get(Tag.SOURCE, SourceCitation);
+    getSourceCitation(q) {
+        return this.get(Tag.SOURCE, q, SourceCitation);
     }
 
-    getMultimedia() {
-        return this.get(Tag.OBJECT, MultimediaReference);
+    getMultimedia(q) {
+        return this.get(Tag.OBJECT, q, MultimediaReference);
     }
 }

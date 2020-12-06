@@ -7,7 +7,7 @@ export class NoteRecord extends Record {
         super(data, clazz || NoteRecord);
     }
 
-    getSourceCitation() {
-        return this.get(Tag.SOURCE, SourceCitation);
+    getSourceCitation(q) {
+        return this.get(Tag.SOURCE, q, SourceCitation);
     }
 }

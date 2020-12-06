@@ -6,11 +6,11 @@ export class Coordinates extends Node {
         super(data, clazz || Coordinates);
     }
 
-    getLatitude() {
-        return this.get(Tag.LATITUDE);
+    getLatitude(q) {
+        return this.get(Tag.LATITUDE, q);
     }
 
-    getLongitude() {
-        return this.get(Tag.LONGITUDE);
+    getLongitude(q) {
+        return this.get(Tag.LONGITUDE, q);
     }
 }

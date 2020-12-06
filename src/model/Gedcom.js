@@ -13,6 +13,9 @@ import { SubmitterRecord } from './SubmitterRecord';
 export class Gedcom extends Node {
     constructor(data, clazz) {
         super(data, clazz || Gedcom);
+        if (data.length !== 1) {
+            throw 'Root should be a single node';
+        }
         this._data.root = this; // Root is its own root
         this._data.parent = null; // Root has no parent
         this._data.parentIndices = []; // Operation not supported = empty array is acceptable
@@ -20,7 +23,7 @@ export class Gedcom extends Node {
 
     _createRecordBindings() {
         // Low level processing for performance
-        const families = _get(this._data.tree.by_tag_pointer, Tag.FAMILY, {});
+        const families = _get(this._data.tree[0].by_tag_pointer, Tag.FAMILY, {});
         const asSpouse = {}, asChild = {};
         for (const familyId in families) {
             const familyData = families[familyId];
@@ -37,9 +40,9 @@ export class Gedcom extends Node {
             for (const child of _get(familyData.by_tag, Tag.CHILD, [])) {
                 const childId = child.value;
                 if (asChild[childId] !== undefined) {
-                    throw new Error(`Individual ${childId} is a child of both ${asChild[childId]} and ${familyId}`);
+                    asChild[childId].push(familyData);
                 } else {
-                    asChild[childId] = familyData;
+                    asChild[childId] = [familyData];
                 }
             }
         }
@@ -47,20 +50,22 @@ export class Gedcom extends Node {
         this._data.as_child = asChild;
     }
 
-    getHeader() {
-        return this.get(Tag.HEADER, Header);
+    /**
+     * @param q
+     * @returns {Header}
+     */
+    getHeader(q) {
+        return this.get(Tag.HEADER, q, Header);
     }
 
-    getRecord(tag, id, Adapter = Record) {
+    getRecord(tag, id, q, Adapter = Record) {
         // undefined and null are considered as wildcards
         const tagArray = tag != null ? (Array.isArray(tag) ? tag : [tag]) : null;
         const idArray = id != null ? (Array.isArray(id) ? id : [id]) : null;
 
         const data = this._data;
-        const tree = data.tree;
-        const arrayTree = data.unit ? [tree] : tree;
         const arrayChildren = [], arrayParents = [];
-        arrayTree.forEach((tr, i) => {
+        data.tree.forEach((tr, i) => {
             let tagMatchedObjs;
             if (tagArray !== null) { // Array of tags
                 tagMatchedObjs = tagArray.map(tag => _get(tr.by_tag_pointer, tag, {}));
@@ -88,31 +93,32 @@ export class Gedcom extends Node {
                 }
             });
         });
-        return this._newInstance(Adapter, arrayChildren, arrayParents, this);
+        // The parent should be the root, otherwise this creates memory leaks (and is not useful anyway)
+        return this._newInstance(Adapter, arrayChildren, arrayParents, this.getGedcom());
     }
 
-    getSubmitterRecord(id) {
-        return this.getRecord(Tag.SUBMITTER, id, SubmitterRecord);
+    getSubmitterRecord(id, q) {
+        return this.getRecord(Tag.SUBMITTER, id, q, SubmitterRecord);
     }
 
-    getIndividualRecord(id) {
-        return this.getRecord(Tag.INDIVIDUAL, id, IndividualRecord);
+    getIndividualRecord(id, q) {
+        return this.getRecord(Tag.INDIVIDUAL, id, q, IndividualRecord);
     }
 
-    getFamilyRecord(id) {
-        return this.getRecord(Tag.FAMILY, id, FamilyRecord);
+    getFamilyRecord(id, q) {
+        return this.getRecord(Tag.FAMILY, id, q, FamilyRecord);
     }
 
-    getMultimediaRecord(id) {
-        return this.getRecord(Tag.OBJECT, id, MultimediaRecord);
+    getMultimediaRecord(id, q) {
+        return this.getRecord(Tag.OBJECT, id, q, MultimediaRecord);
     }
 
-    getNoteRecord(id) {
-        return this.getRecord(Tag.NOTE, id, NoteRecord);
+    getNoteRecord(id, q) {
+        return this.getRecord(Tag.NOTE, id, q, NoteRecord);
     }
 
-    getSourceRecord(id) {
-        return this.getRecord(Tag.SOURCE, id, SourceRecord);
+    getSourceRecord(id, q) {
+        return this.getRecord(Tag.SOURCE, id, q, SourceRecord);
     }
 
     // TODO

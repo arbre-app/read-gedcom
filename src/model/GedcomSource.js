@@ -8,19 +8,19 @@ export class GedcomSource extends Node {
         super(data, clazz || GedcomSource);
     }
 
-    getVersion() {
-        return this.get(Tag.VERSION);
+    getVersion(q) {
+        return this.get(Tag.VERSION, q);
     }
 
-    getName() {
-        return this.get(Tag.NAME);
+    getName(q) {
+        return this.get(Tag.NAME, q);
     }
 
-    getCorporation() {
-        return this.get(Tag.CORPORATE, Corporation);
+    getCorporation(q) {
+        return this.get(Tag.CORPORATE, q, Corporation);
     }
 
-    getDataSource() {
-        return this.get(Tag.DATA, DataSource);
+    getDataSource(q) {
+        return this.get(Tag.DATA, q, DataSource);
     }
 }

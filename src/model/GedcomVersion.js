@@ -8,7 +8,7 @@ export class GedcomVersion extends Node {
     }
 
     valueAsVersion() {
-        return this.valueMap(v => {
+        return this.value().map(v => {
             if(!v) {
                 return null;
             }

@@ -7,7 +7,7 @@ export class Romanization extends Node {
         super(data, clazz || Romanization);
     }
 
-    getMethod() {
-        return this.get(Tag.TYPE, RomanizationMethod);
+    getMethod(q) {
+        return this.get(Tag.TYPE, q, RomanizationMethod);
     }
 }

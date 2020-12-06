@@ -8,15 +8,15 @@ export class Record extends Node {
         super(data, clazz || clazz || Record);
     }
 
-    getReferenceNumber() {
-        return this.get(Tag.REFERENCE, ReferenceNumber);
+    getReferenceNumber(q) {
+        return this.get(Tag.REFERENCE, q, ReferenceNumber);
     }
 
-    getRecordIdentificationNumber() {
-        return this.get(Tag.RECORD_ID_NUMBER)
+    getRecordIdentificationNumber(q) {
+        return this.get(Tag.RECORD_ID_NUMBER, q)
     }
 
-    getChanged() {
-        return this.get(Tag.CHANGE, Changed);
+    getChanged(q) {
+        return this.get(Tag.CHANGE, q, Changed);
     }
 }

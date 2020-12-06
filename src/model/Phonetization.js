@@ -7,7 +7,7 @@ export class Phonetization extends Node {
         super(data, clazz || Phonetization);
     }
 
-    getMethod() {
-        return this.get(Tag.TYPE, PhonetizationMethod);
+    getMethod(q) {
+        return this.get(Tag.TYPE, q, PhonetizationMethod);
     }
 }

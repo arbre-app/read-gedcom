@@ -7,6 +7,6 @@ export class Date extends Node {
     }
 
     valueAsDate() {
-        return this.valueMap(parseDate);
+        return this.value().map(parseDate);
     }
 }

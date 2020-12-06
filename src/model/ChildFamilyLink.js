@@ -8,15 +8,15 @@ export class ChildFamilyLink extends Node {
         super(data, clazz || ChildFamilyLink);
     }
 
-    getFamilyRecord() {
-        return this.getGedcom().getFamilyRecord(this.value());
+    getFamilyRecord(q) {
+        return this.getGedcom().getFamilyRecord(this.value().all(), q);
     }
 
-    getPedigreeLinkageType() {
-        return this.get(Tag.PEDIGREE, PedigreeLinkageType);
+    getPedigreeLinkageType(q) {
+        return this.get(Tag.PEDIGREE, q, PedigreeLinkageType);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 }

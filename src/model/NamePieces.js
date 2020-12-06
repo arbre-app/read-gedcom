@@ -8,35 +8,35 @@ export class NamePieces extends Node {
         super(data, clazz || NamePieces);
     }
 
-    getPrefixName() {
-        return this.get(Tag.NAME_PREFIX);
+    getPrefixName(q) {
+        return this.get(Tag.NAME_PREFIX, q);
     }
 
-    getGivenName() {
-        return this.get(Tag.GIVEN_NAME);
+    getGivenName(q) {
+        return this.get(Tag.GIVEN_NAME, q);
     }
 
-    getNickname() {
-        return this.get(Tag.NICKNAME);
+    getNickname(q) {
+        return this.get(Tag.NICKNAME, q);
     }
 
-    getPrefixSurname() {
-        return this.get(Tag.SURNAME_PREFIX);
+    getPrefixSurname(q) {
+        return this.get(Tag.SURNAME_PREFIX, q);
     }
 
-    getSurname() {
-        return this.get(Tag.SURNAME);
+    getSurname(q) {
+        return this.get(Tag.SURNAME, q);
     }
 
-    getNameSuffix() {
-        return this.get(Tag.NAME_SUFFIX);
+    getNameSuffix(q) {
+        return this.get(Tag.NAME_SUFFIX, q);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 
-    getSourceCitation() {
-        return this.get(Tag.SOURCE, SourceCitation);
+    getSourceCitation(q) {
+        return this.get(Tag.SOURCE, q, SourceCitation);
     }
 }

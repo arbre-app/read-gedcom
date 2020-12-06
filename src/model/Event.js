@@ -14,42 +14,42 @@ export class Event extends AddressStructure {
     }
 
     valueAsHappened() {
-        this.valueMap(v => v ? (v === Event.YES ? true : null) : false);
+        this.value().map(v => v ? (v === Event.YES ? true : null) : false);
     }
 
-    getType() {
-        return this.get(Tag.TYPE);
+    getType(q) {
+        return this.get(Tag.TYPE, q);
     }
 
-    getDate() {
-        return this.get(Tag.DATE, Date);
+    getDate(q) {
+        return this.get(Tag.DATE, q, Date);
     }
 
-    getPlace() {
-        return this.get(Tag.PLACE, Place);
+    getPlace(q) {
+        return this.get(Tag.PLACE, q, Place);
     }
 
-    getResponsibleAgency() {
-        return this.get(Tag.AGENCY);
+    getResponsibleAgency(q) {
+        return this.get(Tag.AGENCY, q);
     }
 
-    getReligiousAffiliation() {
-        return this.get(Tag.RELIGION);
+    getReligiousAffiliation(q) {
+        return this.get(Tag.RELIGION, q);
     }
 
-    getCause() {
-        return this.get(Tag.CAUSE);
+    getCause(q) {
+        return this.get(Tag.CAUSE, q);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 
-    getSourceCitation() {
-        return this.get(Tag.SOURCE, SourceCitation);
+    getSourceCitation(q) {
+        return this.get(Tag.SOURCE, q, SourceCitation);
     }
 
-    getMultimedia() {
-        return this.get(Tag.OBJECT, MultimediaReference);
+    getMultimedia(q) {
+        return this.get(Tag.OBJECT, q, MultimediaReference);
     }
 }

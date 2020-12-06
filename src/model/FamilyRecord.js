@@ -13,81 +13,81 @@ export class FamilyRecord extends Record {
 
     /* Events */
 
-    getEventAnnulment() {
-        return this.get(Tag.ANNULMENT, FamilyEvent);
+    getEventAnnulment(q) {
+        return this.get(Tag.ANNULMENT, q, FamilyEvent);
     }
 
-    getEventCensus() {
-        return this.get(Tag.CENSUS, FamilyEvent);
+    getEventCensus(q) {
+        return this.get(Tag.CENSUS, q, FamilyEvent);
     }
 
-    getEventDivorce() {
-        return this.get(Tag.DIVORCE, FamilyEvent);
+    getEventDivorce(q) {
+        return this.get(Tag.DIVORCE, q, FamilyEvent);
     }
 
-    getEventDivorceFiled() {
-        return this.get(Tag.DIVORCE_FILED, FamilyEvent);
+    getEventDivorceFiled(q) {
+        return this.get(Tag.DIVORCE_FILED, q, FamilyEvent);
     }
 
-    getEventEngagement() {
-        return this.get(Tag.ENGAGEMENT, FamilyEvent);
+    getEventEngagement(q) {
+        return this.get(Tag.ENGAGEMENT, q, FamilyEvent);
     }
 
-    getEventMarriageBann() {
-        return this.get(Tag.MARRIAGE_BANN, FamilyEvent);
+    getEventMarriageBann(q) {
+        return this.get(Tag.MARRIAGE_BANN, q, FamilyEvent);
     }
 
-    getEventMarriageContract() {
-        return this.get(Tag.MARRIAGE_CONTRACT, FamilyEvent);
+    getEventMarriageContract(q) {
+        return this.get(Tag.MARRIAGE_CONTRACT, q, FamilyEvent);
     }
 
-    getEventMarriage() {
-        return this.get(Tag.MARRIAGE, FamilyEvent);
+    getEventMarriage(q) {
+        return this.get(Tag.MARRIAGE, q, FamilyEvent);
     }
 
-    getEventMarriageLicense() {
-        return this.get(Tag.MARRIAGE_LICENSE, FamilyEvent);
+    getEventMarriageLicense(q) {
+        return this.get(Tag.MARRIAGE_LICENSE, q, FamilyEvent);
     }
 
-    getEventMarriageSettlement() {
-        return this.get(Tag.MARRIAGE_SETTLEMENT, FamilyEvent);
+    getEventMarriageSettlement(q) {
+        return this.get(Tag.MARRIAGE_SETTLEMENT, q, FamilyEvent);
     }
 
-    getEventResidence() {
-        return this.get(Tag.RESIDENCE, FamilyEvent); // Residence is normally an attribute
+    getEventResidence(q) {
+        return this.get(Tag.RESIDENCE, q, FamilyEvent); // Residence is normally an attribute
     }
 
-    getEventOther() {
-        return this.get(Tag.EVENT, FamilyEvent);
+    getEventOther(q) {
+        return this.get(Tag.EVENT, q, FamilyEvent);
     }
 
     /* End events */
 
-    getHusband() {
-        return this.get(Tag.HUSBAND, IndividualReference);
+    getHusband(q) {
+        return this.get(Tag.HUSBAND, q, IndividualReference);
     }
 
-    getWife() {
-        return this.get(Tag.WIFE, IndividualReference);
+    getWife(q) {
+        return this.get(Tag.WIFE, q, IndividualReference);
     }
 
-    getChild() {
-        return this.get(Tag.CHILD, IndividualReference);
+    getChild(q) {
+        return this.get(Tag.CHILD, q, IndividualReference);
     }
 
-    getChildrenCount() {
-        return this.get(Tag.CHILDREN_COUNT);
+    getChildrenCount(q) {
+        return this.get(Tag.CHILDREN_COUNT, q);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 
-    getSourceCitation() {
-        return this.get(Tag.SOURCE, SourceCitation);
+    getSourceCitation(q) {
+        return this.get(Tag.SOURCE, q, SourceCitation);
     }
 
-    getMultimedia() {
-        return this.get(Tag.OBJECT, MultimediaReference);
+    getMultimedia(q) {
+        return this.get(Tag.OBJECT, q, MultimediaReference);
     }
 }

@@ -10,19 +10,19 @@ export class Place extends Node {
         super(data, clazz || Place);
     }
 
-    getPhonetization() {
-        return this.get(Tag.PHONETIC, Phonetization);
+    getPhonetization(q) {
+        return this.get(Tag.PHONETIC, q, Phonetization);
     }
 
-    getRomanization() {
-        return this.get(Tag.ROMANIZED, Romanization);
+    getRomanization(q) {
+        return this.get(Tag.ROMANIZED, q, Romanization);
     }
 
-    getCoordinates() {
-        return this.get(Tag.MAP, Coordinates);
+    getCoordinates(q) {
+        return this.get(Tag.MAP, q, Coordinates);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 }

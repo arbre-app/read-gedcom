@@ -7,7 +7,7 @@ export class NamePhonetization extends NamePieces {
         super(data, clazz || NamePhonetization);
     }
 
-    getMethod() {
-        return this.get(Tag.TYPE, PhonetizationMethod);
+    getMethod(q) {
+        return this.get(Tag.TYPE, q, PhonetizationMethod);
     }
 }

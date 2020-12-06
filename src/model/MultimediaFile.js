@@ -7,11 +7,11 @@ export class MultimediaFile extends Node {
         super(data, clazz || MultimediaFile);
     }
 
-    getFormat() {
-        return this.get(Tag.FORMAT, MultimediaFormat);
+    getFormat(q) {
+        return this.get(Tag.FORMAT, q, MultimediaFormat);
     }
 
-    getTitle() {
-        return this.get(Tag.TITLE);
+    getTitle(q) {
+        return this.get(Tag.TITLE, q);
     }
 }

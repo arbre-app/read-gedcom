@@ -10,39 +10,39 @@ export class SourceRecord extends Node {
         super(data, clazz || SourceRecord);
     }
 
-    getData() {
-        return this.get(Tag.DATA, SourceData);
+    getData(q) {
+        return this.get(Tag.DATA, q, SourceData);
     }
 
-    getOriginator() {
-        return this.get(Tag.AUTHOR);
+    getOriginator(q) {
+        return this.get(Tag.AUTHOR, q);
     }
 
-    getDescriptiveTitle() {
-        return this.get(Tag.TITLE);
+    getDescriptiveTitle(q) {
+        return this.get(Tag.TITLE, q);
     }
 
-    getShortTitle() {
-        return this.get(Tag.ABBREVIATION);
+    getShortTitle(q) {
+        return this.get(Tag.ABBREVIATION, q);
     }
 
-    getPublicationFacts() {
-        return this.get(Tag.PUBLICATION);
+    getPublicationFacts(q) {
+        return this.get(Tag.PUBLICATION, q);
     }
 
-    getText() {
-        return this.get(Tag.TEXT);
+    getText(q) {
+        return this.get(Tag.TEXT, q);
     }
 
-    getRepository() {
-        return this.get(Tag.REPOSITORY, RepositoryReference);
+    getRepository(q) {
+        return this.get(Tag.REPOSITORY, q, RepositoryReference);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 
-    getMultimedia() {
-        return this.get(Tag.OBJECT, MultimediaReference);
+    getMultimedia(q) {
+        return this.get(Tag.OBJECT, q, MultimediaReference);
     }
 }

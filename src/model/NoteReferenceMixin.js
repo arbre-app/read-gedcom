@@ -5,7 +5,7 @@ export class NoteReferenceMixin extends Node {
         super(data, clazz || NoteReferenceMixin);
     }
 
-    getNoteRecord() {
-        return this.getGedcom().getNoteRecord(this.value());
+    getNoteRecord(q) {
+        return this.getGedcom().getNoteRecord(this.value().all(), q);
     }
 }

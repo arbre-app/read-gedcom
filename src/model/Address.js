@@ -6,31 +6,31 @@ export class Address extends Node {
         super(data, clazz || Address);
     }
 
-    getAddressLine1() {
-        return this.get(Tag.ADDRESS_1);
+    getAddressLine1(q) {
+        return this.get(Tag.ADDRESS_1, q);
     }
 
-    getAddressLine2() {
-        return this.get(Tag.ADDRESS_2);
+    getAddressLine2(q) {
+        return this.get(Tag.ADDRESS_2, q);
     }
 
-    getAddressLine3() {
-        return this.get(Tag.ADDRESS_3);
+    getAddressLine3(q) {
+        return this.get(Tag.ADDRESS_3, q);
     }
 
-    getCity() {
-        return this.get(Tag.CITY);
+    getCity(q) {
+        return this.get(Tag.CITY, q);
     }
 
-    getState() {
-        return this.get(Tag.STATE);
+    getState(q) {
+        return this.get(Tag.STATE, q);
     }
 
-    getPostalCode() {
-        return this.get(Tag.POSTAL_CODE);
+    getPostalCode(q) {
+        return this.get(Tag.POSTAL_CODE, q);
     }
 
-    getCountry() {
-        return this.get(Tag.COUNTRY);
+    getCountry(q) {
+        return this.get(Tag.COUNTRY, q);
     }
 }

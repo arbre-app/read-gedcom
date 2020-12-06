@@ -7,7 +7,7 @@ export class DatePeriod extends Node {
     }
 
     valueAsDate() {
-        return this.valueMap(v => {
+        return this.value().map(v => {
             const date = parseDate(v);
             if (date !== null && date.isDatePeriod) {
                 return date;

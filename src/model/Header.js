@@ -11,43 +11,43 @@ export class Header extends Node {
         super(data, clazz || Header);
     }
 
-    getGedcomFile() {
-        return this.get(Tag.GEDCOM, GedcomFile);
+    getGedcomFile(q) {
+        return this.get(Tag.GEDCOM, q, GedcomFile);
     }
 
-    getCharacterEncoding() {
-        return this.get(Tag.CHARACTER, CharacterEncoding);
+    getCharacterEncoding(q) {
+        return this.get(Tag.CHARACTER, q, CharacterEncoding);
     }
 
-    getSourceSystem() {
-        return this.get(Tag.SOURCE, GedcomSource);
+    getSourceSystem(q) {
+        return this.get(Tag.SOURCE, q, GedcomSource);
     }
 
-    getDestinationSystem() {
-        return this.get(Tag.DESTINATION)
+    getDestinationSystem(q) {
+        return this.get(Tag.DESTINATION, q)
     }
 
-    getFileCreationDate() {
-        return this.get(Tag.DATE, DateExact);
+    getFileCreationDate(q) {
+        return this.get(Tag.DATE, q, DateExact);
     }
 
-    getLanguage() {
-        return this.get(Tag.LANGUAGE);
+    getLanguage(q) {
+        return this.get(Tag.LANGUAGE, q);
     }
 
-    getSubmitterReference() {
-        return this.get(Tag.SUBMITTER, SubmitterReference);
+    getSubmitterReference(q) {
+        return this.get(Tag.SUBMITTER, q, SubmitterReference);
     }
 
-    getFilename() {
-        return this.get(Tag.FILE);
+    getFilename(q) {
+        return this.get(Tag.FILE, q);
     }
 
-    getCopyright() {
-        return this.get(Tag.COPYRIGHT);
+    getCopyright(q) {
+        return this.get(Tag.COPYRIGHT, q);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE);
+    getNote(q) {
+        return this.get(Tag.NOTE, q);
     }
 }

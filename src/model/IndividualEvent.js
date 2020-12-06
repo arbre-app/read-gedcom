@@ -6,7 +6,7 @@ export class IndividualEvent extends Event {
         super(data, clazz || Event);
     }
 
-    getAge() {
-        return this.get(Tag.AGE);
+    getAge(q) {
+        return this.get(Tag.AGE, q);
     }
 }

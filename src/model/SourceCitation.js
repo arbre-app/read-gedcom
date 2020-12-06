@@ -11,31 +11,31 @@ export class SourceCitation extends Node {
         super(data, clazz || SourceCitation);
     }
 
-    getSourceRecord() {
-        return this.getGedcom().getSourceRecord(this.value());
+    getSourceRecord(q) {
+        return this.getGedcom().getSourceRecord(this.value().all(), q);
     }
 
-    getLocationInSource() {
-        return this.get(Tag.PAGE);
+    getLocationInSource(q) {
+        return this.get(Tag.PAGE, q);
     }
 
-    getEventCitedFrom() {
-        return this.get(Tag.EVENT, CitationEvent);
+    getEventCitedFrom(q) {
+        return this.get(Tag.EVENT, q, CitationEvent);
     }
 
-    getData() {
-        return this.get(Tag.DATA, CitationData);
+    getData(q) {
+        return this.get(Tag.DATA, q, CitationData);
     }
 
-    getMultimedia() {
-        return this.get(Tag.OBJECT, MultimediaReference);
+    getMultimedia(q) {
+        return this.get(Tag.OBJECT, q, MultimediaReference);
     }
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 
-    getCertainty() {
-        return this.get(Tag.QUALITY_OF_DATA, SourceCertainty);
+    getCertainty(q) {
+        return this.get(Tag.QUALITY_OF_DATA, q, SourceCertainty);
     }
 }

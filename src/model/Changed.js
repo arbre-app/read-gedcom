@@ -9,7 +9,7 @@ export class Changed extends Node {
 
     // TODO: date exact
 
-    getNote() {
-        return this.get(Tag.NOTE, NoteReferenceMixin);
+    getNote(q) {
+        return this.get(Tag.NOTE, q, NoteReferenceMixin);
     }
 }

@@ -1,18 +1,22 @@
 import { _get } from '../utils';
+import { Value } from './Value';
 
 export class Node {
     constructor(tree, clazz = Node) {
-        if (!tree || !clazz) { // Validation
+        // Validation
+        if (!tree || !clazz) {
             if (!tree) {
                 throw 'Undefined tree';
             } else {
                 throw 'Undefined adapter class';
             }
         }
+        if (!Array.isArray(tree)) {
+            throw 'Tree should be an array';
+        }
         this._data = {
             tree: tree,
             Clazz: clazz,
-            unit: !Array.isArray(tree),
         };
     }
 
@@ -24,26 +28,37 @@ export class Node {
         return instance;
     }
 
-    get(tag, Adapter = Node) {
+    get(tag, q = null, Adapter = Node) {
         const tagArray = tag != null ? (Array.isArray(tag) ? tag : [tag]) : null;
-
+        const withLimit = q != null;
+        if (withLimit && !Number.isInteger(q)) {
+            throw 'The quantifier provided is not an integer';
+        }
         const tree = this._data.tree;
-        const arrayTree = this._data.unit ? [tree] : tree;
         const arrayChildren = [], arrayParents = [];
-        arrayTree.forEach((tr, i) => {
+        tree.forEach((tr, i) => {
             if (tagArray !== null) { // Array of tags
                 tagArray.forEach(tg => {
-                    _get(tr.by_tag, tg, []).forEach(v => {
+                    let all = _get(tr.by_tag, tg, []);
+                    if (withLimit) {
+                        all = all.slice(0, q);
+                    }
+                    all.forEach(v => {
                         arrayChildren.push(v);
                         arrayParents.push(i);
                     });
                 });
             } else { // All tags
+                let i = 0;
                 for (const tag in tr.by_tag) {
+                    if (withLimit && q >= i) {
+                        break;
+                    }
                     const objects = tr.by_tag[tag];
                     objects.forEach(v => {
                         arrayChildren.push(v);
                         arrayParents.push(i);
+                        i++;
                     });
                 }
             }
@@ -52,74 +67,23 @@ export class Node {
     }
 
     value() {
-        const tree = this._data.tree;
-        return this._data.unit ? tree.value : tree.map(t => t.value);
+        return new Value(this._data.tree.map(t => t.value));
     }
 
     pointer() {
-        const tree = this._data.tree;
-        return this._data.unit ? tree.pointer : tree.map(t => t.pointer);
+        return new Value(this._data.tree.map(t => t.pointer));
     }
 
     tag() {
-        const tree = this._data.tree;
-        return this._data.unit ? tree.tag : tree.map(t => t.tag);
-    }
-
-    nth(n) {
-        const data = this._data;
-        if (data.unit) {
-            if (n !== 0) {
-                throw `Undefined index: ${n}`;
-            }
-            return this;
-        } else {
-            const tree = data.tree[n];
-            if (tree === undefined) {
-                throw `Undefined index: ${n}`;
-            }
-            return this._newInstance(data.Clazz, tree, [data.parentIndices[n]], data.parent);
-        }
-    }
-
-    first() {
-        return this.nth(0);
-    }
-
-    last() {
-        return this.nth(this.count() - 1);
-    }
-
-    option() {
-        const data = this._data;
-        if (data.unit) {
-            return this._newInstance(data.Clazz, [data.tree], data.parentIndices, data.parent);
-        } else {
-            return this._newInstance(data.Clazz, data.tree.slice(0, 1), data.parentIndices.slice(0, 1), data.parent);
-        }
+        return new Value(this._data.tree.map(t => t.tag));
     }
 
     count() {
-        const data = this._data;
-        return data.unit ? 1 : data.tree.length;
-    }
-
-    length() {
-        return this.count();
+        return this._data.tree.length;
     }
 
     isEmpty() {
-        const data = this._data;
-        return !data.unit && !data.tree.length;
-    }
-
-    isUnit() {
-        return this._data.unit;
-    }
-
-    isUnique() {
-        const data = this._data;
-        return data.unit || data.tree.length === 1;
+        return !this._data.tree.length;
     }
 
     parent() {
@@ -128,23 +92,18 @@ export class Node {
             throw 'Root node has no parent';
         }
         const parent = data.parent;
-        if (data.unit) {
-            return this._newInstance(parent._data.Clazz, parent._data.unit ? parent._data.tree : parent._data.tree[data.parentIndices[0]],
-                [parent._data.parentIndices[data.parentIndices[0]]], parent._data.parent);
-        } else {
-            const treesSet = new Set();
-            const parentTrees = [], parentIndices = [];
-            data.parentIndices.forEach((v, i) => {
-                const parentIndex = parent._data.parentIndices[v];
-                const parentTree = parent._data.unit ? parent._data.tree : parent._data.tree[parentIndex];
-                if (!treesSet.has(parentTree)) { // New unique parent
-                    treesSet.add(parentTree);
-                    parentTrees.push(parentTree);
-                    parentIndices.push(parentIndex);
-                }
-            });
-            return this._newInstance(parent._data.Clazz, parentTrees, parentIndices, parent._data.parent);
-        }
+        const treesSet = new Set();
+        const parentTrees = [], parentIndices = [];
+        data.parentIndices.forEach((v, i) => {
+            const parentIndex = parent._data.parentIndices[v];
+            const parentTree = parent._data.tree[parentIndex];
+            if (!treesSet.has(parentTree)) { // New unique parent
+                treesSet.add(parentTree);
+                parentTrees.push(parentTree);
+                parentIndices.push(parentIndex);
+            }
+        });
+        return this._newInstance(parent._data.Clazz, parentTrees, parentIndices, parent._data.parent);
     }
 
     getGedcom() {
@@ -153,19 +112,12 @@ export class Node {
 
     array() {
         const data = this._data;
-        return data.unit ? [this] : data.tree.map((t, i) => this._newInstance(data.Clazz, t, [data.parentIndices[i]], data.parent));
-    }
-
-    valueMap(f) {
-        const tree = this._data.tree;
-        return this._data.unit ? f(tree.value) : tree.map(t => f(t.value));
+        return data.tree.map((t, i) => this._newInstance(data.Clazz, [t], [data.parentIndices[i]], data.parent));
     }
 
     children(Adapter = Node) {
-        const tree = this._data.tree;
-        const arrayTree = this._data.unit ? [tree] : tree;
         const arrayChildren = [], arrayParents = [];
-        arrayTree.forEach((tr, i) => {
+        this._data.tree.forEach((tr, i) => {
             tr.children.forEach(c => {
                 arrayChildren.push(c);
                 arrayParents.push(i);
@@ -176,9 +128,8 @@ export class Node {
 
     filter(f) {
         const data = this._data;
-        const tree = data.unit ? [data.tree] : data.tree;
         const newTree = [], newIndices = [];
-        tree.filter((t, i) => {
+        data.tree.filter((t, i) => {
             const parentIndex = data.parentIndices[i];
             const unitNode = this._newInstance(data.Clazz, t, [parentIndex], data.parent);
             if(f(unitNode)) {
