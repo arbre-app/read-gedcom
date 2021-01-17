@@ -12,11 +12,35 @@ export function decodeAnsel(buffer) {
     registerTable(table1, ANSEL_TABLE_1);
     registerTable(table2, ANSEL_TABLE_2);
 
+    const byteBuffer = new Uint8Array(buffer);
+
     const output = [];
-    let pending = -1;
-    for(let i = 0; i < buffer.length; i++) {
-        const current = buffer[i];
-        // TODO
+    let i = 0;
+    let pending = byteBuffer[i];
+    i++;
+    while(pending !== undefined) {
+        const b = pending;
+        pending = byteBuffer[i];
+        i++;
+        if (b < 128) { // Unchanged ASCII
+            output.push(String.fromCharCode(b));
+        } else if (pending !== undefined && ((b >= 0xE0 && b <= 0xFF) || (b >= 0xD7 && b <= 0xD9))) {
+            // Two bytes
+            const u = table2.get(b * 256 + pending);
+            if (u !== undefined) {
+                pending = byteBuffer[i];
+                i++;
+                output.push(String.fromCharCode(u));
+            } else {
+                throw 'Illegal byte code'
+            }
+        } else {
+            // One byte
+            const u = table1.get(b);
+            const c = String.fromCharCode(u !== undefined ? u : 0xFFFD);
+            output.push(c);
+        }
     }
-    // TODO
+
+    return output.join('');
 }

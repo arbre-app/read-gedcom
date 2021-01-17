@@ -15,7 +15,7 @@ const gLineItem = `${gEscape}|${gLineText}|${gEscape}[${cDelim}]${gLineText}`;
 const gXRefId = `@${gIdentifierString}@`;
 const gPointer = `${gXRefId}`;
 const gLineValue = `${gPointer}|(?:${gLineItem})`;
-const gTag = `[${ccAlphanum}]+|_[${ccAlphanum}]+`; // TODO
+const gTag = `[${ccAlphanum}]+|_[${ccAlphanum}_]+`; // TODO
 const gTerminator = `${cCR}?${cLF}`;
 const gGedcomLine = `(${gLevel})(?:${cDelim}(${gXRefId}))?${cDelim}(${gTag})(?:${cDelim}(${gLineValue}))?(?:${gTerminator})`;
 

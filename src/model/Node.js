@@ -49,16 +49,16 @@ export class Node {
                     });
                 });
             } else { // All tags
-                let i = 0;
+                let j = 0;
                 for (const tag in tr.by_tag) {
-                    if (withLimit && q >= i) {
+                    if (withLimit && j >= q) {
                         break;
                     }
                     const objects = tr.by_tag[tag];
                     objects.forEach(v => {
                         arrayChildren.push(v);
                         arrayParents.push(i);
-                        i++;
+                        j++;
                     });
                 }
             }
@@ -131,7 +131,7 @@ export class Node {
         const newTree = [], newIndices = [];
         data.tree.filter((t, i) => {
             const parentIndex = data.parentIndices[i];
-            const unitNode = this._newInstance(data.Clazz, t, [parentIndex], data.parent);
+            const unitNode = this._newInstance(data.Clazz, [t], [parentIndex], data.parent);
             if(f(unitNode)) {
                 newTree.push(t);
                 newIndices.push(parentIndex);

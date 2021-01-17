@@ -62,6 +62,10 @@ export class Gedcom extends Node {
         // undefined and null are considered as wildcards
         const tagArray = tag != null ? (Array.isArray(tag) ? tag : [tag]) : null;
         const idArray = id != null ? (Array.isArray(id) ? id : [id]) : null;
+        const withLimit = q != null;
+        if (withLimit && !Number.isInteger(q)) {
+            throw 'The quantifier provided is not an integer';
+        }
 
         const data = this._data;
         const arrayChildren = [], arrayParents = [];
@@ -79,16 +83,21 @@ export class Gedcom extends Node {
                 if (idArray !== null) { // Array of ids
                     idArray.forEach(id => {
                         const element = obj[id];
-                        if(element !== undefined) {
+                        if(element !== undefined && (!withLimit || q > 0)) { // A bit pointless
                             arrayChildren.push(element);
                             arrayParents.push(i);
                         }
                     });
                 } else { // All ids
+                    let j = 0;
                     for (const id in obj) {
+                        if (withLimit && j >= q) {
+                            break;
+                        }
                         const element = obj[id];
                         arrayChildren.push(element);
                         arrayParents.push(i);
+                        j++;
                     }
                 }
             });

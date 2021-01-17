@@ -25,7 +25,7 @@ export class Value {
     option(otherwise) {
         const value = this.values[0];
         if (otherwise !== undefined) {
-            return value !== null ? otherwise : value;
+            return value !== null ? value : otherwise;
         } else {
             return value;
         }
@@ -45,6 +45,6 @@ export class Value {
     }
 
     map(f) {
-        return new Value(this.values.map(v => f(v)));
+        return new Value(this.values.map(f));
     }
 }

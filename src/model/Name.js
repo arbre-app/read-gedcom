@@ -4,7 +4,7 @@ import { NameRomanization } from './NameRomanization';
 import { NameType } from './NameType';
 import { Tag } from '../tag';
 
-const rNameParts = /^(?:([^\/]*)|(?:(?:([^\/]*) )?\/([^\/]*)\/(?: ([^\/]*))?))$/;
+const rNameParts = /^(?:([^\/]*)|(?:(?:([^\/]*) ?)?\/([^\/]*)\/(?: ?([^\/]*))?))$/;
 
 export class Name extends NamePieces {
     constructor(data, clazz) {
@@ -20,10 +20,10 @@ export class Name extends NamePieces {
             if (!groups) {
                 return null;
             }
-            if (groups[4] === undefined) {
-                return [groups[1], groups[2], groups[3]];
+            if (groups[1] === undefined) {
+                return [groups[2], groups[3], groups[4]];
             } else {
-                return [groups[4], undefined, undefined];
+                return [groups[1], undefined, undefined];
             }
         });
     }
