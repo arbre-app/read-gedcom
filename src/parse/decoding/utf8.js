@@ -1,7 +1,20 @@
 export function decodeUtf8(buffer) {
+    const [output, _] = decodeUtf8BOM(buffer);
+    return output;
+}
+
+export function decodeUtf8BOM(buffer) {
     const byteBuffer = new Uint8Array(buffer);
     let outputView = "";
-    for (let nPart, nLen = byteBuffer.length, nIdx = 0; nIdx < nLen; nIdx++) {
+
+    let nIdx = 0;
+    let hasBOM = false;
+    if(byteBuffer[0] === 239 && byteBuffer[1] === 187 && byteBuffer[2] === 191) { // UTF-8 BOM
+        nIdx += 3;
+        hasBOM = true;
+    }
+
+    for (let nPart, nLen = byteBuffer.length; nIdx < nLen; nIdx++) {
         nPart = byteBuffer[nIdx];
 
         outputView += String.fromCharCode(
@@ -21,5 +34,5 @@ export function decodeUtf8(buffer) {
         );
     }
 
-    return outputView;
+    return [outputView, hasBOM];
 }

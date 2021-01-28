@@ -36,6 +36,8 @@ export function parseDate(value) {
         return null;
     }
 
+    value = value.trimLeft(); // Some files contain leading spaces
+
     const defaultDateKinds = {
         hasDate: true,
         hasPhrase: false,

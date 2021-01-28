@@ -2,7 +2,7 @@ import { Tag } from '../tag';
 import { tokenize } from './tokenizer';
 import { makeTree } from './structurer';
 import { Gedcom, CharacterEncoding } from '../model';
-import { decodeCp1252 } from './decoding';
+import { decodeUtf8BOM } from './decoding';
 
 export class FileEncoding {
     static UTF_8 = 'UTF-8';
@@ -12,7 +12,7 @@ export class FileEncoding {
 
 function getFileMetadata(buffer) {
     const maxPeekBytes = 1000;
-    const inputHead = decodeCp1252(buffer.slice(0, maxPeekBytes));
+    const [inputHead, hasBOM] = decodeUtf8BOM(buffer.slice(0, maxPeekBytes)); // Start with UTF-8 since file can contain a BOM
 
     const it = tokenize(inputHead, false); // Non-strict mode: break silently on error
     let i = 0;
@@ -33,11 +33,11 @@ function getFileMetadata(buffer) {
     const sourceOpt = source.value().option();
     const versionOpt = source.getVersion().value().option();
 
-    return { sourceEncoding: charOpt, sourceProvider: sourceOpt, sourceProviderVersion: versionOpt };
+    return { sourceEncoding: charOpt, sourceProvider: sourceOpt, sourceProviderVersion: versionOpt, fileHasBOM: hasBOM };
 }
 
 export function detectCharset(buffer) {
-    const { sourceEncoding, sourceProvider, sourceProviderVersion } = getFileMetadata(buffer);
+    const { sourceEncoding, sourceProvider, sourceProviderVersion, fileHasBOM } = getFileMetadata(buffer);
 
     // Estimate an encoding without knowing the provider
     function estimateEncoding() {
@@ -52,6 +52,10 @@ export function detectCharset(buffer) {
         }
     }
 
+    if(fileHasBOM) { // Short-circuit: must be one of UTF-{8,16,32}
+        return FileEncoding.UTF_8;
+    }
+
     if(sourceProvider === 'GeneWeb') { // Geneweb
         if(sourceEncoding === CharacterEncoding.ASCII) {
             return FileEncoding.CP1252;
@@ -60,7 +64,7 @@ export function detectCharset(buffer) {
         } else {
             return estimateEncoding();
         }
-    } else if(sourceProvider !== null && sourceProvider.startsWith('HEREDIS')) { // Heredis
+    } else if(sourceProvider != null && sourceProvider.startsWith('HEREDIS')) { // Heredis
         if(sourceEncoding === CharacterEncoding.ANSI) {
             return FileEncoding.CP1252;
         } else {
