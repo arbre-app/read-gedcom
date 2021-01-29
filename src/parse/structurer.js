@@ -31,7 +31,11 @@ export function makeTree(input) {
             if(!parent) {
                 throw new Error(`Concatenation with no parent at line ${i + 1}`);
             }
+            if(parent.value == null) {
+                parent.value = '';
+            }
             parent.value += value;
+            currentLevel = level - 1;
         } else if(tag === Tag.CONTINUATION) {
             if(pointer) {
                 throw new Error(`Illegal concatenation format at line ${i + 1}`);
@@ -40,7 +44,11 @@ export function makeTree(input) {
                 throw new Error(`Continuation with no parent at line ${i + 1}`);
             }
             const separator = '\n'; // TODO: hardcoded separator
+            if(parent.value == null) {
+                parent.value = '';
+            }
             parent.value += separator + value;
+            currentLevel = level - 1;
         } else {
             const child = {
                 pointer: pointer,
