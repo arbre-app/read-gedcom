@@ -47,6 +47,8 @@ export function detectCharset(buffer) {
             return FileEncoding.ANSEL;
         } else if(sourceEncoding === CharacterEncoding.ASCII) {
             return FileEncoding.CP1252;
+        } else if(sourceEncoding === CharacterEncoding.ANSI) {
+            return FileEncoding.CP1252;
         } else { // Unknown encoding
             return FileEncoding.UTF_8; // Defaults to UTF-8
         }
