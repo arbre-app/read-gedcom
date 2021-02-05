@@ -2,7 +2,7 @@ import { tokenize } from './tokenizer';
 import { makeTree } from './structurer';
 import { createLinks } from './adapter';
 import { detectCharset, FileEncoding } from './decoder';
-import { decodeUtf8, decodeCp1252, decodeAnsel } from './decoding';
+import { decodeUtf8, decodeCp1252, decodeAnsel, decodeMacintosh, decodeCp850 } from './decoding';
 
 /**
  * Reads a gedcom file and returns a traversable model
@@ -19,8 +19,12 @@ export function readGedcom(buffer) {
         input = decodeCp1252(buffer);
     } else if(charset === FileEncoding.ANSEL) {
         input = decodeAnsel(buffer);
+    } else if(charset === FileEncoding.MACINTOSH) {
+        input = decodeMacintosh(buffer);
+    } else if(charset === FileEncoding.CP850) {
+        input = decodeCp850(buffer);
     } else {
-        throw `Unrecognized charset: ${charset}`;
+        throw new Error(`Unrecognized charset: ${charset}`);
     }
 
     const it = tokenize(input);

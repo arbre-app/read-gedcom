@@ -8,6 +8,8 @@ export class FileEncoding {
     static UTF_8 = 'UTF-8';
     static ANSEL = 'ANSEL';
     static CP1252 = 'Cp1252';
+    static MACINTOSH = 'Macintosh';
+    static CP850 = 'Cp850';
 }
 
 function getFileMetadata(buffer) {
@@ -49,6 +51,18 @@ export function detectCharset(buffer) {
             return FileEncoding.CP1252;
         } else if(sourceEncoding === CharacterEncoding.ANSI) {
             return FileEncoding.CP1252;
+        } else if(sourceEncoding === 'WINDOWS') {
+            return FileEncoding.CP1252;
+        } else if(sourceEncoding === 'MACINTOSH') {
+            return FileEncoding.MACINTOSH;
+        } else if(sourceEncoding === 'IBMPC') {
+            return FileEncoding.CP850;
+        } else if(sourceEncoding === 'MSDOS') {
+            return FileEncoding.CP850;
+        } else if(sourceEncoding === 'UNIX') {
+            return FileEncoding.CP1252;
+        } else if(sourceEncoding === 'UTF8') { // Spelling mistake
+            return FileEncoding.UTF_8;
         } else { // Unknown encoding
             return FileEncoding.UTF_8; // Defaults to UTF-8
         }

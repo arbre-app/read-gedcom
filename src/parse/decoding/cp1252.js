@@ -3,7 +3,7 @@ const CP1252_TABLE = '\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f
 
 export function decodeCp1252(buffer) {
     const byteBuffer = new Uint8Array(buffer);
-    let outputView = "";
+    let outputView = '';
     for(let i = 0; i < byteBuffer.length; i++) {
         outputView += CP1252_TABLE.charAt(byteBuffer[i]);
     }
