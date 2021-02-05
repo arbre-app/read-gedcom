@@ -2,14 +2,14 @@
 export class Value {
     constructor(values) {
         if (!Array.isArray(values)) {
-            throw 'Values should be an array';
+            throw new Error('Values should be an array');
         }
         this.values = values;
     }
 
     one() {
         if (!this.isOne()) {
-            throw 'Values count is not 1';
+            throw new Error('Values count is not 1');
         }
         return this.values[0];
     }

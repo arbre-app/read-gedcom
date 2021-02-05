@@ -14,7 +14,7 @@ export class Gedcom extends Node {
     constructor(data, clazz) {
         super(data, clazz || Gedcom);
         if (data.length !== 1) {
-            throw 'Root should be a single node';
+            throw new Error('Root should be a single node');
         }
         this._data.root = this; // Root is its own root
         this._data.parent = null; // Root has no parent
@@ -64,7 +64,7 @@ export class Gedcom extends Node {
         const idArray = id != null ? (Array.isArray(id) ? id : [id]) : null;
         const withLimit = q != null;
         if (withLimit && !Number.isInteger(q)) {
-            throw 'The quantifier provided is not an integer';
+            throw new Error('The quantifier provided is not an integer');
         }
 
         const data = this._data;

@@ -26,13 +26,14 @@ export function decodeAnsel(buffer) {
             output.push(String.fromCharCode(b));
         } else if (pending !== undefined && ((b >= 0xE0 && b <= 0xFF) || (b >= 0xD7 && b <= 0xD9))) {
             // Two bytes
-            const u = table2.get(b * 256 + pending);
+            const code = b * 256 + pending;
+            const u = table2.get(code);
             if (u !== undefined) {
                 pending = byteBuffer[i];
                 i++;
                 output.push(String.fromCharCode(u));
             } else {
-                throw 'Illegal byte code'
+                throw new Error(`Illegal ANSEL character code: ${code}`);
             }
         } else {
             // One byte

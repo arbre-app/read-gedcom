@@ -6,13 +6,13 @@ export class Node {
         // Validation
         if (!tree || !clazz) {
             if (!tree) {
-                throw 'Undefined tree';
+                throw new Error('Undefined tree');
             } else {
-                throw 'Undefined adapter class';
+                throw new Error('Undefined adapter class');
             }
         }
         if (!Array.isArray(tree)) {
-            throw 'Tree should be an array';
+            throw new Error('Tree should be an array');
         }
         this._data = {
             tree: tree,
@@ -32,7 +32,7 @@ export class Node {
         const tagArray = tag != null ? (Array.isArray(tag) ? tag : [tag]) : null;
         const withLimit = q != null;
         if (withLimit && !Number.isInteger(q)) {
-            throw 'The quantifier provided is not an integer';
+            throw new Error('The quantifier provided is not an integer');
         }
         const tree = this._data.tree;
         const arrayChildren = [], arrayParents = [];
@@ -89,7 +89,7 @@ export class Node {
     parent() {
         const data = this._data;
         if (!data.parent) {
-            throw 'Root node has no parent';
+            throw new Error('Root node has no parent');
         }
         const parent = data.parent;
         const treesSet = new Set();

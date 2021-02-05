@@ -5,7 +5,7 @@ const cSpace = ' ';
 const cDelim = `${cSpace}`;
 const gEscapeText = `[${ccAlphanum}][${ccAlphanum}${cSpace}]*`;
 const gEscape = `@#(?:${gEscapeText})@`;
-const gIdentifierString = `[${ccAlphanum}]+`;
+const gIdentifierString = `[${ccAlphanum}-]+`; // x: Allow '-'
 const gLevel = `[${ccNonZeroDigit}][${ccDigit}]+|[${ccDigit}]`;
 const ccDisallowed = '\\x00-\\x08\\x0A-\\x1F'; // x: include \xFF
 const cCR = '\\r', cLF = '\\n';
