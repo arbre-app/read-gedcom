@@ -1,7 +1,7 @@
 {
   "name": "read-gedcom",
   "description": "Gedcom file reader",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/cjs/gedcom.js",
   "browser": "dist/umd/gedcom.js",
   "module": "dist/esm/gedcom.js",
