@@ -1,4 +1,4 @@
-import { parseDate } from '../parse';
+import { parseDate } from '../parse/date';
 import { Node } from './Node';
 
 export class DatePeriod extends Node {

@@ -1,2 +1,2 @@
 export { readGedcom } from './reader';
-export { parseDate } from './date';
+export { parseDate, parseDateExact } from './date';

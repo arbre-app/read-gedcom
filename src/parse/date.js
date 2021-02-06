@@ -36,7 +36,7 @@ export function parseDate(value) {
         return null;
     }
 
-    value = value.trimLeft(); // Some files contain leading spaces
+    value = value.trim(); // Some files contain leading/trailing spaces
 
     const defaultDateKinds = {
         hasDate: true,
@@ -315,4 +315,31 @@ export function parseDate(value) {
         }
     }
     return null; // All other invalid cases
+}
+
+export function parseDateExact(value) {
+    if (!value) {
+        return null;
+    }
+
+    value = value.trim();
+
+    const parts = value.split(' ');
+
+    if(parts.length !== 3) { // Must contain three parts: day, month, year
+        return null;
+    }
+
+    const month = MONTHS[parts[1]];
+    if(rDay.exec(parts[0]) !== null && month !== undefined && rYear.exec(parts[2]) !== null) {
+        const day = parseInt(parts[0]);
+        const year = parseInt(parts[2]);
+        return {
+            day,
+            month,
+            year,
+        };
+    } else { // Invalid date
+        return null;
+    }
 }
