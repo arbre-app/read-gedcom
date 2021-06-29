@@ -6,13 +6,14 @@ import {GedcomTree} from "../tree";
  * @param rootNode The root node
  * @param noBackwardsReferencesIndex See {@link GedcomTreeReadingOptions.noBackwardsReferencesIndex}
  */
-export const indexTree = (rootNode: GedcomTree.NodeRoot, noBackwardsReferencesIndex: boolean = false): void => {
+export const indexTree = (rootNode: GedcomTree.NodeRoot, noBackwardsReferencesIndex = false): void => {
     const stack: [node: GedcomTree.Node, childIndex: number][] = [[rootNode, 0]];
     while (stack.length > 0) {
         const [node, childIndex] = stack[stack.length - 1]; // Peek
         if (childIndex < node.children.length) {
             stack.push([node.children[childIndex], 0]); // Push
         } else {
+            // eslint-disable-next-line
             const [node, _] = stack.pop() as [GedcomTree.Node, number]; // Pop
             if (stack.length > 0) {
                 stack[stack.length - 1][1]++; // Next child
@@ -61,6 +62,7 @@ const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
     (nodeRoot._index as GedcomTree.RootIndex).byTagPointer = byTagPointer;
 };
 
+// eslint-disable-next-line
 const indexBackwardsReferences = (rootNode: GedcomTree.NodeRoot): void => {
     // We assume that the index is defined
     // TODO

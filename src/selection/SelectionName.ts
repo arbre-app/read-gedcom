@@ -4,7 +4,7 @@ import { SelectionNameRomanization } from './SelectionNameRomanization';
 import { GedcomTag } from '../tag';
 import {SelectionNamePieces} from "./SelectionNamePieces";
 
-const rNameParts = /^(?:([^\/]*)|(?:(?:([^\/]*) ?)?\/([^\/]*)\/(?: ?([^\/]*))?))$/;
+const rNameParts = /^(?:([^/]*)|(?:(?:([^/]*) ?)?\/([^/]*)\/(?: ?([^/]*))?))$/;
 
 export class SelectionName extends SelectionNamePieces {
     

@@ -1,7 +1,7 @@
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 import {parseDate} from "../parse";
 
-export class SelectionDatePeriod extends GedcomSelection {
+export class SelectionDatePeriod extends SelectionAny {
     
     valueAsDate() {
         return this.value().map(v => {

@@ -1,9 +1,7 @@
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
-import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 import {SelectionWithNoteMixin} from "./mixin";
 
-export class SelectionSpouseFamilyLink extends SelectionWithNoteMixin(GedcomSelection) {
+export class SelectionSpouseFamilyLink extends SelectionWithNoteMixin(SelectionAny) {
     
     getFamilyRecord() {
         return this.root().getFamilyRecord(this.valueNonNull());

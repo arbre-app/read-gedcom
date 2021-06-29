@@ -1,9 +1,7 @@
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
-import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 import {SelectionWithNoteMixin} from "./mixin";
 
-export class SelectionChanged extends SelectionWithNoteMixin(GedcomSelection) {
+export class SelectionChanged extends SelectionWithNoteMixin(SelectionAny) {
     
     // TODO: date exact
 

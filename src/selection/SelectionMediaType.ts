@@ -1,6 +1,6 @@
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
 /**
  * @deprecated
  */
-export class SelectionMediaType extends GedcomSelection {}
+export class SelectionMediaType extends SelectionAny {}

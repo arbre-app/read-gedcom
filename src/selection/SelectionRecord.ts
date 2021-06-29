@@ -1,9 +1,9 @@
 import { SelectionReferenceNumber } from './SelectionReferenceNumber';
 import { SelectionChanged } from './SelectionChanged';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionRecord extends GedcomSelection {
+export class SelectionRecord extends SelectionAny {
     
     getReferenceNumber() {
         return this.get(GedcomTag.Reference, null, SelectionReferenceNumber);

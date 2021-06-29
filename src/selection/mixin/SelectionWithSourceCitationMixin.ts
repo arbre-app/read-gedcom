@@ -1,12 +1,12 @@
 import {AnyConstructor, Mixin} from "../../meta";
-import {GedcomSelection} from "../GedcomSelection";
+import {SelectionAny} from "../Selection";
 import {GedcomTag} from "../../tag";
 import {SelectionSourceCitation} from "../SelectionSourceCitation";
 
 /**
  * @ignore
  */
-export const SelectionWithSourceCitationMixin = <C extends AnyConstructor<GedcomSelection>>(Base: C) =>
+export const SelectionWithSourceCitationMixin = <C extends AnyConstructor<SelectionAny>>(Base: C) =>
     class extends Base {
         /**
          * Source citations related to this entity.

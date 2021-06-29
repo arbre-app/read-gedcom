@@ -7,7 +7,6 @@ import { SelectionIndividualAttribute } from './SelectionIndividualAttribute';
 import { SelectionChildFamilyLink } from './SelectionChildFamilyLink';
 import { SelectionSpouseFamilyLink } from './SelectionSpouseFamilyLink';
 import { SelectionAssociation } from './SelectionAssociation';
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';

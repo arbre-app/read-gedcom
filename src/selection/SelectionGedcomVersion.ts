@@ -1,8 +1,8 @@
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
 const rVersion = /^(0|[1-9][0-9]{0,2})\.(0|[1-9][0-9]{0,2})(?:\.(0|[1-9][0-9]{0,2}))?$/
 
-export class SelectionGedcomVersion extends GedcomSelection {
+export class SelectionGedcomVersion extends SelectionAny {
     
     valueAsVersion() {
         return this.value().map(v => {

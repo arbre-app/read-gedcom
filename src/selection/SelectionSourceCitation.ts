@@ -1,13 +1,12 @@
 import { SelectionCitationEvent } from './SelectionCitationEvent';
 import { SelectionCitationData } from './SelectionCitationData';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { SelectionSourceCertainty } from './SelectionSourceCertainty';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 import {SelectionWithNoteMixin} from "./mixin";
 
-export class SelectionSourceCitation extends SelectionWithNoteMixin(GedcomSelection) {
+export class SelectionSourceCitation extends SelectionWithNoteMixin(SelectionAny) {
     
     getSourceRecord() {
         return this.root().getSourceRecord(this.valueNonNull());

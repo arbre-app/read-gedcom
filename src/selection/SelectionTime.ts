@@ -1,9 +1,9 @@
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
 // Note: Gedcom 5.5.5 says *no* leading zeros are allowed on hours. For compatibility purposes we *do* accept them anyway
 const rNameParts = /^(0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9])(?:\.([0-9]{2}))?)?$/;
 
-export class SelectionTime extends GedcomSelection {
+export class SelectionTime extends SelectionAny {
     
     valueAsTime() {
         return this.value().map(v => {

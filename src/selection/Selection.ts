@@ -4,7 +4,7 @@ import {AnyConstructor, enumerable} from "../meta";
 /**
  * A selection of Gedcom nodes, represented in an array-like datastructure.
  */
-export class GedcomSelection implements ArrayLike<GedcomTree.Node> {
+export class SelectionAny implements ArrayLike<GedcomTree.Node> {
 
     /**
      * The number of nodes in the selection.
@@ -85,7 +85,7 @@ export class GedcomSelection implements ArrayLike<GedcomTree.Node> {
      * @param tag Optionally filter the results by their Gedcom tag
      * @param pointer Optionally filter the result by their pointer value
      */
-    get(tag?: string | string[] | null, pointer?: string | string[] | null): GedcomSelection;
+    get(tag?: string | string[] | null, pointer?: string | string[] | null): SelectionAny;
 
     /**
      * Query the direct children of this node.
@@ -98,12 +98,12 @@ export class GedcomSelection implements ArrayLike<GedcomTree.Node> {
      * @param pointer Optionally filter the result by their pointer value
      * @param adapter The adapter class, see {@link as}
      */
-    get<N extends GedcomSelection>(tag: string | string[] | null, pointer: string | string[] | null, adapter: AnyConstructor<N>): N;
+    get<N extends SelectionAny>(tag: string | string[] | null, pointer: string | string[] | null, adapter: AnyConstructor<N>): N;
 
     // Implementation
-    get<N extends GedcomSelection>(tag?: string | string[] | null, pointer?: string | string[] | null, adapter?: AnyConstructor<N>): N {
+    get<N extends SelectionAny>(tag?: string | string[] | null, pointer?: string | string[] | null, adapter?: AnyConstructor<N>): N {
         const Adapter = adapter != null ? adapter :
-            GedcomSelection as unknown as AnyConstructor<N>; // Type safety of this cast is enforced by the signature of the visible methods
+            SelectionAny as unknown as AnyConstructor<N>; // Type safety of this cast is enforced by the signature of the visible methods
         const tags = tag != null ? (Array.isArray(tag) ? tag : [tag]) : null;
         const pointers = pointer != null ? (Array.isArray(pointer) ? pointer : [pointer]) : null;
         const selection: GedcomTree.Node[] = [];
@@ -164,7 +164,7 @@ export class GedcomSelection implements ArrayLike<GedcomTree.Node> {
      * View this selection as a different type. This method can be used to extend functionality for non-standard Gedcom files.
      * @param adapter The class adapter
      */
-    as<N extends GedcomSelection>(adapter: AnyConstructor<N>): N {
+    as<N extends SelectionAny>(adapter: AnyConstructor<N>): N {
         throw new Error('Not implemented');
     }
 
@@ -184,7 +184,7 @@ export class GedcomSelection implements ArrayLike<GedcomTree.Node> {
      * @param nodes The nodes to be included in the selection
      * @param adapter The adapter class, see {@link as}
      */
-    static of<N extends GedcomSelection>(previous: GedcomSelection, nodes: GedcomTree.Node[] | GedcomTree.Node, adapter: AnyConstructor<N>): N {
+    static of<N extends SelectionAny>(previous: SelectionAny, nodes: GedcomTree.Node[] | GedcomTree.Node, adapter: AnyConstructor<N>): N {
         throw new Error('Not implemented');
     }
 }
@@ -204,7 +204,7 @@ import {SelectionRepositoryRecord} from "./SelectionRepositoryRecord";
  * The root of a Gedcom file.
  * Remark that the actual root is a pseudo node, and hence will store <code>null</code> for the attributes {@link tag}, {@link pointer} and {@link value}.
  */
-export class SelectionGedcom extends GedcomSelection {
+export class SelectionGedcom extends SelectionAny {
     getHeader() {
         return this.get(GedcomTag.Header, null, SelectionHeader);
     }

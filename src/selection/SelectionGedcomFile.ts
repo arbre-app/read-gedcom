@@ -1,9 +1,9 @@
 import { SelectionGedcomVersion } from './SelectionGedcomVersion';
 import { SelectionGedcomForm } from './SelectionGedcomForm';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionGedcomFile extends GedcomSelection {
+export class SelectionGedcomFile extends SelectionAny {
     
     getVersion() {
         return this.get(GedcomTag.Version, null, SelectionGedcomVersion);

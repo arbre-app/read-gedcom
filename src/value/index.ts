@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ValueAdoption } from './ValueAdoption';
 import { ValueCharacterEncoding } from './ValueCharacterEncoding';
 import { ValueEvent } from './ValueEvent';

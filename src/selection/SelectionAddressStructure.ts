@@ -1,8 +1,8 @@
 import { SelectionAddress } from './SelectionAddress';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionAddressStructure extends GedcomSelection {
+export class SelectionAddressStructure extends SelectionAny {
     
     getAddress() {
         return this.get(GedcomTag.Address, null, SelectionAddress);

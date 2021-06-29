@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { SelectionAddressStructure } from './SelectionAddressStructure';
 import { SelectionAddress } from './SelectionAddress';
 import { SelectionAdoption } from './SelectionAdoption';
@@ -65,85 +66,87 @@ import { SelectionSpouseFamilyLink } from './SelectionSpouseFamilyLink';
 import { SelectionSubmitterRecord } from './SelectionSubmitterRecord';
 import { SelectionSubmitterReference } from './SelectionSubmitterReference';
 import { SelectionTime } from './SelectionTime';
-
-export * from './GedcomSelection';
-import { SelectionGedcom } from "./GedcomSelection";
+import { SelectionAny, SelectionGedcom } from "./Selection";
 import {SelectionWithNoteMixin, SelectionWithSourceCitationMixin} from "./mixin";
+export { SelectionAny } from './Selection';
 //import { Selection as SelectionBase } from './Selection';
 
-module SelectionAddressStructure {}
-module SelectionAddress {}
-module SelectionAdoption {}
-module SelectionAssociation {}
-module SelectionChanged {}
-module SelectionCharacterEncoding {}
-module SelectionChildFamilyLink {}
-module SelectionCitationData {}
-module SelectionCitationEvent {}
-module SelectionCoordinates {}
-module SelectionCorporation {}
-module SelectionDataSource {}
-module SelectionDateExact {}
-module SelectionDatePeriod {}
-module SelectionDatePunctual {}
-module SelectionDate {}
-module SelectionEventsRecorded {}
-module SelectionEvent {}
-module SelectionFamilyEvent {}
-module SelectionFamilyRecord {}
-module SelectionFamilyReferenceAdoption {}
-module SelectionFamilyReference {}
-module SelectionGedcomFile {}
-module SelectionGedcomForm {}
-module SelectionGedcomSource {}
-module SelectionGedcom {}
-module SelectionGedcomVersion {}
-module SelectionHeader {}
-module SelectionIndividualAttribute {}
-module SelectionIndividualEventFamilyAdoption {}
-module SelectionIndividualEventFamily {}
-module SelectionIndividualEvent {}
-module SelectionIndividualRecord {}
-module SelectionIndividualReference {}
-module SelectionMediaType {}
-module SelectionMetaEvent {}
-module SelectionMultimediaFile {}
-module SelectionMultimediaFormat {}
-module SelectionMultimediaRecord {}
-module SelectionMultimediaReference {}
-module SelectionNamePhonetization {}
-module SelectionNamePieces {}
-module SelectionNameRomanization {}
-module SelectionName {}
-module SelectionNameType {}
-module SelectionNoteRecord {}
-module SelectionNoteReferenceMixin {}
-module SelectionPedigreeLinkageType {}
-module SelectionPhonetizationMethod {}
-module SelectionPhonetization {}
-module SelectionPlace {}
-module SelectionRecord {}
-module SelectionReferenceNumber {}
-module SelectionReference {}
-module SelectionRepositoryRecord {}
-module SelectionRepositoryReference {}
-module SelectionRomanizationMethod {}
-module SelectionRomanization {}
-module SelectionSex {}
-module SelectionSourceCertainty {}
-module SelectionSourceCitation {}
-module SelectionSourceData {}
-module SelectionSourceRecord {}
-module SelectionSpouseEventDetails {}
-module SelectionSpouseFamilyLink {}
-module SelectionSubmitterRecord {}
-module SelectionSubmitterReference {}
-module SelectionTime {}
+namespace SelectionAny {}
 
-module SelectionWithNoteMixin {}
-module SelectionWithSourceCitationMixin {}
+namespace SelectionAddressStructure {}
+namespace SelectionAddress {}
+namespace SelectionAdoption {}
+namespace SelectionAssociation {}
+namespace SelectionChanged {}
+namespace SelectionCharacterEncoding {}
+namespace SelectionChildFamilyLink {}
+namespace SelectionCitationData {}
+namespace SelectionCitationEvent {}
+namespace SelectionCoordinates {}
+namespace SelectionCorporation {}
+namespace SelectionDataSource {}
+namespace SelectionDateExact {}
+namespace SelectionDatePeriod {}
+namespace SelectionDatePunctual {}
+namespace SelectionDate {}
+namespace SelectionEventsRecorded {}
+namespace SelectionEvent {}
+namespace SelectionFamilyEvent {}
+namespace SelectionFamilyRecord {}
+namespace SelectionFamilyReferenceAdoption {}
+namespace SelectionFamilyReference {}
+namespace SelectionGedcomFile {}
+namespace SelectionGedcomForm {}
+namespace SelectionGedcomSource {}
+namespace SelectionGedcom {}
+namespace SelectionGedcomVersion {}
+namespace SelectionHeader {}
+namespace SelectionIndividualAttribute {}
+namespace SelectionIndividualEventFamilyAdoption {}
+namespace SelectionIndividualEventFamily {}
+namespace SelectionIndividualEvent {}
+namespace SelectionIndividualRecord {}
+namespace SelectionIndividualReference {}
+namespace SelectionMediaType {}
+namespace SelectionMetaEvent {}
+namespace SelectionMultimediaFile {}
+namespace SelectionMultimediaFormat {}
+namespace SelectionMultimediaRecord {}
+namespace SelectionMultimediaReference {}
+namespace SelectionNamePhonetization {}
+namespace SelectionNamePieces {}
+namespace SelectionNameRomanization {}
+namespace SelectionName {}
+namespace SelectionNameType {}
+namespace SelectionNoteRecord {}
+namespace SelectionNoteReferenceMixin {}
+namespace SelectionPedigreeLinkageType {}
+namespace SelectionPhonetizationMethod {}
+namespace SelectionPhonetization {}
+namespace SelectionPlace {}
+namespace SelectionRecord {}
+namespace SelectionReferenceNumber {}
+namespace SelectionReference {}
+namespace SelectionRepositoryRecord {}
+namespace SelectionRepositoryReference {}
+namespace SelectionRomanizationMethod {}
+namespace SelectionRomanization {}
+namespace SelectionSex {}
+namespace SelectionSourceCertainty {}
+namespace SelectionSourceCitation {}
+namespace SelectionSourceData {}
+namespace SelectionSourceRecord {}
+namespace SelectionSpouseEventDetails {}
+namespace SelectionSpouseFamilyLink {}
+namespace SelectionSubmitterRecord {}
+namespace SelectionSubmitterReference {}
+namespace SelectionTime {}
+
+namespace SelectionWithNoteMixin {}
+namespace SelectionWithSourceCitationMixin {}
 
 export namespace GedcomSelection {
+    export import Any = SelectionAny;
     export import AddressStructure = SelectionAddressStructure;
     export import Address = SelectionAddress;
     export import Adoption = SelectionAdoption;
@@ -221,6 +224,8 @@ export namespace GedcomSelection {
 
 
 export namespace GedcomSelection {
+    /** @ignore */
+    export type Any = SelectionAny;
     /** @ignore */
     export type AddressStructure = SelectionAddressStructure;
     /** @ignore */

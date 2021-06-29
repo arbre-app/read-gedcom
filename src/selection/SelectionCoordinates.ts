@@ -1,7 +1,7 @@
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionCoordinates extends GedcomSelection {
+export class SelectionCoordinates extends SelectionAny {
     
     getLatitude() {
         return this.get(GedcomTag.Latitude);

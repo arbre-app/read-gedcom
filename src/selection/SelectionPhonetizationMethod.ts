@@ -1,6 +1,6 @@
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
 /**
  * @deprecated
  */
-export class SelectionPhonetizationMethod extends GedcomSelection {}
+export class SelectionPhonetizationMethod extends SelectionAny {}

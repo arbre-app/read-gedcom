@@ -17,7 +17,8 @@
     "build": "tsc",
     "build:clean": "rimraf dist && tsc",
     "docs": "typedoc",
-    "test": "mocha -r ts-node/register tests/**/*.test.ts"
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
+    "lint": "npx eslint src/ tests/ --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -26,8 +27,11 @@
   "devDependencies": {
     "@types/chai": "^4.2.19",
     "@types/mocha": "^8.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "chai": "^4.3.4",
     "cross-env": "^7.0.2",
+    "eslint": "^7.29.0",
     "mocha": "^9.0.1",
     "rimraf": "^3.0.2",
     "ts-node": "^10.0.0",

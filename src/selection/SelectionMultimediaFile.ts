@@ -1,8 +1,8 @@
 import { SelectionMultimediaFormat } from './SelectionMultimediaFormat';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionMultimediaFile extends GedcomSelection {
+export class SelectionMultimediaFile extends SelectionAny {
     
     getFormat() {
         return this.get(GedcomTag.Format, null, SelectionMultimediaFormat);

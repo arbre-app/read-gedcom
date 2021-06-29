@@ -1,7 +1,7 @@
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionSpouseEventDetails extends GedcomSelection {
+export class SelectionSpouseEventDetails extends SelectionAny {
     
     getAge() {
         return this.get(GedcomTag.Age);

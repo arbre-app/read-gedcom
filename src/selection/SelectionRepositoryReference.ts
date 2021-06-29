@@ -1,7 +1,7 @@
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionRepositoryReference extends GedcomSelection {
+export class SelectionRepositoryReference extends SelectionAny {
     
     getRepositoryRecord() {
         return this.root().getRepositoryRecord(this.valueNonNull());

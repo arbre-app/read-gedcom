@@ -1,9 +1,9 @@
 import { SelectionCorporation } from './SelectionCorporation';
 import { SelectionDataSource } from './SelectionDataSource';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionGedcomSource extends GedcomSelection {
+export class SelectionGedcomSource extends SelectionAny {
     
     getVersion() {
         return this.get(GedcomTag.Version);

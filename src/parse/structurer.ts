@@ -6,11 +6,12 @@ import {GedcomTree} from "../tree";
  * @param lines An iterable of regular expression matches, which format is defined in {@link tokenize}
  * @param noInlineContinuations See {@link GedcomTreeReadingOptions.noInlineContinuations}
  */
-export const buildTree = (lines: Iterable<RegExpExecArray>, noInlineContinuations: boolean = false): GedcomTree.NodeRoot => {
+export const buildTree = (lines: Iterable<RegExpExecArray>, noInlineContinuations = false): GedcomTree.NodeRoot => {
     let i = 0;
     let currentLevel = -1; // Current level
     const stack: GedcomTree.Node[] = [{ tag: null, pointer: null, value: null, indexSource: -1, indexRelative: 0, children: [] }];
-    for(let line of lines) {
+    for(const line of lines) {
+        // eslint-disable-next-line
         const [_, levelStr, pointer, tag, value] = line;
         const level = parseInt(levelStr);
         const isSameOrUpperLevel = level <= currentLevel, isDownLevel = level === currentLevel + 1;

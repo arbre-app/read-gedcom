@@ -1,6 +1,6 @@
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
 /**
  * @deprecated
  */
-export class SelectionSex extends GedcomSelection {}
+export class SelectionSex extends SelectionAny {}

@@ -1,8 +1,8 @@
 import { SelectionDate } from './SelectionDate';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
-export class SelectionCitationData extends GedcomSelection {
+export class SelectionCitationData extends SelectionAny {
     
     getDate() {
         return this.get(GedcomTag.Date, null, SelectionDate);

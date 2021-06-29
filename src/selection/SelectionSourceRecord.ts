@@ -1,6 +1,5 @@
 import { SelectionSourceData } from './SelectionSourceData';
 import { SelectionRepositoryReference } from './SelectionRepositoryReference';
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
 import {SelectionRecord} from "./SelectionRecord";

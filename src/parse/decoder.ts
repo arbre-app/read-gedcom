@@ -27,13 +27,13 @@ export interface FileMetadata {
  * @param maxPeekBytes Maximum number of bytes to read
  * @param maxPeekLines Maximum number of lines to read
  */
-export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes: number = 1000, maxPeekLines: number = 100): FileMetadata => {
+export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 1000, maxPeekLines = 100): FileMetadata => {
     const [inputHead, hasBOM] = decodeUtf8BOM(buffer.slice(0, maxPeekBytes)); // Start with UTF-8 since file can contain a BOM
 
     const it = tokenize(inputHead, false); // Non-strict mode: break silently on error
     let i = 0;
     const array = [];
-    for(let line of it) {
+    for(const line of it) {
         if(i >= maxPeekLines) {
             break;
         }
@@ -59,6 +59,7 @@ export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes: number = 1000
  * @param buffer The content of the file
  */
 export const detectCharset = (buffer: ArrayBuffer) => {
+    // eslint-disable-next-line
     const { sourceEncoding, sourceProvider, sourceProviderVersion, fileHasBOM } = getFileMetadata(buffer);
 
     // Estimate an encoding without knowing the provider

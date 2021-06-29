@@ -1,7 +1,6 @@
-import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 
 /**
  * @deprecated
  */
-export class SelectionAdoption extends GedcomSelection {}
+export class SelectionAdoption extends SelectionAny {}

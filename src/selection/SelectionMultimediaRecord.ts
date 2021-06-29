@@ -1,5 +1,4 @@
 import { SelectionMultimediaFile } from './SelectionMultimediaFile';
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { GedcomTag } from '../tag';
 import {SelectionRecord} from "./SelectionRecord";

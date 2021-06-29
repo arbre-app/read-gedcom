@@ -1,5 +1,4 @@
 import { SelectionIndividualReference } from './SelectionIndividualReference';
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';

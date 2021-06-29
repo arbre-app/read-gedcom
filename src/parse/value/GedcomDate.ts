@@ -80,7 +80,7 @@ export namespace GedcomDate {
             phrase: string;
         }
 
-        export interface PhraseOnly extends Fuzzy {}
+        export type PhraseOnly = Fuzzy
 
         /**
          * An instance is indicated by {@link hasDate}.
@@ -121,7 +121,7 @@ export namespace GedcomDate {
             isDateInterpreted: true;
         }
 
-        export interface Normal extends Punctual {}
+        export type Normal = Punctual
 
         /**
          * An instance is indicated by {@link isDateRange}.

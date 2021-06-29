@@ -1,7 +1,7 @@
 import {FileDecoder} from "./FileDecoder";
 
 export const decodeUtf8: FileDecoder = buffer => {
-    const [output, _] = decodeUtf8BOM(buffer);
+    const [output, _] = decodeUtf8BOM(buffer); // eslint-disable-line
     return output;
 }
 

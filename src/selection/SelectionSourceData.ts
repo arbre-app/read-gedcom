@@ -1,10 +1,9 @@
 import { SelectionEventsRecorded } from './SelectionEventsRecorded';
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 import {SelectionWithNoteMixin} from "./mixin";
 
-export class SelectionSourceData extends SelectionWithNoteMixin(GedcomSelection) {
+export class SelectionSourceData extends SelectionWithNoteMixin(SelectionAny) {
     
     getEventsRecorded() {
         return this.get(GedcomTag.Event, null, SelectionEventsRecorded);

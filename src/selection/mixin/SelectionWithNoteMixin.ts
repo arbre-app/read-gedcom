@@ -1,12 +1,12 @@
 import {AnyConstructor, Mixin} from "../../meta";
-import {GedcomSelection} from "../GedcomSelection";
+import {SelectionAny} from "../Selection";
 import {GedcomTag} from "../../tag";
 import {SelectionNoteReferenceMixin} from "../SelectionNoteReferenceMixin";
 
 /**
  * @ignore
  */
-export const SelectionWithNoteMixin = <C extends AnyConstructor<GedcomSelection>>(Base: C) =>
+export const SelectionWithNoteMixin = <C extends AnyConstructor<SelectionAny>>(Base: C) =>
     class extends Base {
         /**
          * The note(s) associated to this attribute.
@@ -15,7 +15,7 @@ export const SelectionWithNoteMixin = <C extends AnyConstructor<GedcomSelection>
          *  <tr><th>Multiplicity</th><td><code>*</code></td></tr>
          * </table>
          */
-        getNote(): GedcomSelection {
+        getNote(): SelectionAny {
             return this.get(GedcomTag.Note, null, SelectionNoteReferenceMixin);
         }
     };

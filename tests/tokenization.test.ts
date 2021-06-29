@@ -15,7 +15,7 @@ describe('Gedcom tokenizer', () => {
     it('should correctly match separate lines', () => {
         sampleCorrectLines.forEach(mockLine => {
             let first = true;
-            for(let line of tokenize(mockLine)) {
+            for(const line of tokenize(mockLine)) { // eslint-disable-line
                 assert(first, mockLine);
                 first = false;
             }
@@ -25,7 +25,7 @@ describe('Gedcom tokenizer', () => {
 
     it('should correctly match all lines', () => {
         let count = 0;
-        for(let line of tokenize(sampleCorrectLines.join(''))) {
+        for(const line of tokenize(sampleCorrectLines.join(''))) { // eslint-disable-line
             count++;
         }
         assert(count === sampleCorrectLines.length);
@@ -44,7 +44,8 @@ describe('Gedcom tokenizer', () => {
     it('should throw an error on incorrect separate lines', () => {
         sampleIncorrectLines.forEach(mockLine => {
             assert.throws(() => {
-                for(let line of tokenize(mockLine)) { }
+                // eslint-disable-next-line
+                for(const line of tokenize(mockLine)) { }
             }, Error, mockLine);
         })
     });

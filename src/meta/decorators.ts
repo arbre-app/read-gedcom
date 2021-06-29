@@ -1,4 +1,5 @@
 export const enumerable = (value: boolean) =>
+    // eslint-disable-next-line
     (target: any, prop: string, descriptor?: PropertyDescriptor) => {
         if (descriptor) {
             descriptor.enumerable = value;

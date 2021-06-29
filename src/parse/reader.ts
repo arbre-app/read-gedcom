@@ -2,36 +2,13 @@ import {detectCharset, FileEncoding} from "./decoder";
 import {decodeAnsel, decodeCp1252, decodeCp850, decodeMacintosh, decodeUtf8} from "./decoding";
 import {tokenize} from "./tokenizer";
 import {buildTree} from "./structurer";
-import {GedcomSelection, SelectionGedcom} from "../selection";
+import {GedcomSelection} from "../selection";
 import {GedcomTree} from '../tree';
 import {GedcomTag} from "../tag";
 import {indexTree} from "./indexer";
+import {SelectionGedcom} from "../selection/Selection";
+import {GedcomTreeReadingOptions} from "./GedcomTreeReadingOptions"; // Required to do it that way, for obscure reasons
 
-/**
- * Options to control the parsing of the Gedcom tree.
- */
-export interface GedcomTreeReadingOptions {
-    /**
-     * When set to <code>true</code> completely disabled the indexing in the tree.
-     * This option can be safely set without affecting the correctness of the other components that may use the tree.
-     * However, it will incur a slowdown when querying the tree.
-     */
-    noIndex?: boolean;
-
-    /**
-     * When set to <code>true</code> the backwards references of the root node will not be stored (namely spouse and sibling relationships).
-     * This option only has an effect when {@link noIndex} is not set, and as for that option it will not affect correctness of other components.
-     * It will incur a slowdown when querying backward references.
-     */
-    noBackwardsReferencesIndex?: boolean;
-
-    /**
-     * When set to <code>true</code> the {@link GedcomTag.Concatenation} and {@link GedcomTag.Continuation} special tags will not get interpreted and will be preserved in the resulting tree.
-     * This option might affect the behavior of other components.
-     * Otherwise the tags will get inlined according to their respective semantics, and thus will never appear in the output.
-     */
-    noInlineContinuations?: boolean;
-}
 
 /**
  * Reads a Gedcom file with {@link readGedcomAsNode} and wraps the result in a {@link GedcomSelection.Gedcom}.

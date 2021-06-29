@@ -1,10 +1,9 @@
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { GedcomTag } from '../tag';
-import { GedcomSelection } from './GedcomSelection';
+import { SelectionAny } from './Selection';
 import {SelectionWithNoteMixin} from "./mixin";
 
-export class SelectionNamePieces extends SelectionWithNoteMixin(GedcomSelection) {
+export class SelectionNamePieces extends SelectionWithNoteMixin(SelectionAny) {
     
     getPrefixName() {
         return this.get(GedcomTag.NamePrefix);

@@ -1,5 +1,4 @@
 import { SelectionAddress } from './SelectionAddress';
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { GedcomTag } from '../tag';
 import {SelectionRecord} from "./SelectionRecord";
 import {SelectionWithNoteMixin} from "./mixin";

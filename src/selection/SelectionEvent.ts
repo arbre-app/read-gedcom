@@ -1,6 +1,5 @@
 import { SelectionDate } from './SelectionDate';
 import { SelectionPlace } from './SelectionPlace';
-import { SelectionNoteReferenceMixin } from './SelectionNoteReferenceMixin';
 import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
