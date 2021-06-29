@@ -1,4 +1,4 @@
-import {FileDecoder} from "./FileDecoder";
+import { FileDecoder } from './FileDecoder';
 
 const ANSEL_KEYS_1 = [0x8d, 0x8e, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8, 0xb9, 0xba, 0xbc, 0xbd, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xcf, 0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xe7, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef, 0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfe, 0x81, 0x88, 0x89, 0x92, 0x93, 0x94, 0xc7, 0xc8, 0xe8, 0xbe, 0xbf, 0xcd, 0xce];
 const ANSEL_VALUES_1 = '\u200d\u200c\u0141\xd8\xd0\xde\xc6\u0152\u02b9\xb7\u266d\xae\xb1\u01a0\u01af\u02be\xb0\u0142\xf8\u0111\xfe\xe6\u0153\u02ba\u0131\xa3\xf0\u01a1\u01b0\xb0\u2113\u2117\xa9\u266f\xbf\xa1\xdf\u0309\u0300\u0301\u0302\u0303\u0304\u0306\u0307\u030c\u030a\ufe20\ufe21\u0315\u030b\u0310\u0327\u0328\u0323\u0324\u0325\u0333\u0332\u0326\u031c\u032e\ufe22\ufe23\u0313\xfc\x98\x9c\'\u201c\u201d\xdf\u20ac\u0308\u25af\u25aeeo';
@@ -8,11 +8,11 @@ const ANSEL_VALUES_2 = '\u02c0\u1ea2\u1eba\u1ec8\u1ece\u1ee6\u1ef6\u1ea3\u1ebb\u
 export const decodeAnsel: FileDecoder = buffer => {
     const createTable = (keys: number[], values: string): Map<number, number> => {
         const map = new Map<number, number>();
-        for(let i = 0; i < keys.length; i++) {
+        for (let i = 0; i < keys.length; i++) {
             map.set(keys[i], values.charCodeAt(i));
         }
         return map;
-    }
+    };
     const table1 = createTable(ANSEL_KEYS_1, ANSEL_VALUES_1), table2 = createTable(ANSEL_KEYS_2, ANSEL_VALUES_2);
 
     const byteBuffer = new Uint8Array(buffer);
@@ -21,7 +21,7 @@ export const decodeAnsel: FileDecoder = buffer => {
     let i = 0;
     let pending = byteBuffer[i];
     i++;
-    while(pending !== undefined) {
+    while (pending !== undefined) {
         const b = pending;
         pending = byteBuffer[i];
         i++;
@@ -47,4 +47,4 @@ export const decodeAnsel: FileDecoder = buffer => {
     }
 
     return output.join('');
-}
+};

@@ -1,3 +1,3 @@
 export * from './value';
-export {readGedcom, readGedcomAsNode} from './reader';
-export {GedcomTreeReadingOptions} from './GedcomTreeReadingOptions';
+export { readGedcom, readGedcomAsNode } from './reader';
+export { GedcomTreeReadingOptions } from './GedcomTreeReadingOptions';

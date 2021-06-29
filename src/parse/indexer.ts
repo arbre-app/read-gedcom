@@ -1,4 +1,4 @@
-import {GedcomTree} from "../tree";
+import { GedcomTree } from '../tree';
 
 /**
  * Computes an index for each node in the tree.
@@ -66,4 +66,4 @@ const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
 const indexBackwardsReferences = (rootNode: GedcomTree.NodeRoot): void => {
     // We assume that the index is defined
     // TODO
-}
+};

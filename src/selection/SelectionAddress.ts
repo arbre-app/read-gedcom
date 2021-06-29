@@ -2,7 +2,6 @@ import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
 
 export class SelectionAddress extends SelectionAny {
-
     getAddressLine1() {
         return this.get(GedcomTag.Address1);
     }

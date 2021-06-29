@@ -8,8 +8,8 @@ export const enumerable = (value: boolean) =>
             Object.defineProperty(target, prop, {
                 configurable: true,
                 enumerable: value,
-                get() { return this[propSymbol] },
-                set(value) { this[propSymbol] = value }
+                get() { return this[propSymbol]; },
+                set(value) { this[propSymbol] = value; },
             });
         }
     };

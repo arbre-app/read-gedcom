@@ -1,10 +1,9 @@
 import { SelectionAddress } from './SelectionAddress';
 import { GedcomTag } from '../tag';
-import {SelectionRecord} from "./SelectionRecord";
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionRecord } from './SelectionRecord';
+import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionRepositoryRecord extends SelectionWithNoteMixin(SelectionRecord) {
-    
     getName() {
         return this.get(GedcomTag.Name);
     }

@@ -10,8 +10,8 @@ import { SelectionAssociation } from './SelectionAssociation';
 import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
-import {SelectionRecord} from "./SelectionRecord";
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionRecord } from './SelectionRecord';
+import { SelectionWithNoteMixin } from './mixin';
 
 /**
  * An individual record.
@@ -21,7 +21,6 @@ import {SelectionWithNoteMixin} from "./mixin";
  * </table>
  */
 export class SelectionIndividualRecord extends SelectionWithNoteMixin(SelectionRecord) {
-    
     getName() {
         return this.get(GedcomTag.Name, null, SelectionName);
     }

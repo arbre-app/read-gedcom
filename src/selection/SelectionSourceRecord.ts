@@ -2,11 +2,10 @@ import { SelectionSourceData } from './SelectionSourceData';
 import { SelectionRepositoryReference } from './SelectionRepositoryReference';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
-import {SelectionRecord} from "./SelectionRecord";
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionRecord } from './SelectionRecord';
+import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionSourceRecord extends SelectionWithNoteMixin(SelectionRecord) {
-    
     getData() {
         return this.get(GedcomTag.Data, null, SelectionSourceData);
     }

@@ -1,4 +1,4 @@
-import {GedcomDate} from "./GedcomDate";
+import { GedcomDate } from './GedcomDate';
 
 const CALENDAR_GREGORIAN = 'DGREGORIAN', CALENDAR_JULIAN = 'DJULIAN', CALENDAR_HEBREW = 'DHEBREW',
     CALENDAR_FRENCH_REPUBLICAN = 'DFRENCH R', CALENDAR_UNKNOWN = 'DUNKNOWN';
@@ -119,7 +119,7 @@ export const parseDate = (value: string | null):
         } else {
             return null; // Underflow or not a year
         }
-    }
+    };
 
     const parseDatePart = (parts: string[]): GedcomDate.FuzzyPart.Date | null => {
         if (i < parts.length) {
@@ -204,7 +204,7 @@ export const parseDate = (value: string | null):
         } else {
             return null; // Underflow
         }
-    }
+    };
 
     i++;
 
@@ -319,7 +319,7 @@ export const parseDate = (value: string | null):
         }
     }
     return null; // All other invalid cases
-}
+};
 
 export const parseDateExact = (value: string | null): GedcomDate.Exact | null => {
     if (!value) {
@@ -330,12 +330,12 @@ export const parseDateExact = (value: string | null): GedcomDate.Exact | null =>
 
     const parts = value.split(' ');
 
-    if(parts.length !== 3) { // Must contain three parts: day, month, year
+    if (parts.length !== 3) { // Must contain three parts: day, month, year
         return null;
     }
 
     const month = MONTHS[parts[1]];
-    if(rDay.exec(parts[0]) !== null && month !== undefined && rYear.exec(parts[2]) !== null) {
+    if (rDay.exec(parts[0]) !== null && month !== undefined && rYear.exec(parts[2]) !== null) {
         const day = parseInt(parts[0]);
         const year = parseInt(parts[2]);
         return {
@@ -346,4 +346,4 @@ export const parseDateExact = (value: string | null): GedcomDate.Exact | null =>
     } else { // Invalid date
         return null;
     }
-}
+};

@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 import fs from 'fs';
 import 'mocha';
 import assert from 'assert';
 import { expect } from 'chai';
-import {readGedcom, GedcomSelection, GedcomValue} from "../src";
+import { GedcomSelection, GedcomValue, readGedcom } from '../src';
 
 describe('Gedcom sample file', function () {
     let gedcomWithIndex: GedcomSelection.Gedcom;
@@ -34,7 +35,7 @@ describe('Gedcom sample file', function () {
 
         assert(header.getCharacterEncoding().value()[0] === GedcomValue.CharacterEncoding.Utf8);
 
-        const sourceSystem = header.getSourceSystem()
+        const sourceSystem = header.getSourceSystem();
         assert(sourceSystem.value()[0] === 'GS');
         assert(sourceSystem.getName().value()[0] === 'GEDCOM Specification');
         assert(sourceSystem.getVersion().value()[0] === '5.5.5');

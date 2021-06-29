@@ -1,14 +1,13 @@
-import {detectCharset, FileEncoding} from "./decoder";
-import {decodeAnsel, decodeCp1252, decodeCp850, decodeMacintosh, decodeUtf8} from "./decoding";
-import {tokenize} from "./tokenizer";
-import {buildTree} from "./structurer";
-import {GedcomSelection} from "../selection";
-import {GedcomTree} from '../tree';
-import {GedcomTag} from "../tag";
-import {indexTree} from "./indexer";
-import {SelectionGedcom} from "../selection/Selection";
-import {GedcomTreeReadingOptions} from "./GedcomTreeReadingOptions"; // Required to do it that way, for obscure reasons
-
+import { FileEncoding, detectCharset } from './decoder';
+import { decodeAnsel, decodeCp1252, decodeCp850, decodeMacintosh, decodeUtf8 } from './decoding';
+import { tokenize } from './tokenizer';
+import { buildTree } from './structurer';
+import { GedcomSelection } from '../selection';
+import { GedcomTree } from '../tree';
+import { GedcomTag } from '../tag';
+import { indexTree } from './indexer';
+import { SelectionGedcom } from '../selection/Selection'; // Required to do it that way, for obscure reasons
+import { GedcomTreeReadingOptions } from './GedcomTreeReadingOptions';
 
 /**
  * Reads a Gedcom file with {@link readGedcomAsNode} and wraps the result in a {@link GedcomSelection.Gedcom}.
@@ -19,7 +18,7 @@ export const readGedcom = (buffer: ArrayBuffer, options: GedcomTreeReadingOption
     const rootNode = readGedcomAsNode(buffer, options);
 
     return new SelectionGedcom(rootNode, [rootNode]);
-}
+};
 
 /**
  * Reads a Gedcom file and returns it as a tree representation.
@@ -30,15 +29,15 @@ export const readGedcomAsNode = (buffer: ArrayBuffer, options: GedcomTreeReading
     const charset = detectCharset(buffer);
 
     let input;
-    if(charset === FileEncoding.Utf8) {
+    if (charset === FileEncoding.Utf8) {
         input = decodeUtf8(buffer);
-    } else if(charset === FileEncoding.Cp1252) {
+    } else if (charset === FileEncoding.Cp1252) {
         input = decodeCp1252(buffer);
-    } else if(charset === FileEncoding.Ansel) {
+    } else if (charset === FileEncoding.Ansel) {
         input = decodeAnsel(buffer);
-    } else if(charset === FileEncoding.Macintosh) {
+    } else if (charset === FileEncoding.Macintosh) {
         input = decodeMacintosh(buffer);
-    } else if(charset === FileEncoding.Cp850) {
+    } else if (charset === FileEncoding.Cp850) {
         input = decodeCp850(buffer);
     } else {
         throw new Error(`Unrecognized charset: ${charset}`);
@@ -49,12 +48,12 @@ export const readGedcomAsNode = (buffer: ArrayBuffer, options: GedcomTreeReading
 
     checkTreeStructure(rootNode);
 
-    if(!options.noIndex) {
+    if (!options.noIndex) {
         indexTree(rootNode, options.noBackwardsReferencesIndex);
     }
 
     return rootNode;
-}
+};
 
 /**
  * A simple procedure verifying that the root node starts with a {@link GedcomTag.Header} and ends with a {@link GedcomTag.Trailer}.
@@ -62,15 +61,15 @@ export const readGedcomAsNode = (buffer: ArrayBuffer, options: GedcomTreeReading
  */
 const checkTreeStructure = (rootNode: GedcomTree.NodeRoot): void => {
     const root = rootNode.children;
-    if(!root.length) {
+    if (!root.length) {
         throw new Error('Empty tree');
     }
     const header = root[0];
-    if(header.tag !== GedcomTag.Header) {
+    if (header.tag !== GedcomTag.Header) {
         throw new Error(`First node is not a header (got ${header.tag})`);
     }
     const trailer = root[root.length - 1];
-    if(trailer.tag !== GedcomTag.Trailer) {
+    if (trailer.tag !== GedcomTag.Trailer) {
         throw new Error(`Last node is not a trailer (got ${trailer.tag})`);
     }
-}
+};

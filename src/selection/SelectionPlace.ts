@@ -3,10 +3,9 @@ import { SelectionRomanization } from './SelectionRomanization';
 import { SelectionCoordinates } from './SelectionCoordinates';
 import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionPlace extends SelectionWithNoteMixin(SelectionAny) {
-    
     getPhonetization() {
         return this.get(GedcomTag.Phonetic, null, SelectionPhonetization);
     }

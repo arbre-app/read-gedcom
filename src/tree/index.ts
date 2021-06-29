@@ -1,1 +1,1 @@
-export {GedcomTree} from "./GedcomTree";
+export { GedcomTree } from './GedcomTree';

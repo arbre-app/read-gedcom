@@ -3,7 +3,6 @@ import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
 
 export class SelectionAddressStructure extends SelectionAny {
-    
     getAddress() {
         return this.get(GedcomTag.Address, null, SelectionAddress);
     }

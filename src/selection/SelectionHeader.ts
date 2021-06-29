@@ -5,10 +5,9 @@ import { SelectionDateExact } from './SelectionDateExact';
 import { SelectionSubmitterReference } from './SelectionSubmitterReference';
 import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionHeader extends SelectionWithNoteMixin(SelectionAny) {
-    
     getGedcomFile() {
         return this.get(GedcomTag.Gedcom, null, SelectionGedcomFile);
     }

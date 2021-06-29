@@ -1,8 +1,7 @@
 import { SelectionAny } from './Selection';
-import {parseDate} from "../parse";
+import { parseDate } from '../parse';
 
 export class SelectionDatePunctual extends SelectionAny {
-    
     valueAsDate() {
         return this.value().map(v => {
             const date = parseDate(v);

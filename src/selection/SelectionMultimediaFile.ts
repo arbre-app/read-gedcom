@@ -3,7 +3,6 @@ import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
 
 export class SelectionMultimediaFile extends SelectionAny {
-    
     getFormat() {
         return this.get(GedcomTag.Format, null, SelectionMultimediaFormat);
     }

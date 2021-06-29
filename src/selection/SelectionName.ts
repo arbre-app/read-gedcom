@@ -2,12 +2,11 @@ import { SelectionNameType } from './SelectionNameType';
 import { SelectionNamePhonetization } from './SelectionNamePhonetization';
 import { SelectionNameRomanization } from './SelectionNameRomanization';
 import { GedcomTag } from '../tag';
-import {SelectionNamePieces} from "./SelectionNamePieces";
+import { SelectionNamePieces } from './SelectionNamePieces';
 
 const rNameParts = /^(?:([^/]*)|(?:(?:([^/]*) ?)?\/([^/]*)\/(?: ?([^/]*))?))$/;
 
 export class SelectionName extends SelectionNamePieces {
-    
     valueAsParts() {
         return this.value().map(v => {
             if (!v) {

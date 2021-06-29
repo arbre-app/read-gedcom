@@ -4,11 +4,10 @@ import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
 import { GedcomValue } from '../value';
-import {SelectionAddressStructure} from "./SelectionAddressStructure";
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionAddressStructure } from './SelectionAddressStructure';
+import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionEvent extends SelectionWithNoteMixin(SelectionAddressStructure) {
-    
     valueAsHappened() {
         return this.value().map(v => v ? (v === GedcomValue.Event.Yes ? true : null) : false);
     }

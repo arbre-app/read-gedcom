@@ -1,9 +1,8 @@
 import { SelectionDatePeriod } from './SelectionDatePeriod';
 import { GedcomTag } from '../tag';
-import {SelectionMetaEvent} from "./SelectionMetaEvent";
+import { SelectionMetaEvent } from './SelectionMetaEvent';
 
 export class SelectionEventsRecorded extends SelectionMetaEvent {
-    
     getPlace() {
         return this.get(GedcomTag.Place);
     }

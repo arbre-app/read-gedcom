@@ -4,7 +4,6 @@ import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
 
 export class SelectionGedcomFile extends SelectionAny {
-    
     getVersion() {
         return this.get(GedcomTag.Version, null, SelectionGedcomVersion);
     }

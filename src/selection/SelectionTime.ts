@@ -4,7 +4,6 @@ import { SelectionAny } from './Selection';
 const rNameParts = /^(0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9])(?:\.([0-9]{2}))?)?$/;
 
 export class SelectionTime extends SelectionAny {
-    
     valueAsTime() {
         return this.value().map(v => {
             // TODO move this to a dedicated file
@@ -21,18 +20,18 @@ export class SelectionTime extends SelectionAny {
                 hours,
                 minutes,
             };
-            if(groups[2] !== undefined) {
+            if (groups[2] !== undefined) {
                 const seconds = parseInt(groups[2]);
                 const hoursMinutesSeconds = {
                     ...hoursMinutes,
                     seconds,
                 };
-                if(groups[3] !== undefined) {
+                if (groups[3] !== undefined) {
                     const centiseconds = parseInt(groups[3]);
                     return {
                         ...hoursMinutesSeconds,
                         centiseconds,
-                    }
+                    };
                 } else {
                     return hoursMinutesSeconds;
                 }

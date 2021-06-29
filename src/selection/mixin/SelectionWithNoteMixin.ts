@@ -1,7 +1,7 @@
-import {AnyConstructor, Mixin} from "../../meta";
-import {SelectionAny} from "../Selection";
-import {GedcomTag} from "../../tag";
-import {SelectionNoteReferenceMixin} from "../SelectionNoteReferenceMixin";
+import { AnyConstructor, Mixin } from '../../meta';
+import { SelectionAny } from '../Selection';
+import { GedcomTag } from '../../tag';
+import { SelectionNoteReferenceMixin } from '../SelectionNoteReferenceMixin';
 
 /**
  * @ignore

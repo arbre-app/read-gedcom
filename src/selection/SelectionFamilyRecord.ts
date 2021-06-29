@@ -2,12 +2,11 @@ import { SelectionIndividualReference } from './SelectionIndividualReference';
 import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
-import {SelectionRecord} from "./SelectionRecord";
-import {SelectionFamilyEvent} from "./SelectionFamilyEvent";
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionRecord } from './SelectionRecord';
+import { SelectionFamilyEvent } from './SelectionFamilyEvent';
+import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionFamilyRecord extends SelectionWithNoteMixin(SelectionRecord) {
-    
     /* Events */
 
     getEventAnnulment() {

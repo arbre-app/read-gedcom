@@ -1,10 +1,9 @@
 import { SelectionTime } from './SelectionTime';
 import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
-import {parseDateExact} from "../parse";
+import { parseDateExact } from '../parse';
 
 export class SelectionDateExact extends SelectionAny {
-    
     valueAsExactDate() {
         return this.value().map(parseDateExact);
     }

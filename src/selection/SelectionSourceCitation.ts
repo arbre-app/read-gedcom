@@ -4,10 +4,9 @@ import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { SelectionSourceCertainty } from './SelectionSourceCertainty';
 import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionSourceCitation extends SelectionWithNoteMixin(SelectionAny) {
-    
     getSourceRecord() {
         return this.root().getSourceRecord(this.valueNonNull());
     }

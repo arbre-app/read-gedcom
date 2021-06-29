@@ -1,8 +1,8 @@
-import {GedcomNonStandardTag, GedcomTag} from '../tag';
+import { GedcomNonStandardTag, GedcomTag } from '../tag';
 import { tokenize } from './tokenizer';
 import { buildTree } from './structurer';
 import { decodeUtf8BOM } from './decoding';
-import {GedcomValue} from "../value";
+import { GedcomValue } from '../value';
 
 export enum FileEncoding {
     Utf8 = 'UTF-8',
@@ -33,8 +33,8 @@ export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 1000, maxPee
     const it = tokenize(inputHead, false); // Non-strict mode: break silently on error
     let i = 0;
     const array = [];
-    for(const line of it) {
-        if(i >= maxPeekLines) {
+    for (const line of it) {
+        if (i >= maxPeekLines) {
             break;
         }
         array.push(line);
@@ -50,7 +50,7 @@ export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 1000, maxPee
     const versionOpt = version.length > 0 ? version[0].value : null;
 
     return { sourceEncoding: charOpt, sourceProvider: sourceOpt, sourceProviderVersion: versionOpt, fileHasBOM: hasBOM };
-}
+};
 
 /**
  * Detects the file charset using a set of heuristics. Has proven to work great in practice.
@@ -64,57 +64,57 @@ export const detectCharset = (buffer: ArrayBuffer) => {
 
     // Estimate an encoding without knowing the provider
     function estimateEncoding() {
-        if(sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
+        if (sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
             return FileEncoding.Utf8;
-        } else if(sourceEncoding === GedcomValue.CharacterEncoding.Ansel) {
+        } else if (sourceEncoding === GedcomValue.CharacterEncoding.Ansel) {
             return FileEncoding.Ansel;
-        } else if(sourceEncoding === GedcomValue.CharacterEncoding.Ascii) {
+        } else if (sourceEncoding === GedcomValue.CharacterEncoding.Ascii) {
             return FileEncoding.Cp1252;
-        } else if(sourceEncoding === GedcomValue.CharacterEncoding.Ansi) {
+        } else if (sourceEncoding === GedcomValue.CharacterEncoding.Ansi) {
             return FileEncoding.Cp1252;
-        } else if(sourceEncoding === 'WINDOWS') {
+        } else if (sourceEncoding === 'WINDOWS') {
             return FileEncoding.Cp1252;
-        } else if(sourceEncoding === 'MACINTOSH') {
+        } else if (sourceEncoding === 'MACINTOSH') {
             return FileEncoding.Macintosh;
-        } else if(sourceEncoding === 'IBMPC') {
+        } else if (sourceEncoding === 'IBMPC') {
             return FileEncoding.Cp850;
-        } else if(sourceEncoding === 'MSDOS') {
+        } else if (sourceEncoding === 'MSDOS') {
             return FileEncoding.Cp850;
-        } else if(sourceEncoding === 'UNIX') {
+        } else if (sourceEncoding === 'UNIX') {
             return FileEncoding.Cp1252;
-        } else if(sourceEncoding === 'UTF8') { // Spelling mistake
+        } else if (sourceEncoding === 'UTF8') { // Spelling mistake
             return FileEncoding.Utf8;
         } else { // Unknown encoding
             return FileEncoding.Utf8; // Defaults to UTF-8
         }
     }
 
-    if(fileHasBOM) { // Short-circuit: must be one of UTF-{8,16,32}
+    if (fileHasBOM) { // Short-circuit: must be one of UTF-{8,16,32}
         return FileEncoding.Utf8;
     }
 
-    if(sourceProvider === 'GeneWeb') { // Geneweb
-        if(sourceEncoding === GedcomValue.CharacterEncoding.Ascii) {
+    if (sourceProvider === 'GeneWeb') { // Geneweb
+        if (sourceEncoding === GedcomValue.CharacterEncoding.Ascii) {
             return FileEncoding.Cp1252;
-        } else if(sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
+        } else if (sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
             return FileEncoding.Utf8;
         } else {
             return estimateEncoding();
         }
-    } else if(sourceProvider != null && sourceProvider.startsWith('HEREDIS')) { // Heredis
-        if(sourceEncoding === GedcomValue.CharacterEncoding.Ansi) {
+    } else if (sourceProvider != null && sourceProvider.startsWith('HEREDIS')) { // Heredis
+        if (sourceEncoding === GedcomValue.CharacterEncoding.Ansi) {
             return FileEncoding.Cp1252;
         } else {
             return estimateEncoding();
         }
-    } else if(sourceProvider === 'GENEATIQUE') { // Généatique
-        if(sourceEncoding === GedcomValue.CharacterEncoding.Ansel) {
+    } else if (sourceProvider === 'GENEATIQUE') { // Généatique
+        if (sourceEncoding === GedcomValue.CharacterEncoding.Ansel) {
             return FileEncoding.Ansel;
         } else {
             return estimateEncoding();
         }
-    } else if(sourceProvider === 'Gramps') { // Gramps
-        if(sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
+    } else if (sourceProvider === 'Gramps') { // Gramps
+        if (sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
             return FileEncoding.Utf8;
         } else {
             return estimateEncoding();
@@ -122,4 +122,4 @@ export const detectCharset = (buffer: ArrayBuffer) => {
     } else { // Unknown provider
         return estimateEncoding();
     }
-}
+};

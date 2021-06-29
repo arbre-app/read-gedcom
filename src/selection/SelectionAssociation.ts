@@ -1,10 +1,9 @@
 import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
-import {SelectionWithNoteMixin} from "./mixin";
+import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionAssociation extends SelectionWithNoteMixin(SelectionAny) {
-    
     getRelation() {
         return this.get(GedcomTag.Relationship);
     }

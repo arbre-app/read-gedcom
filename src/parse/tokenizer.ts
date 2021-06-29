@@ -24,7 +24,7 @@ class GedcomTokenizer implements IterableIterator<RegExpExecArray> {
     private linesRead = 0;
     private charactersRead = 0;
 
-    constructor(private readonly input: string, private readonly strict: boolean) {}
+    constructor(private readonly input: string, private readonly strict: boolean) {} // eslint-disable-line no-useless-constructor
 
     [Symbol.iterator](): IterableIterator<RegExpExecArray> {
         return this;

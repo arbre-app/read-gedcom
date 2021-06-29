@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
 import 'mocha';
 import assert from 'assert';
 import { tokenize } from '../src/parse/tokenizer';
-
 
 describe('Gedcom tokenizer', () => {
     const sampleCorrectLines = [
@@ -9,7 +9,7 @@ describe('Gedcom tokenizer', () => {
         '1 AGE 13y',
         '1 CHIL @I1234@',
         '1 NOTE This is a note field that is',
-        '2 CONT continued on the next line.'
+        '2 CONT continued on the next line.',
     ].map(l => l + '\n');
 
     it('should correctly match separate lines', () => {
@@ -38,7 +38,7 @@ describe('Gedcom tokenizer', () => {
         //'1 CHIL @@I1234@', // invalid at escaping
         //'1 CHIL @I1234@@', // same
         '1 MY-NOTE This is a note field that is', // invalid character in tag
-        '2 CONT continued on the next line.\n\r' // illegal line ending
+        '2 CONT continued on the next line.\n\r', // illegal line ending
     ].map(l => l + '\n');
 
     it('should throw an error on incorrect separate lines', () => {
@@ -47,6 +47,6 @@ describe('Gedcom tokenizer', () => {
                 // eslint-disable-next-line
                 for(const line of tokenize(mockLine)) { }
             }, Error, mockLine);
-        })
+        });
     });
 });

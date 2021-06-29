@@ -4,7 +4,6 @@ import { GedcomTag } from '../tag';
 import { SelectionAny } from './Selection';
 
 export class SelectionRecord extends SelectionAny {
-    
     getReferenceNumber() {
         return this.get(GedcomTag.Reference, null, SelectionReferenceNumber);
     }

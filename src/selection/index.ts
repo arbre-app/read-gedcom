@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, import/export */
 import { SelectionAddressStructure } from './SelectionAddressStructure';
 import { SelectionAddress } from './SelectionAddress';
 import { SelectionAdoption } from './SelectionAdoption';
@@ -66,8 +66,8 @@ import { SelectionSpouseFamilyLink } from './SelectionSpouseFamilyLink';
 import { SelectionSubmitterRecord } from './SelectionSubmitterRecord';
 import { SelectionSubmitterReference } from './SelectionSubmitterReference';
 import { SelectionTime } from './SelectionTime';
-import { SelectionAny, SelectionGedcom } from "./Selection";
-import {SelectionWithNoteMixin, SelectionWithSourceCitationMixin} from "./mixin";
+import { SelectionAny, SelectionGedcom } from './Selection';
+import { SelectionWithNoteMixin, SelectionWithSourceCitationMixin } from './mixin';
 export { SelectionAny } from './Selection';
 //import { Selection as SelectionBase } from './Selection';
 
@@ -221,7 +221,6 @@ export namespace GedcomSelection {
         export import WithSourceCitation = SelectionWithSourceCitationMixin;
     }
 }
-
 
 export namespace GedcomSelection {
     /** @ignore */
