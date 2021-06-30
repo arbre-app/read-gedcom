@@ -1,4 +1,4 @@
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 import { parseDate } from '../parse';
 
 export class SelectionDatePunctual extends SelectionAny {

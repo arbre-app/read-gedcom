@@ -1,4 +1,4 @@
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionChanged extends SelectionWithNoteMixin(SelectionAny) {

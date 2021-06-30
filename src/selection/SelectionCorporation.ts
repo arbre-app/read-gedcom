@@ -1,9 +1,4 @@
-import { SelectionAddress } from './SelectionAddress';
-import { GedcomTag } from '../tag';
-import { SelectionAddressStructure } from './SelectionAddressStructure';
+import { SelectionWithAddressMixin } from './mixin';
+import { SelectionAny } from './SelectionAny';
 
-export class SelectionCorporation extends SelectionAddressStructure {
-    getAddress() {
-        return this.get(GedcomTag.Address, null, SelectionAddress);
-    }
-}
+export class SelectionCorporation extends SelectionWithAddressMixin(SelectionAny) {}

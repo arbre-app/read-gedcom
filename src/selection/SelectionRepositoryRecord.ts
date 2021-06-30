@@ -1,6 +1,6 @@
 import { SelectionAddress } from './SelectionAddress';
 import { GedcomTag } from '../tag';
-import { SelectionRecord } from './SelectionRecord';
+import { SelectionRecord } from './base';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionRepositoryRecord extends SelectionWithNoteMixin(SelectionRecord) {

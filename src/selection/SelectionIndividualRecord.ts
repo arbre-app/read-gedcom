@@ -1,3 +1,6 @@
+import { GedcomTree } from '../tree';
+import { SelectionWithNoteSourceCitationMixin } from './mixin';
+import { SelectionFamilyRecord } from './SelectionFamilyRecord';
 import { SelectionName } from './SelectionName';
 import { SelectionSex } from './SelectionSex';
 import { SelectionIndividualEventFamily } from './SelectionIndividualEventFamily';
@@ -7,11 +10,9 @@ import { SelectionIndividualAttribute } from './SelectionIndividualAttribute';
 import { SelectionChildFamilyLink } from './SelectionChildFamilyLink';
 import { SelectionSpouseFamilyLink } from './SelectionSpouseFamilyLink';
 import { SelectionAssociation } from './SelectionAssociation';
-import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
-import { SelectionRecord } from './SelectionRecord';
-import { SelectionWithNoteMixin } from './mixin';
+import { SelectionRecord } from './base';
 
 /**
  * An individual record.
@@ -20,7 +21,7 @@ import { SelectionWithNoteMixin } from './mixin';
  *  <tr><th>Value</th><td>No</td></tr>
  * </table>
  */
-export class SelectionIndividualRecord extends SelectionWithNoteMixin(SelectionRecord) {
+export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMixin(SelectionRecord) {
     getName() {
         return this.get(GedcomTag.Name, null, SelectionName);
     }
@@ -30,11 +31,47 @@ export class SelectionIndividualRecord extends SelectionWithNoteMixin(SelectionR
     }
 
     getFamilyAsChild() {
-        throw new Error('Not implemented');
+        const children: GedcomTree.Node[] = [];
+        const rootIndex = this.rootNode._index as GedcomTree.RootIndex | undefined;
+        if (rootIndex !== undefined && rootIndex.asChild !== undefined) {
+            for (let i = 0; i < this.length; i++) {
+                const node = this[i];
+                if (node.pointer !== null) {
+                    const families = rootIndex.asChild[node.pointer];
+                    if (families !== undefined) { // TODO this shouldn't happen, is it necessary?
+                        families.forEach(family => {
+                            children.push(family);
+                        });
+                    }
+                }
+            }
+        } else {
+            throw new Error('Not implemented');
+        }
+
+        return new SelectionFamilyRecord(this.rootNode, children);
     }
 
     getFamilyAsSpouse() {
-        throw new Error('Not implemented');
+        const children: GedcomTree.Node[] = [];
+        const rootIndex = this.rootNode._index as GedcomTree.RootIndex | undefined;
+        if (rootIndex !== undefined && rootIndex.asSpouse !== undefined) {
+            for (let i = 0; i < this.length; i++) {
+                const node = this[i];
+                if (node.pointer !== null) {
+                    const families = rootIndex.asSpouse[node.pointer];
+                    if (families !== undefined) { // ditto
+                        families.forEach(family => {
+                            children.push(family);
+                        });
+                    }
+                }
+            }
+        } else {
+            throw new Error('Not implemented');
+        }
+
+        return new SelectionFamilyRecord(this.rootNode, children);
     }
 
     /* Events */
@@ -191,10 +228,6 @@ export class SelectionIndividualRecord extends SelectionWithNoteMixin(SelectionR
 
     getAssociation() {
         return this.get(GedcomTag.Associates, null, SelectionAssociation);
-    }
-
-    getSourceCitation() {
-        return this.get(GedcomTag.Source, null, SelectionSourceCitation);
     }
 
     getMultimedia() {

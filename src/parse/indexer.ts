@@ -1,4 +1,7 @@
+import { GedcomTag } from '../tag';
 import { GedcomTree } from '../tree';
+import { GedcomError } from './error';
+import RootIndex = GedcomTree.RootIndex;
 
 /**
  * Computes an index for each node in the tree.
@@ -52,7 +55,7 @@ const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
                     byTagPointer[child.tag] = {};
                 }
                 if (byTagPointer[child.tag][child.pointer] !== undefined) {
-                    throw new Error('Duplicate key'); // TODO improve message
+                    throw new GedcomError.DuplicatePointerError(`Duplicate key: ${child.pointer}`);
                 }
                 byTagPointer[child.tag][child.pointer] = child;
             }
@@ -64,6 +67,41 @@ const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
 
 // eslint-disable-next-line
 const indexBackwardsReferences = (rootNode: GedcomTree.NodeRoot): void => {
-    // We assume that the index is defined
-    // TODO
+    const get = <V, D>(object: { [k: string]: V }, key: string, def: D): V | D => {
+        const value = object[key];
+        return value != null ? value : def;
+    };
+
+    const index = rootNode._index as RootIndex; // We assume that the index is defined
+
+    const families = get(index.byTagPointer, GedcomTag.Family, {} as { [p: string]: GedcomTree.Node });
+    const asSpouse: { [spouseId: string]: GedcomTree.Node[] } = {}, asChild: { [childId: string]: GedcomTree.Node[] } = {};
+    Object.values(families).forEach(familyData => {
+        const familyIndex = familyData._index as GedcomTree.Index; // Also safe, by assumption
+        for (const spouseType of [GedcomTag.Husband, GedcomTag.Wife]) {
+            for (const spouse of get(familyIndex.byTag, spouseType, [])) {
+                const spouseId = spouse.value;
+                if (spouseId !== null) { // We ignore the other possibility (even though it is a hard violation)
+                    if (asSpouse[spouseId] !== undefined) {
+                        asSpouse[spouseId].push(familyData);
+                    } else {
+                        asSpouse[spouseId] = [familyData];
+                    }
+                }
+            }
+        }
+        for (const child of get(familyIndex.byTag, GedcomTag.Child, [])) {
+            const childId = child.value;
+            if (childId !== null) { // ditto
+                if (asChild[childId] !== undefined) {
+                    asChild[childId].push(familyData);
+                } else {
+                    asChild[childId] = [familyData];
+                }
+            }
+        }
+    });
+
+    index.asSpouse = asSpouse;
+    index.asChild = asChild;
 };

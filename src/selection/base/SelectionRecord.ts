@@ -1,7 +1,7 @@
-import { SelectionReferenceNumber } from './SelectionReferenceNumber';
-import { SelectionChanged } from './SelectionChanged';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { GedcomTag } from '../../tag';
+import { SelectionAny } from '../SelectionAny';
+import { SelectionChanged } from '../SelectionChanged';
+import { SelectionReferenceNumber } from '../SelectionReferenceNumber';
 
 export class SelectionRecord extends SelectionAny {
     getReferenceNumber() {

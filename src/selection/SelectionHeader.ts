@@ -4,7 +4,7 @@ import { SelectionGedcomSource } from './SelectionGedcomSource';
 import { SelectionDateExact } from './SelectionDateExact';
 import { SelectionSubmitterReference } from './SelectionSubmitterReference';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionHeader extends SelectionWithNoteMixin(SelectionAny) {

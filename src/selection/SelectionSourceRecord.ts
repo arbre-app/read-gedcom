@@ -2,7 +2,7 @@ import { SelectionSourceData } from './SelectionSourceData';
 import { SelectionRepositoryReference } from './SelectionRepositoryReference';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
-import { SelectionRecord } from './SelectionRecord';
+import { SelectionRecord } from './base';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionSourceRecord extends SelectionWithNoteMixin(SelectionRecord) {

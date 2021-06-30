@@ -1,6 +1,6 @@
 import { SelectionDate } from './SelectionDate';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 
 export class SelectionDataSource extends SelectionAny {
     getDate() {

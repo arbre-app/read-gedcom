@@ -1,5 +1,6 @@
 import { GedcomTag } from '../tag';
 import { GedcomTree } from '../tree';
+import { GedcomError } from './error';
 
 /**
  * Builds a tree from tokenized Gedcom lines.
@@ -17,10 +18,10 @@ export const buildTree = (lines: Iterable<RegExpExecArray>, noInlineContinuation
         const isSameOrUpperLevel = level <= currentLevel, isDownLevel = level === currentLevel + 1;
 
         if (level < 0) {
-            throw new Error(`Illegal nesting level value at line ${i + 1} (got ${level})`);
+            throw new GedcomError.InvalidNestingError(`Illegal nesting level value at line ${i + 1} (got ${level})`);
         }
         if (!isSameOrUpperLevel && !isDownLevel) {
-            throw new Error(`Bad nesting level at line ${i + 1} (current is ${currentLevel}, got ${level})`);
+            throw new GedcomError.InvalidNestingError(`Bad nesting level at line ${i + 1} (current is ${currentLevel}, got ${level})`);
         }
 
         const levelDifference = currentLevel - level + 1;
@@ -32,10 +33,10 @@ export const buildTree = (lines: Iterable<RegExpExecArray>, noInlineContinuation
         const siblings = parent.children;
         if (tag === GedcomTag.Concatenation && !noInlineContinuations) { // TODO: (potentially) inefficient string concatenation
             if (pointer) {
-                throw new Error(`Illegal concatenation format at line ${i + 1}`);
+                throw new GedcomError.InvalidConcatenationError(`Illegal concatenation format at line ${i + 1}`);
             }
             if (!parent) {
-                throw new Error(`Concatenation with no parent at line ${i + 1}`);
+                throw new GedcomError.InvalidConcatenationError(`Concatenation with no parent at line ${i + 1}`);
             }
             if (parent.value == null) {
                 parent.value = '';
@@ -44,10 +45,10 @@ export const buildTree = (lines: Iterable<RegExpExecArray>, noInlineContinuation
             currentLevel = level - 1;
         } else if (tag === GedcomTag.Continuation && !noInlineContinuations) {
             if (pointer) {
-                throw new Error(`Illegal concatenation format at line ${i + 1}`);
+                throw new GedcomError.InvalidConcatenationError(`Illegal continuation format at line ${i + 1}`);
             }
             if (!parent) {
-                throw new Error(`Continuation with no parent at line ${i + 1}`);
+                throw new GedcomError.InvalidConcatenationError(`Continuation with no parent at line ${i + 1}`);
             }
             const separator = '\n'; // TODO: hardcoded separator
             if (parent.value == null) {
@@ -56,11 +57,11 @@ export const buildTree = (lines: Iterable<RegExpExecArray>, noInlineContinuation
             parent.value += separator + value;
             currentLevel = level - 1;
         } else {
-            const child: GedcomTree.Node = { tag, pointer: pointer ?? null, value: value ?? null, indexSource: i, indexRelative: parent.children.length, children: [] }; // TODO check for undefined
+            const child: GedcomTree.Node = { tag, pointer: pointer ?? null, value: value ?? null, indexSource: i, indexRelative: parent.children.length, children: [] };
             siblings.push(child);
 
             if (pointer && level > 0) {
-                throw new Error(`Record must be a top-level definition at line ${i + 1}`);
+                throw new GedcomError.InvalidRecordDefinitionError(`Record must be a top-level definition at line ${i + 1}`);
             }
 
             stack.push(child);

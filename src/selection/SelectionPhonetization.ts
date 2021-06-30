@@ -1,6 +1,6 @@
 import { SelectionPhonetizationMethod } from './SelectionPhonetizationMethod';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 
 export class SelectionPhonetization extends SelectionAny {
     getMethod() {

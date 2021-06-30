@@ -1,9 +1,8 @@
-import { SelectionSourceCitation } from './SelectionSourceCitation';
+import { SelectionWithNoteSourceCitationMixin } from './mixin';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
-import { SelectionWithNoteMixin } from './mixin';
+import { SelectionAny } from './SelectionAny';
 
-export class SelectionNamePieces extends SelectionWithNoteMixin(SelectionAny) {
+export class SelectionNamePieces extends SelectionWithNoteSourceCitationMixin(SelectionAny) {
     getPrefixName() {
         return this.get(GedcomTag.NamePrefix);
     }
@@ -26,9 +25,5 @@ export class SelectionNamePieces extends SelectionWithNoteMixin(SelectionAny) {
 
     getNameSuffix() {
         return this.get(GedcomTag.NameSuffix);
-    }
-
-    getSourceCitation() {
-        return this.get(GedcomTag.Source, null, SelectionSourceCitation);
     }
 }

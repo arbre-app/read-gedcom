@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import 'mocha';
 import assert from 'assert';
-import { readGedcomAsNode } from '../src';
+import { parseGedcom } from '../src';
 
 describe('Gedcom header/trailer verification', () => {
     const header = [
@@ -22,7 +22,7 @@ describe('Gedcom header/trailer verification', () => {
     ];
 
     const read = (lines: string[]) => {
-        return readGedcomAsNode(Buffer.from(lines.map(s => s + '\n').join(''), 'utf8'));
+        return parseGedcom(Buffer.from(lines.map(s => s + '\n').join(''), 'utf8'));
     };
 
     it('should accept a correct minimal gedcom', () => {

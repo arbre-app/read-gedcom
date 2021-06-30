@@ -1,5 +1,5 @@
 import { AnyConstructor, Mixin } from '../../meta';
-import { SelectionAny } from '../Selection';
+import { SelectionAny } from '../SelectionAny';
 import { GedcomTag } from '../../tag';
 import { SelectionNoteReferenceMixin } from '../SelectionNoteReferenceMixin';
 

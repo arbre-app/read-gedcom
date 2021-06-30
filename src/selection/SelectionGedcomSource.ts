@@ -1,7 +1,7 @@
 import { SelectionCorporation } from './SelectionCorporation';
 import { SelectionDataSource } from './SelectionDataSource';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 
 export class SelectionGedcomSource extends SelectionAny {
     getVersion() {

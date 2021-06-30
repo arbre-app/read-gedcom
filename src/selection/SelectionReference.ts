@@ -1,3 +1,3 @@
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 
 export class SelectionReference extends SelectionAny {}

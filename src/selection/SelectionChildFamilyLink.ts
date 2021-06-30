@@ -1,6 +1,6 @@
 import { SelectionPedigreeLinkageType } from './SelectionPedigreeLinkageType';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionChildFamilyLink extends SelectionWithNoteMixin(SelectionAny) {

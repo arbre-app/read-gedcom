@@ -2,7 +2,7 @@ import { SelectionPhonetization } from './SelectionPhonetization';
 import { SelectionRomanization } from './SelectionRomanization';
 import { SelectionCoordinates } from './SelectionCoordinates';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionPlace extends SelectionWithNoteMixin(SelectionAny) {

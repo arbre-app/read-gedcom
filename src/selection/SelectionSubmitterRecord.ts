@@ -1,5 +1,5 @@
 import { GedcomTag } from '../tag';
-import { SelectionRecord } from './SelectionRecord';
+import { SelectionRecord } from './base';
 
 export class SelectionSubmitterRecord extends SelectionRecord {
     getName() {

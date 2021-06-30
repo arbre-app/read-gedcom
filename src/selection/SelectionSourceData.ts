@@ -1,6 +1,6 @@
 import { SelectionEventsRecorded } from './SelectionEventsRecorded';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionSourceData extends SelectionWithNoteMixin(SelectionAny) {

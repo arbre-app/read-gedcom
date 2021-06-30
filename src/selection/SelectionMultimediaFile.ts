@@ -1,6 +1,6 @@
 import { SelectionMultimediaFormat } from './SelectionMultimediaFormat';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 
 export class SelectionMultimediaFile extends SelectionAny {
     getFormat() {

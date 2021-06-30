@@ -1,9 +1,4 @@
-import { SelectionSourceCitation } from './SelectionSourceCitation';
-import { GedcomTag } from '../tag';
-import { SelectionRecord } from './SelectionRecord';
+import { SelectionWithSourceCitationMixin } from './mixin';
+import { SelectionRecord } from './base';
 
-export class SelectionNoteRecord extends SelectionRecord {
-    getSourceCitation() {
-        return this.get(GedcomTag.Source, null, SelectionSourceCitation);
-    }
-}
+export class SelectionNoteRecord extends SelectionWithSourceCitationMixin(SelectionRecord) {}

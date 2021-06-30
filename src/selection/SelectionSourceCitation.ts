@@ -3,7 +3,7 @@ import { SelectionCitationData } from './SelectionCitationData';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { SelectionSourceCertainty } from './SelectionSourceCertainty';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionSourceCitation extends SelectionWithNoteMixin(SelectionAny) {

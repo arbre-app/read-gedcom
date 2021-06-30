@@ -1,12 +1,11 @@
+import { SelectionWithNoteSourceCitationMixin } from './mixin';
 import { SelectionIndividualReference } from './SelectionIndividualReference';
-import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
-import { SelectionRecord } from './SelectionRecord';
+import { SelectionRecord } from './base';
 import { SelectionFamilyEvent } from './SelectionFamilyEvent';
-import { SelectionWithNoteMixin } from './mixin';
 
-export class SelectionFamilyRecord extends SelectionWithNoteMixin(SelectionRecord) {
+export class SelectionFamilyRecord extends SelectionWithNoteSourceCitationMixin(SelectionRecord) {
     /* Events */
 
     getEventAnnulment() {
@@ -73,10 +72,6 @@ export class SelectionFamilyRecord extends SelectionWithNoteMixin(SelectionRecor
 
     getChildrenCount() {
         return this.get(GedcomTag.ChildrenCount);
-    }
-
-    getSourceCitation() {
-        return this.get(GedcomTag.Source, null, SelectionSourceCitation);
     }
 
     getMultimedia() {

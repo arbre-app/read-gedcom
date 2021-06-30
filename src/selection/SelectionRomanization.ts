@@ -1,6 +1,6 @@
 import { SelectionRomanizationMethod } from './SelectionRomanizationMethod';
 import { GedcomTag } from '../tag';
-import { SelectionAny } from './Selection';
+import { SelectionAny } from './SelectionAny';
 
 export class SelectionRomanization extends SelectionAny {
     getMethod() {

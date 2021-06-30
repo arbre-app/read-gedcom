@@ -1,13 +1,12 @@
+import { SelectionWithAddressMixin, SelectionWithNoteSourceCitationMixin } from './mixin';
+import { SelectionAny } from './SelectionAny';
 import { SelectionDate } from './SelectionDate';
 import { SelectionPlace } from './SelectionPlace';
-import { SelectionSourceCitation } from './SelectionSourceCitation';
 import { SelectionMultimediaReference } from './SelectionMultimediaReference';
 import { GedcomTag } from '../tag';
 import { GedcomValue } from '../value';
-import { SelectionAddressStructure } from './SelectionAddressStructure';
-import { SelectionWithNoteMixin } from './mixin';
 
-export class SelectionEvent extends SelectionWithNoteMixin(SelectionAddressStructure) {
+export class SelectionEvent extends SelectionWithAddressMixin(SelectionWithNoteSourceCitationMixin(SelectionAny)) {
     valueAsHappened() {
         return this.value().map(v => v ? (v === GedcomValue.Event.Yes ? true : null) : false);
     }
@@ -34,10 +33,6 @@ export class SelectionEvent extends SelectionWithNoteMixin(SelectionAddressStruc
 
     getCause() {
         return this.get(GedcomTag.Cause);
-    }
-
-    getSourceCitation() {
-        return this.get(GedcomTag.Source, null, SelectionSourceCitation);
     }
 
     getMultimedia() {

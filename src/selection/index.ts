@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, import/export */
-import { SelectionAddressStructure } from './SelectionAddressStructure';
+import { GedcomTreeReadingOptions, parseGedcom } from '../parse';
+import { SelectionRecord } from './base';
 import { SelectionAddress } from './SelectionAddress';
 import { SelectionAdoption } from './SelectionAdoption';
 import { SelectionAssociation } from './SelectionAssociation';
@@ -49,7 +50,6 @@ import { SelectionPedigreeLinkageType } from './SelectionPedigreeLinkageType';
 import { SelectionPhonetizationMethod } from './SelectionPhonetizationMethod';
 import { SelectionPhonetization } from './SelectionPhonetization';
 import { SelectionPlace } from './SelectionPlace';
-import { SelectionRecord } from './SelectionRecord';
 import { SelectionReferenceNumber } from './SelectionReferenceNumber';
 import { SelectionReference } from './SelectionReference';
 import { SelectionRepositoryRecord } from './SelectionRepositoryRecord';
@@ -66,14 +66,23 @@ import { SelectionSpouseFamilyLink } from './SelectionSpouseFamilyLink';
 import { SelectionSubmitterRecord } from './SelectionSubmitterRecord';
 import { SelectionSubmitterReference } from './SelectionSubmitterReference';
 import { SelectionTime } from './SelectionTime';
-import { SelectionAny, SelectionGedcom } from './Selection';
 import { SelectionWithNoteMixin, SelectionWithSourceCitationMixin } from './mixin';
-export { SelectionAny } from './Selection';
-//import { Selection as SelectionBase } from './Selection';
+import { SelectionAny } from './SelectionAny';
+import { SelectionGedcom } from './SelectionGedcom';
+
+/**
+ * Parses a Gedcom file with {@link parseGedcom} and wraps the result in a {@link GedcomSelection.Gedcom}.
+ * @param buffer The content of the file
+ * @param options Optional parameters
+ */
+export const readGedcom = (buffer: ArrayBuffer, options: GedcomTreeReadingOptions = {}): SelectionGedcom => {
+    const rootNode = parseGedcom(buffer, options);
+
+    return new SelectionGedcom(rootNode, [rootNode]);
+};
 
 namespace SelectionAny {}
 
-namespace SelectionAddressStructure {}
 namespace SelectionAddress {}
 namespace SelectionAdoption {}
 namespace SelectionAssociation {}
@@ -144,10 +153,10 @@ namespace SelectionTime {}
 
 namespace SelectionWithNoteMixin {}
 namespace SelectionWithSourceCitationMixin {}
+// TODO add all mixins
 
 export namespace GedcomSelection {
     export import Any = SelectionAny;
-    export import AddressStructure = SelectionAddressStructure;
     export import Address = SelectionAddress;
     export import Adoption = SelectionAdoption;
     export import Association = SelectionAssociation;
@@ -225,8 +234,6 @@ export namespace GedcomSelection {
 export namespace GedcomSelection {
     /** @ignore */
     export type Any = SelectionAny;
-    /** @ignore */
-    export type AddressStructure = SelectionAddressStructure;
     /** @ignore */
     export type Address = SelectionAddress;
     /** @ignore */
@@ -362,5 +369,3 @@ export namespace GedcomSelection {
     /** @ignore */
     export type Time = SelectionTime;
 }
-
-export * from './mixin';

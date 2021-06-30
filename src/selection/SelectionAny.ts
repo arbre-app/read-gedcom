@@ -1,16 +1,6 @@
-import { GedcomTree } from '../tree';
 import { AnyConstructor, enumerable } from '../meta';
-
-import { SelectionHeader } from './SelectionHeader';
-import { GedcomTag } from '../tag';
-import { SelectionSubmitterRecord } from './SelectionSubmitterRecord';
-import { SelectionIndividualRecord } from './SelectionIndividualRecord';
-import { SelectionFamilyRecord } from './SelectionFamilyRecord';
-import { SelectionMultimediaRecord } from './SelectionMultimediaRecord';
-import { SelectionNoteRecord } from './SelectionNoteRecord';
-import { SelectionSourceRecord } from './SelectionSourceRecord';
-import { SelectionRecord } from './SelectionRecord';
-import { SelectionRepositoryRecord } from './SelectionRepositoryRecord';
+import { GedcomTree } from '../tree';
+import { SelectionGedcom } from './SelectionGedcom';
 
 /**
  * A selection of Gedcom nodes, represented in an array-like datastructure.
@@ -35,9 +25,21 @@ export class SelectionAny implements ArrayLike<GedcomTree.Node> {
     constructor(rootNode: GedcomTree.NodeRoot, nodes: GedcomTree.Node[]) {
         this.rootNode = rootNode;
         this.length = nodes.length;
-        nodes.forEach((node, i) => {
-            this[i] = node;
-        });
+        for (let i = 0; i < nodes.length; i++) {
+            this[i] = nodes[i];
+        }
+    }
+
+    /**
+     * Returns a constructor for this selection.
+     * @private
+     */
+    selfConstructor(): AnyConstructor<this> {
+        if (Object.setPrototypeOf !== undefined) {
+            return Object.getPrototypeOf(this).constructor as AnyConstructor<this>;
+        } else {
+            return (this as any).__proto__.constructor; // eslint-disable-line no-proto
+        }
     }
 
     /**
@@ -114,9 +116,7 @@ export class SelectionAny implements ArrayLike<GedcomTree.Node> {
 
     // Implementation
     get<N extends SelectionAny>(tag?: string | string[] | null, pointer?: string | string[] | null, adapter?: AnyConstructor<N>): N {
-        const Adapter = adapter != null
-? adapter
-            : SelectionAny as unknown as AnyConstructor<N>; // Type safety of this cast is enforced by the signature of the visible methods
+        const Adapter = adapter != null ? adapter : SelectionAny as unknown as AnyConstructor<N>; // Type safety of this cast is enforced by the signature of the visible methods
         const tags = tag != null ? (Array.isArray(tag) ? tag : [tag]) : null;
         const pointers = pointer != null ? (Array.isArray(pointer) ? pointer : [pointer]) : null;
         const selection: GedcomTree.Node[] = [];
@@ -173,12 +173,24 @@ export class SelectionAny implements ArrayLike<GedcomTree.Node> {
         return new Adapter(this.rootNode, selection);
     }
 
+    filter(f: (node: GedcomTree.Node) => boolean): this {
+        const nodes: GedcomTree.Node[] = [];
+        for (let i = 0; i < this.length; i++) {
+            const node = this[i];
+            if (f(node)) {
+                nodes.push(node);
+            }
+        }
+        const Constructor = this.selfConstructor();
+        return new Constructor(this.rootNode, nodes);
+    }
+
     /**
      * View this selection as a different type. This method can be used to extend functionality for non-standard Gedcom files.
-     * @param adapter The class adapter
+     * @param Adapter The class adapter
      */
-    as<N extends SelectionAny>(adapter: AnyConstructor<N>): N { // eslint-disable-line @typescript-eslint/no-unused-vars
-        throw new Error('Not implemented');
+    as<N extends SelectionAny>(Adapter: AnyConstructor<N>): N {
+        return new Adapter(this.rootNode, this);
     }
 
     /**
@@ -186,7 +198,23 @@ export class SelectionAny implements ArrayLike<GedcomTree.Node> {
      * The inverse operation is {@link of}.
      */
     array(): GedcomTree.Node[] {
-        throw new Error('Not implemented');
+        const array = [];
+        for (let i = 0; i < this.length; i++) {
+            array.push(this[i]);
+        }
+        return array;
+    }
+
+    /**
+     * Exports the selection as an array of selections of one element.
+     */
+    arraySelect(): this[] {
+        const Constructor = this.selfConstructor();
+        const array = [];
+        for (let i = 0; i < this.length; i++) {
+            array.push(new Constructor(this.rootNode, [this[i]]));
+        }
+        return array;
     }
 
     /**
@@ -195,53 +223,22 @@ export class SelectionAny implements ArrayLike<GedcomTree.Node> {
      * The inverse operation is {@link array}.
      * @param previous The previous selection, required to inherit the reference to the root
      * @param nodes The nodes to be included in the selection
-     * @param adapter The adapter class, see {@link as}
      */
-    static of<N extends SelectionAny>(previous: SelectionAny, nodes: GedcomTree.Node[] | GedcomTree.Node, adapter: AnyConstructor<N>): N { // eslint-disable-line @typescript-eslint/no-unused-vars
-        throw new Error('Not implemented');
-    }
-}
+    static of(previous: SelectionAny, nodes: GedcomTree.Node[] | GedcomTree.Node): SelectionAny;
 
-/**
- * The root of a Gedcom file.
- * Remark that the actual root is a pseudo node, and hence will store <code>null</code> for the attributes {@link tag}, {@link pointer} and {@link value}.
- */
-export class SelectionGedcom extends SelectionAny {
-    getHeader() {
-        return this.get(GedcomTag.Header, null, SelectionHeader);
-    }
+    /**
+     * Create a selection from an array of nodes.
+     * It is highly recommended (but not required) for the nodes to be at the same logical level in the hierarchy.
+     * The inverse operation is {@link array}.
+     * @param previous The previous selection, required to inherit the reference to the root
+     * @param nodes The nodes to be included in the selection
+     * @param Adapter The adapter class, see {@link as}
+     */
+    static of<N extends SelectionAny>(previous: SelectionAny, nodes: GedcomTree.Node[] | GedcomTree.Node, Adapter: AnyConstructor<N>): N;
 
-    getRecord<R extends SelectionRecord>(tag: string | string[] | null, pointer: string | string[] | null, SelectionAdapter: AnyConstructor<R>): R {
-        return this.get(tag, pointer, SelectionAdapter);
+    static of<N extends SelectionAny>(previous: SelectionAny, nodes: GedcomTree.Node[] | GedcomTree.Node, Adapter?: AnyConstructor<N>): N {
+        const AdapterClass = Adapter != null ? Adapter : SelectionAny as unknown as AnyConstructor<N>;
+        const nodesArray = Array.isArray(nodes) ? nodes : [nodes as GedcomTree.Node];
+        return new AdapterClass(previous.rootNode, nodesArray);
     }
-
-    getSubmitterRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Submitter, pointer ?? null, SelectionSubmitterRecord);
-    }
-
-    getIndividualRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Individual, pointer ?? null, SelectionIndividualRecord);
-    }
-
-    getFamilyRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Family, pointer ?? null, SelectionFamilyRecord);
-    }
-
-    getMultimediaRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Object, pointer ?? null, SelectionMultimediaRecord);
-    }
-
-    getNoteRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Note, pointer ?? null, SelectionNoteRecord);
-    }
-
-    getSourceRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Source, pointer ?? null, SelectionSourceRecord);
-    }
-
-    getRepositoryRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Repository, pointer ?? null, SelectionRepositoryRecord);
-    }
-
-    // TODO
 }
