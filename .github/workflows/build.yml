@@ -1,0 +1,28 @@
+name: Node.js Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npm run docs
+      - name: deploy documentation
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr --delete
+          path: docs/
+          remote_path: documentation/read-gedcom
+          remote_host: docs.arbre.app
+          remote_user: github
+          remote_key: ${{ secrets.DEPLOY_KEY }}
