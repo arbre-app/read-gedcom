@@ -185,6 +185,18 @@ export class SelectionAny implements ArrayLike<GedcomTree.Node> {
         return new Constructor(this.rootNode, nodes);
     }
 
+    filterSelect(f: (node: this) => boolean): this {
+        const Constructor = this.selfConstructor();
+        const nodes: GedcomTree.Node[] = [];
+        for (let i = 0; i < this.length; i++) {
+            const node = this[i];
+            if (f(new Constructor(this.rootNode, [node]))) {
+                nodes.push(node);
+            }
+        }
+        return new Constructor(this.rootNode, nodes);
+    }
+
     /**
      * View this selection as a different type. This method can be used to extend functionality for non-standard Gedcom files.
      * @param Adapter The class adapter

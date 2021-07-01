@@ -1,4 +1,4 @@
-name: Node.js Package
+name: Build
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       - run: npm run build
       - run: npm test
       - run: npm run docs
-      - name: deploy documentation
+      - name: Deploy documentation
         uses: burnett01/rsync-deployments@4.1
         with:
           switches: -avzr --delete

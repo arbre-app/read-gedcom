@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, import/export */
-import { GedcomTreeReadingOptions, parseGedcom } from '../parse';
 import { SelectionRecord } from './base';
 import { SelectionAddress } from './SelectionAddress';
 import { SelectionAdoption } from './SelectionAdoption';
@@ -70,16 +69,7 @@ import { SelectionWithNoteMixin, SelectionWithSourceCitationMixin } from './mixi
 import { SelectionAny } from './SelectionAny';
 import { SelectionGedcom } from './SelectionGedcom';
 
-/**
- * Parses a Gedcom file with {@link parseGedcom} and wraps the result in a {@link GedcomSelection.Gedcom}.
- * @param buffer The content of the file
- * @param options Optional parameters
- */
-export const readGedcom = (buffer: ArrayBuffer, options: GedcomTreeReadingOptions = {}): SelectionGedcom => {
-    const rootNode = parseGedcom(buffer, options);
-
-    return new SelectionGedcom(rootNode, [rootNode]);
-};
+export { readGedcom } from './read';
 
 namespace SelectionAny {}
 
@@ -154,6 +144,75 @@ namespace SelectionTime {}
 namespace SelectionWithNoteMixin {}
 namespace SelectionWithSourceCitationMixin {}
 // TODO add all mixins
+
+export namespace GedcomSelection {
+    export const Address: typeof SelectionAddress = require('./SelectionAddress').SelectionAddress;
+    export const Adoption: typeof SelectionAdoption = require('./SelectionAdoption').SelectionAdoption;
+    export const Any: typeof SelectionAny = require('./SelectionAny').SelectionAny;
+    export const Association: typeof SelectionAssociation = require('./SelectionAssociation').SelectionAssociation;
+    export const Changed: typeof SelectionChanged = require('./SelectionChanged').SelectionChanged;
+    export const CharacterEncoding: typeof SelectionCharacterEncoding = require('./SelectionCharacterEncoding').SelectionCharacterEncoding;
+    export const ChildFamilyLink: typeof SelectionChildFamilyLink = require('./SelectionChildFamilyLink').SelectionChildFamilyLink;
+    export const CitationData: typeof SelectionCitationData = require('./SelectionCitationData').SelectionCitationData;
+    export const CitationEvent: typeof SelectionCitationEvent = require('./SelectionCitationEvent').SelectionCitationEvent;
+    export const Coordinates: typeof SelectionCoordinates = require('./SelectionCoordinates').SelectionCoordinates;
+    export const Corporation: typeof SelectionCorporation = require('./SelectionCorporation').SelectionCorporation;
+    export const DataSource: typeof SelectionDataSource = require('./SelectionDataSource').SelectionDataSource;
+    export const DateExact: typeof SelectionDateExact = require('./SelectionDateExact').SelectionDateExact;
+    export const DatePeriod: typeof SelectionDatePeriod = require('./SelectionDatePeriod').SelectionDatePeriod;
+    export const DatePunctual: typeof SelectionDatePunctual = require('./SelectionDatePunctual').SelectionDatePunctual;
+    export const EventsRecorded: typeof SelectionEventsRecorded = require('./SelectionEventsRecorded').SelectionEventsRecorded;
+    export const Event: typeof SelectionEvent = require('./SelectionEvent').SelectionEvent;
+    export const FamilyEvent: typeof SelectionFamilyEvent = require('./SelectionFamilyEvent').SelectionFamilyEvent;
+    export const FamilyRecord: typeof SelectionFamilyRecord = require('./SelectionFamilyRecord').SelectionFamilyRecord;
+    export const FamilyReferenceAdoption: typeof SelectionFamilyReferenceAdoption = require('./SelectionFamilyReferenceAdoption').SelectionFamilyReferenceAdoption;
+    export const FamilyReference: typeof SelectionFamilyReference = require('./SelectionFamilyReference').SelectionFamilyReference;
+    export const GedcomFile: typeof SelectionGedcomFile = require('./SelectionGedcomFile').SelectionGedcomFile;
+    export const GedcomForm: typeof SelectionGedcomForm = require('./SelectionGedcomForm').SelectionGedcomForm;
+    export const GedcomSource: typeof SelectionGedcomSource = require('./SelectionGedcomSource').SelectionGedcomSource;
+    export const Gedcom: typeof SelectionGedcom = require('./SelectionGedcom').SelectionGedcom;
+    export const GedcomVersion: typeof SelectionGedcomVersion = require('./SelectionGedcomVersion').SelectionGedcomVersion;
+    export const Header: typeof SelectionHeader = require('./SelectionHeader').SelectionHeader;
+    export const IndividualAttribute: typeof SelectionIndividualAttribute = require('./SelectionIndividualAttribute').SelectionIndividualAttribute;
+    export const IndividualEventFamilyAdoption: typeof SelectionIndividualEventFamilyAdoption = require('./SelectionIndividualEventFamilyAdoption').SelectionIndividualEventFamilyAdoption;
+    export const IndividualEventFamily: typeof SelectionIndividualEventFamily = require('./SelectionIndividualEventFamily').SelectionIndividualEventFamily;
+    export const IndividualEvent: typeof SelectionIndividualEvent = require('./SelectionIndividualEvent').SelectionIndividualEvent;
+    export const IndividualRecord: typeof SelectionIndividualRecord = require('./SelectionIndividualRecord').SelectionIndividualRecord;
+    export const IndividualReference: typeof SelectionIndividualReference = require('./SelectionIndividualReference').SelectionIndividualReference;
+    export const MediaType: typeof SelectionMediaType = require('./SelectionMediaType').SelectionMediaType;
+    export const MetaEvent: typeof SelectionMetaEvent = require('./SelectionMetaEvent').SelectionMetaEvent;
+    export const MultimediaFile: typeof SelectionMultimediaFile = require('./SelectionMultimediaFile').SelectionMultimediaFile;
+    export const MultimediaFormat: typeof SelectionMultimediaFormat = require('./SelectionMultimediaFormat').SelectionMultimediaFormat;
+    export const MultimediaRecord: typeof SelectionMultimediaRecord = require('./SelectionMultimediaRecord').SelectionMultimediaRecord;
+    export const MultimediaReference: typeof SelectionMultimediaReference = require('./SelectionMultimediaReference').SelectionMultimediaReference;
+    export const NamePhonetization: typeof SelectionNamePhonetization = require('./SelectionNamePhonetization').SelectionNamePhonetization;
+    export const NamePieces: typeof SelectionNamePieces = require('./SelectionNamePieces').SelectionNamePieces;
+    export const NameRomanization: typeof SelectionNameRomanization = require('./SelectionNameRomanization').SelectionNameRomanization;
+    export const Name: typeof SelectionName = require('./SelectionName').SelectionName;
+    export const NameType: typeof SelectionNameType = require('./SelectionNameType').SelectionNameType;
+    export const NoteRecord: typeof SelectionNoteRecord = require('./SelectionNoteRecord').SelectionNoteRecord;
+    export const NoteReferenceMixin: typeof SelectionNoteReferenceMixin = require('./SelectionNoteReferenceMixin').SelectionNoteReferenceMixin;
+    export const PedigreeLinkageType: typeof SelectionPedigreeLinkageType = require('./SelectionPedigreeLinkageType').SelectionPedigreeLinkageType;
+    export const PhonetizationMethod: typeof SelectionPhonetizationMethod = require('./SelectionPhonetizationMethod').SelectionPhonetizationMethod;
+    export const Phonetization: typeof SelectionPhonetization = require('./SelectionPhonetization').SelectionPhonetization;
+    export const Place: typeof SelectionPlace = require('./SelectionPlace').SelectionPlace;
+    export const ReferenceNumber: typeof SelectionReferenceNumber = require('./SelectionReferenceNumber').SelectionReferenceNumber;
+    export const Reference: typeof SelectionReference = require('./SelectionReference').SelectionReference;
+    export const RepositoryRecord: typeof SelectionRepositoryRecord = require('./SelectionRepositoryRecord').SelectionRepositoryRecord;
+    export const RepositoryReference: typeof SelectionRepositoryReference = require('./SelectionRepositoryReference').SelectionRepositoryReference;
+    export const RomanizationMethod: typeof SelectionRomanizationMethod = require('./SelectionRomanizationMethod').SelectionRomanizationMethod;
+    export const Romanization: typeof SelectionRomanization = require('./SelectionRomanization').SelectionRomanization;
+    export const Sex: typeof SelectionSex = require('./SelectionSex').SelectionSex;
+    export const SourceCertainty: typeof SelectionSourceCertainty = require('./SelectionSourceCertainty').SelectionSourceCertainty;
+    export const SourceCitation: typeof SelectionSourceCitation = require('./SelectionSourceCitation').SelectionSourceCitation;
+    export const SourceData: typeof SelectionSourceData = require('./SelectionSourceData').SelectionSourceData;
+    export const SourceRecord: typeof SelectionSourceRecord = require('./SelectionSourceRecord').SelectionSourceRecord;
+    export const SpouseEventDetails: typeof SelectionSpouseEventDetails = require('./SelectionSpouseEventDetails').SelectionSpouseEventDetails;
+    export const SpouseFamilyLink: typeof SelectionSpouseFamilyLink = require('./SelectionSpouseFamilyLink').SelectionSpouseFamilyLink;
+    export const SubmitterRecord: typeof SelectionSubmitterRecord = require('./SelectionSubmitterRecord').SelectionSubmitterRecord;
+    export const SubmitterReference: typeof SelectionSubmitterReference = require('./SelectionSubmitterReference').SelectionSubmitterReference;
+    export const Time: typeof SelectionTime = require('./SelectionTime').SelectionTime;
+}
 
 export namespace GedcomSelection {
     export import Any = SelectionAny;

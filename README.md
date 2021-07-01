@@ -1,6 +1,6 @@
 # read-gedcom
 
-![](https://img.shields.io/appveyor/build/arbre-app/read-gedcom)
+![](https://github.com/arbre-app/read-gedcom/actions/workflows/build.yml/badge.svg)
 ![](https://img.shields.io/npm/v/read-gedcom)
 ![](https://img.shields.io/librariesio/dependents/npm/read-gedcom)
 ![](https://img.shields.io/npm/l/read-gedcom)

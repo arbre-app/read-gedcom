@@ -3,12 +3,12 @@ import fs from 'fs';
 import 'mocha';
 import assert from 'assert';
 import { expect } from 'chai';
-import { GedcomSelection, readGedcom } from '../src';
+import { GedcomSelection, GedcomTag, readGedcom } from '../src';
 
 describe('Gedcom sample file', function () {
     const gedcom: GedcomSelection.Gedcom = readGedcom(fs.readFileSync('./tests/data/sample555.ged'));
 
-    it('should ', () => {
+    it('should resolve links', () => {
         const families = gedcom
             .getIndividualRecord('@I1@') // ['@I1@']
             .getSpouseFamilyLink() // ['-> @F1@', '-> @F2@']
@@ -16,7 +16,7 @@ describe('Gedcom sample file', function () {
         assert(families.length === 2);
     });
 
-    it('should ', () => {
+    it('should use the index correctly', () => {
         const wife = gedcom.getIndividualRecord().filter(node => node.pointer === '@I2@');
         expect(wife.pointer()).to.deep.equal(['@I2@']);
         const familyAsWife = wife.getFamilyAsSpouse();
@@ -27,7 +27,7 @@ describe('Gedcom sample file', function () {
         expect(familyAsChild.pointer()).to.deep.equal(['@F1@', '@F2@']);
     });
 
-    /*it('should allow transtyping', () => {
+    it('should allow transtyping', () => {
         assert(gedcom.get(GedcomTag.Header).as(GedcomSelection.Header).getCharacterEncoding()[0].value === 'UTF-8');
-    });*/
+    });
 });
