@@ -74,7 +74,11 @@ const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
                     byTagPointer[child.tag] = {};
                 }
                 if (byTagPointer[child.tag][child.pointer] !== undefined) {
-                    throw new GedcomError.DuplicatePointerError(`Duplicate key: ${child.pointer}`);
+                    throw new GedcomError.DuplicatePointerError(
+                        `Duplicate pointer: ${child.pointer}`,
+                        child.indexSource + 1,
+                        byTagPointer[child.tag][child.pointer].indexSource,
+                        child.pointer);
                 }
                 byTagPointer[child.tag][child.pointer] = child;
             }

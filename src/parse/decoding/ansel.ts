@@ -42,7 +42,7 @@ export const decodeAnsel: FileDecoder = (buffer, progressCallback?) => {
                 i++;
                 output.push(String.fromCharCode(u));
             } else {
-                throw new GedcomError.DecodingError(`Illegal ANSEL character code: ${code}`);
+                throw new GedcomError.DecodingError(`Illegal ANSEL character code: ${code}`, code);
             }
         } else {
             // One byte

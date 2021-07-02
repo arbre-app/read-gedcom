@@ -34,7 +34,7 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
     } else if (charset === FileEncoding.Cp850) {
         input = decodeCp850(buffer, decodingCallback);
     } else {
-        throw new GedcomError.UnsupportedCharsetError(charset);
+        throw new GedcomError.UnsupportedCharsetError(`Unsupported charset: ${charset}`, charset);
     }
 
     const totalChars = input.length;
@@ -58,7 +58,7 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
 const checkTreeStructure = (rootNode: GedcomTree.NodeRoot): void => {
     const root = rootNode.children;
     if (root.length === 0) {
-        throw new GedcomError.EmptyTreeError();
+        throw new GedcomError.EmptyTreeError('The tree is empty');
     }
     const header = root[0];
     if (header.tag !== GedcomTag.Header) {

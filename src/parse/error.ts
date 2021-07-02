@@ -13,22 +13,54 @@ export namespace GedcomError {
         }
     }
 
-    export class ParseError extends BaseError {}
+    export class ParseError extends BaseError {
+        constructor(public readonly message: string) {
+            super(message);
+        }
+    }
 
-    export class DecodingError extends ParseError {}
+    export class DecodingError extends ParseError {
+        constructor(message: string, public readonly illegalCode: number) {
+            super(message);
+        }
+    }
 
-    export class UnsupportedCharsetError extends ParseError {}
+    export class UnsupportedCharsetError extends ParseError {
+        constructor(message: string, public readonly charset: string) {
+            super(message);
+        }
+    }
 
-    export class TokenizationError extends ParseError {}
+    export class TokenizationError extends ParseError {
+        constructor(message: string, public readonly lineNumber: number, public readonly line: string) {
+            super(message);
+        }
+    }
 
-    export class TreeSyntaxError extends ParseError {}
-    export class InvalidNestingError extends TreeSyntaxError {}
-    export class InvalidConcatenationError extends TreeSyntaxError {}
+    export class TreeSyntaxError extends ParseError {
+        constructor(message: string, public readonly lineNumber: number) {
+            super(message);
+        }
+    }
+    export class InvalidNestingError extends TreeSyntaxError {
+        constructor(message: string, public readonly lineNumber: number, public readonly currentLevel: number, public readonly level: number) {
+            super(message, lineNumber);
+        }
+    }
+    export class InvalidConcatenationError extends TreeSyntaxError {
+        constructor(message: string, public readonly lineNumber: number, public readonly kind: string) {
+            super(message, lineNumber);
+        }
+    }
     export class InvalidRecordDefinitionError extends TreeSyntaxError {}
 
     export class TreeStructureError extends ParseError {}
     export class EmptyTreeError extends TreeStructureError {}
 
     export class IndexingError extends ParseError {}
-    export class DuplicatePointerError extends IndexingError {}
+    export class DuplicatePointerError extends IndexingError {
+        constructor(message: string, public readonly lineNumber: number, public readonly lineNumberOriginalDefinition: number, public readonly pointer: string) {
+            super(message);
+        }
+    }
 }
