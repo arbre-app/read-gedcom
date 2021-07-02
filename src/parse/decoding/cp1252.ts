@@ -11,7 +11,7 @@ export const decodeCp1252: FileDecoder = (buffer, progressCallback?) => {
 
     const byteBuffer = new Uint8Array(buffer);
     let outputView = '';
-    let i = 0
+    let i = 0;
     for (; i < byteBuffer.length; i++) {
         outputView += CP1252_TABLE.charAt(byteBuffer[i]);
 

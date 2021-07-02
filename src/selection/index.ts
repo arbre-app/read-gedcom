@@ -65,7 +65,7 @@ import { SelectionSpouseFamilyLink } from './SelectionSpouseFamilyLink';
 import { SelectionSubmitterRecord } from './SelectionSubmitterRecord';
 import { SelectionSubmitterReference } from './SelectionSubmitterReference';
 import { SelectionTime } from './SelectionTime';
-import { SelectionWithNoteMixin, SelectionWithSourceCitationMixin } from './mixin';
+import { SelectionWithAddressMixin, SelectionWithNoteMixin, SelectionWithNoteSourceCitationMixin, SelectionWithSourceCitationMixin } from './mixin';
 import { SelectionAny } from './SelectionAny';
 import { SelectionGedcom } from './SelectionGedcom';
 
@@ -141,7 +141,9 @@ namespace SelectionSubmitterRecord {}
 namespace SelectionSubmitterReference {}
 namespace SelectionTime {}
 
+namespace SelectionWithAddressMixin {}
 namespace SelectionWithNoteMixin {}
+namespace SelectionWithNoteSourceCitationMixin {}
 namespace SelectionWithSourceCitationMixin {}
 // TODO add all mixins
 
@@ -285,7 +287,9 @@ export namespace GedcomSelection {
     export import Time = SelectionTime;
 
     export namespace Mixin {
+        export import WithAddress = SelectionWithAddressMixin;
         export import WithNote = SelectionWithNoteMixin;
+        export import WithNoteSourceCitation = SelectionWithNoteSourceCitationMixin;
         export import WithSourceCitation = SelectionWithSourceCitationMixin;
     }
 }

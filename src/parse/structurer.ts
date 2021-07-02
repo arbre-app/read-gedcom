@@ -11,9 +11,9 @@ const PROGRESS_INTERVAL = 50000;
  * @param progressCallback See {@link GedcomReadingPhase.progressCallback}
  */
 export const buildTree = (lines: Iterable<RegExpExecArray>,
-                          noInlineContinuations: boolean = false,
+                          noInlineContinuations = false,
                           progressCallback: ((charsRead: number) => void) | null = null): GedcomTree.NodeRoot => {
-    if(progressCallback) {
+    if (progressCallback) {
         progressCallback(0);
     }
 
@@ -28,8 +28,8 @@ export const buildTree = (lines: Iterable<RegExpExecArray>,
         const level = parseInt(levelStr);
         const isSameOrUpperLevel = level <= currentLevel, isDownLevel = level === currentLevel + 1;
 
-        if (level < 0 || !isSameOrUpperLevel && !isDownLevel) {
-            throw new GedcomError.InvalidNestingError(`Bad nesting level at line ${i + 1} (current is ${currentLevel}, got ${level})`, i + 1, currentLevel, level);
+        if (level < 0 || (!isSameOrUpperLevel && !isDownLevel)) {
+            throw new GedcomError.InvalidNestingError(`Illegal nesting level at line ${i + 1} (current is ${currentLevel}, got ${level})`, i + 1, currentLevel, level);
         }
 
         const levelDifference = currentLevel - level + 1;
@@ -78,12 +78,12 @@ export const buildTree = (lines: Iterable<RegExpExecArray>,
 
         i++;
 
-        if(progressCallback && i % PROGRESS_INTERVAL === 0) {
+        if (progressCallback && i % PROGRESS_INTERVAL === 0) {
             progressCallback(charsRead);
         }
     }
 
-    if(progressCallback) {
+    if (progressCallback) {
         progressCallback(charsRead);
     }
 

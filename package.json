@@ -14,9 +14,9 @@
   "author": "Florian Cassayre",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "build:clean": "rimraf dist && tsc",
-    "docs": "typedoc",
+    "build": "tsc -p tsconfig-build.json",
+    "build:clean": "rimraf dist && npm run build",
+    "docs": "typedoc --tsconfig tsconfig-build.json",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "lint": "npx eslint src/ tests/ --ext .ts --fix"
   },
