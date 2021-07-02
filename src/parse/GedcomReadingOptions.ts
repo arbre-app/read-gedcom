@@ -1,7 +1,9 @@
 /**
  * Options to control the parsing of the Gedcom tree.
  */
-export interface GedcomTreeReadingOptions {
+import { GedcomReadingPhase } from './GedcomReadingPhase';
+
+export interface GedcomReadingOptions {
     /**
      * When set to <code>true</code> completely disabled the indexing in the tree.
      * This option can be safely set without affecting the correctness of the other components that may use the tree.
@@ -29,4 +31,12 @@ export interface GedcomTreeReadingOptions {
      * This option is not enabled by default for performance reasons.
      */
     doFreeze?: boolean;
+
+    /**
+     * An optional callback used to track the progress.
+     * Can also be used to implement preemptive multitasking (unblock the rendering thread).
+     * @param phase The current phase
+     * @param progress The progress of the phase, indicated by a number between <code>0</code> and <code>1</code>, or <code>null</code> if the progress cannot be determined
+     */
+    progressCallback?: (phase: GedcomReadingPhase, progress: number | null) => void;
 }

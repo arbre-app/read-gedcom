@@ -1,11 +1,16 @@
+import { BYTES_INTERVAL } from './common';
 import { FileDecoder } from './FileDecoder';
 
-export const decodeUtf8: FileDecoder = buffer => {
-    const [output, _] = decodeUtf8BOM(buffer); // eslint-disable-line
+export const decodeUtf8: FileDecoder = (buffer, progressCallback?) => {
+    const [output, _] = decodeUtf8BOM(buffer, progressCallback); // eslint-disable-line
     return output;
 };
 
-export const decodeUtf8BOM = (buffer: ArrayBuffer): [string, boolean] => {
+export const decodeUtf8BOM = (buffer: ArrayBuffer, progressCallback?: (bytesRead: number) => void): [string, boolean] => {
+    if (progressCallback) {
+        progressCallback(0);
+    }
+
     const byteBuffer = new Uint8Array(buffer);
     let outputView = '';
 
@@ -32,6 +37,14 @@ export const decodeUtf8BOM = (buffer: ArrayBuffer): [string, boolean] => {
                         : nPart > 191 && nPart < 224 && nIdx + 1 < nLen /* two bytes */
                             ? (nPart - 192 << 6) + byteBuffer[++nIdx] - 128
                             : /* nPart < 127 ? */ /* one byte */ nPart);
+
+        if (progressCallback && nIdx % BYTES_INTERVAL === 0) {
+            progressCallback(nIdx);
+        }
+    }
+
+    if (progressCallback) {
+        progressCallback(nIdx);
     }
 
     return [outputView, hasBOM];

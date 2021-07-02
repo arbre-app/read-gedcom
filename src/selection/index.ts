@@ -69,7 +69,7 @@ import { SelectionWithNoteMixin, SelectionWithSourceCitationMixin } from './mixi
 import { SelectionAny } from './SelectionAny';
 import { SelectionGedcom } from './SelectionGedcom';
 
-export { readGedcom } from './read';
+export { readGedcom, selectGedcom } from './read';
 
 namespace SelectionAny {}
 

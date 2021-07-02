@@ -1,12 +1,13 @@
-import { FileEncoding, detectCharset } from './decoder';
+import { GedcomTag } from '../tag';
+import { GedcomTree } from '../tree';
+import { detectCharset, FileEncoding } from './decoder';
 import { decodeAnsel, decodeCp1252, decodeCp850, decodeMacintosh, decodeUtf8 } from './decoding';
 import { GedcomError } from './error';
-import { tokenize } from './tokenizer';
-import { buildTree } from './structurer';
-import { GedcomTree } from '../tree';
-import { GedcomTag } from '../tag';
+import { GedcomReadingOptions } from './GedcomReadingOptions';
+import { GedcomReadingPhase } from './GedcomReadingPhase';
 import { indexTree } from './indexer';
-import { GedcomTreeReadingOptions } from './GedcomTreeReadingOptions';
+import { buildTree } from './structurer';
+import { tokenize } from './tokenizer';
 
 /**
  * Reads a Gedcom file and returns it as a tree representation.
@@ -14,31 +15,37 @@ import { GedcomTreeReadingOptions } from './GedcomTreeReadingOptions';
  * @param options Optional parameters
  * @throws GedcomError.ParseError If the file cannot be interpreted correctly
  */
-export const parseGedcom = (buffer: ArrayBuffer, options: GedcomTreeReadingOptions = {}): GedcomTree.NodeRoot => {
+export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions = {}): GedcomTree.NodeRoot => {
     const charset = detectCharset(buffer);
 
+    const callback = options.progressCallback;
+
+    const totalBytes = buffer.byteLength;
+    const decodingCallback = callback ? (bytesRead: number) => callback(GedcomReadingPhase.Decoding, bytesRead / totalBytes) : undefined;
     let input;
     if (charset === FileEncoding.Utf8) {
-        input = decodeUtf8(buffer);
+        input = decodeUtf8(buffer, decodingCallback);
     } else if (charset === FileEncoding.Cp1252) {
-        input = decodeCp1252(buffer);
+        input = decodeCp1252(buffer, decodingCallback);
     } else if (charset === FileEncoding.Ansel) {
-        input = decodeAnsel(buffer);
+        input = decodeAnsel(buffer, decodingCallback);
     } else if (charset === FileEncoding.Macintosh) {
-        input = decodeMacintosh(buffer);
+        input = decodeMacintosh(buffer, decodingCallback);
     } else if (charset === FileEncoding.Cp850) {
-        input = decodeCp850(buffer);
+        input = decodeCp850(buffer, decodingCallback);
     } else {
         throw new GedcomError.UnsupportedCharsetError(charset);
     }
 
+    const totalChars = input.length;
+
     const tokensIterator = tokenize(input);
-    const rootNode = buildTree(tokensIterator, !!options.noInlineContinuations);
+    const rootNode = buildTree(tokensIterator, !!options.noInlineContinuations, callback ? charsRead => callback(GedcomReadingPhase.TokenizationAndStructuring, charsRead / totalChars) : null);
 
     checkTreeStructure(rootNode);
 
     if (!options.noIndex) {
-        indexTree(rootNode, options.noBackwardsReferencesIndex);
+        indexTree(rootNode, !!options.noBackwardsReferencesIndex, callback ? () => callback(GedcomReadingPhase.Indexing, null) : null);
     }
 
     return rootNode;

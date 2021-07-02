@@ -1,4 +1,5 @@
 export * from './value';
 export { parseGedcom } from './reader';
-export { GedcomTreeReadingOptions } from './GedcomTreeReadingOptions';
+export { GedcomReadingOptions } from './GedcomReadingOptions';
+export { GedcomReadingPhase } from './GedcomReadingPhase';
 export { GedcomError } from './error';

@@ -1,15 +1,25 @@
 import { GedcomTag } from '../tag';
 import { GedcomTree } from '../tree';
 import { GedcomError } from './error';
-import RootIndex = GedcomTree.RootIndex;
+
+const PROGRESS_TRAVERSE_INTERVAL = 50000;
+const PROGRESS_ITERATE_INTERVAL = 5000;
 
 /**
  * Computes an index for each node in the tree.
  * This operation is idempotent: applying several times will not have further effects (but will cost resources as the whole tree will be traversed anyway).
  * @param rootNode The root node
- * @param noBackwardsReferencesIndex See {@link GedcomTreeReadingOptions.noBackwardsReferencesIndex}
+ * @param noBackwardsReferencesIndex See {@link GedcomReadingOptions.noBackwardsReferencesIndex}
+ * @param progressCallback See {@link GedcomReadingOptions.progressCallback}
  */
-export const indexTree = (rootNode: GedcomTree.NodeRoot, noBackwardsReferencesIndex = false): void => {
+export const indexTree = (rootNode: GedcomTree.NodeRoot,
+                          noBackwardsReferencesIndex = false,
+                          progressCallback: (() => void) | null = null): void => {
+    if (progressCallback) {
+        progressCallback();
+    }
+
+    let i = 0;
     const stack: [node: GedcomTree.Node, childIndex: number][] = [[rootNode, 0]];
     while (stack.length > 0) {
         const [node, childIndex] = stack[stack.length - 1]; // Peek
@@ -26,10 +36,19 @@ export const indexTree = (rootNode: GedcomTree.NodeRoot, noBackwardsReferencesIn
                 indexRecords(node as GedcomTree.NodeRoot); // Index records on root node
             }
         }
+
+        i++;
+        if (progressCallback && i % PROGRESS_TRAVERSE_INTERVAL === 0) {
+            progressCallback();
+        }
     }
 
     if (!noBackwardsReferencesIndex) {
-        indexBackwardsReferences(rootNode);
+        indexBackwardsReferences(rootNode, progressCallback);
+    }
+
+    if (progressCallback) {
+        progressCallback();
     }
 };
 
@@ -66,17 +85,17 @@ const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
 };
 
 // eslint-disable-next-line
-const indexBackwardsReferences = (rootNode: GedcomTree.NodeRoot): void => {
+const indexBackwardsReferences = (rootNode: GedcomTree.NodeRoot, progressCallback: (() => void) | null = null): void => {
     const get = <V, D>(object: { [k: string]: V }, key: string, def: D): V | D => {
         const value = object[key];
         return value != null ? value : def;
     };
 
-    const index = rootNode._index as RootIndex; // We assume that the index is defined
+    const index = rootNode._index as GedcomTree.RootIndex; // We assume that the index is defined
 
     const families = get(index.byTagPointer, GedcomTag.Family, {} as { [p: string]: GedcomTree.Node });
     const asSpouse: { [spouseId: string]: GedcomTree.Node[] } = {}, asChild: { [childId: string]: GedcomTree.Node[] } = {};
-    Object.values(families).forEach(familyData => {
+    Object.values(families).forEach((familyData, i) => {
         const familyIndex = familyData._index as GedcomTree.Index; // Also safe, by assumption
         for (const spouseType of [GedcomTag.Husband, GedcomTag.Wife]) {
             for (const spouse of get(familyIndex.byTag, spouseType, [])) {
@@ -99,6 +118,10 @@ const indexBackwardsReferences = (rootNode: GedcomTree.NodeRoot): void => {
                     asChild[childId] = [familyData];
                 }
             }
+        }
+
+        if (progressCallback && i % PROGRESS_ITERATE_INTERVAL === 0) {
+            progressCallback();
         }
     });
 

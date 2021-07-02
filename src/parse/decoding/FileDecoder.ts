@@ -1,1 +1,1 @@
-export type FileDecoder = (buffer: ArrayBuffer) => string;
+export type FileDecoder = (buffer: ArrayBuffer, progressCallback?: (bytesRead: number) => void) => string;

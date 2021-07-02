@@ -2,18 +2,29 @@ import { GedcomTag } from '../tag';
 import { GedcomTree } from '../tree';
 import { GedcomError } from './error';
 
+const PROGRESS_INTERVAL = 50000;
+
 /**
  * Builds a tree from tokenized Gedcom lines.
  * @param lines An iterable of regular expression matches, which format is defined in {@link tokenize}
- * @param noInlineContinuations See {@link GedcomTreeReadingOptions.noInlineContinuations}
+ * @param noInlineContinuations See {@link GedcomReadingOptions.noInlineContinuations}
+ * @param progressCallback See {@link GedcomReadingPhase.progressCallback}
  */
-export const buildTree = (lines: Iterable<RegExpExecArray>, noInlineContinuations = false): GedcomTree.NodeRoot => {
+export const buildTree = (lines: Iterable<RegExpExecArray>,
+                          noInlineContinuations: boolean = false,
+                          progressCallback: ((charsRead: number) => void) | null = null): GedcomTree.NodeRoot => {
+    if(progressCallback) {
+        progressCallback(0);
+    }
+
     let i = 0;
+    let charsRead = 0;
     let currentLevel = -1; // Current level
     const stack: GedcomTree.Node[] = [{ tag: null, pointer: null, value: null, indexSource: -1, indexRelative: 0, children: [] }];
     for (const line of lines) {
         // eslint-disable-next-line
-        const [_, levelStr, pointer, tag, value] = line;
+        const [lineStr, levelStr, pointer, tag, value] = line;
+        charsRead += lineStr.length;
         const level = parseInt(levelStr);
         const isSameOrUpperLevel = level <= currentLevel, isDownLevel = level === currentLevel + 1;
 
@@ -69,6 +80,14 @@ export const buildTree = (lines: Iterable<RegExpExecArray>, noInlineContinuation
         }
 
         i++;
+
+        if(progressCallback && i % PROGRESS_INTERVAL === 0) {
+            progressCallback(charsRead);
+        }
+    }
+
+    if(progressCallback) {
+        progressCallback(charsRead);
     }
 
     return stack[0] as GedcomTree.NodeRoot; // The top of the stack is the root node
