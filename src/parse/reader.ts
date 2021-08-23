@@ -16,7 +16,9 @@ import { tokenize } from './tokenizer';
  * @throws GedcomError.ParseError If the file cannot be interpreted correctly
  */
 export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions = {}): GedcomTree.NodeRoot => {
-    const charset = detectCharset(buffer);
+    checkMagicHeader(buffer);
+
+    const charset: FileEncoding = options.forcedCharset == null ? detectCharset(buffer) : options.forcedCharset;
 
     const callback = options.progressCallback;
 
@@ -49,6 +51,35 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
     }
 
     return rootNode;
+};
+
+/**
+ * A simple and fast testing procedure to eliminate files that are clearly not Gedcoms.
+ * @param buffer The content of the file
+ */
+const checkMagicHeader = (buffer: ArrayBuffer) => {
+    const bom = [0xEF, 0xBB, 0xBF];
+    const headStr = '0 HEAD';
+    const head = [];
+    for(let i = 0; i < headStr.length; i++) {
+        head.push(headStr.charCodeAt(i));
+    }
+    const byteBuffer = new Uint8Array(buffer);
+    const startsWith = (bytes: number[]) => {
+        if(byteBuffer.byteLength < bytes.length) {
+            return false;
+        }
+        for(let i = 0; i < bytes.length; i++) {
+            if(bytes[i] !== byteBuffer[i]) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    if(!startsWith(head) && !startsWith(bom.concat(head))) {
+        throw new GedcomError.InvalidFileTypeError('Probably not a Gedcom file');
+    }
 };
 
 /**

@@ -21,6 +21,12 @@ const gTag = `[${ccAlphanum}]+|_[${ccAlphanum}_]+`; // TODO
 const gTerminator = `${cCR}?${cLF}`;
 const gGedcomLine = `(${gLevel})(?:${cDelim}(${gXRefId}))?${cDelim}(${gTag})(?:${cDelim}(${gLineValue}))?(?:${gTerminator})`;
 
+/**
+ * The tokenizer implementation.
+ * Processes a file stored as a string, line by line, according to the `gGedcomLine` regular expression.
+ * A parameter in the constructor decides whether to raise an error when a line cannot be parsed or to fail silently.
+ * Code was not extracted further as a performance tradeoff.
+ */
 class GedcomTokenizer implements IterableIterator<RegExpExecArray> {
     private rGedcomLines = new RegExp(`^${gGedcomLine}`, 'gym'); // Must be newly created
     private linesRead = 0;
@@ -51,4 +57,9 @@ class GedcomTokenizer implements IterableIterator<RegExpExecArray> {
     }
 }
 
+/**
+ * Processes the input string and return a tokenized, line by line, high-level representation.
+ * @param input The input file, represented as a single string
+ * @param strict When set to <code>false</code> any parsing exception will not be reported
+ */
 export const tokenize = (input: string, strict = true): Iterable<RegExpExecArray> => new GedcomTokenizer(input, strict);

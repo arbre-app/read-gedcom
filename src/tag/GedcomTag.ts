@@ -1,5 +1,8 @@
 // https://wiki-en.genealogy.net/GEDCOM-Tags
 
+/**
+ * All the standard Gedcom tags.
+ */
 export enum GedcomTag {
     Abbreviation = 'ABBR',
     Address = 'ADDR',

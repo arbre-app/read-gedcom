@@ -37,15 +37,24 @@ export namespace GedcomTree {
          */
         children: Node[];
 
+        /**
+         * The index for this node, if computed.
+         */
         _index?: Index;
     }
 
+    /**
+     * The index for a node.
+     */
     export interface Index {
         byTag: { [tag: string]: Node[] };
     }
 
     // Refinements
 
+    /**
+     * The root node of a Gedcom file.
+     */
     export interface NodeRoot extends Node {
         tag: null;
         pointer: null;
@@ -56,6 +65,9 @@ export namespace GedcomTree {
         _index?: RootIndex;
     }
 
+    /**
+     * The index for the root node.
+     */
     export interface RootIndex extends Index {
         byTagPointer: { [tag: string]: { [pointer: string]: Node } };
 

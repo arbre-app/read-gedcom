@@ -58,7 +58,7 @@ export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 1000, maxPee
  * at: https://github.com/arbre-app/read-gedcom/issues.
  * @param buffer The content of the file
  */
-export const detectCharset = (buffer: ArrayBuffer) => {
+export const detectCharset = (buffer: ArrayBuffer): FileEncoding => {
     // eslint-disable-next-line
     const { sourceEncoding, sourceProvider, sourceProviderVersion, fileHasBOM } = getFileMetadata(buffer);
 

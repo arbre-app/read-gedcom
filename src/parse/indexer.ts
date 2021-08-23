@@ -11,10 +11,12 @@ const PROGRESS_ITERATE_INTERVAL = 5000;
  * @param rootNode The root node
  * @param noBackwardsReferencesIndex See {@link GedcomReadingOptions.noBackwardsReferencesIndex}
  * @param progressCallback See {@link GedcomReadingOptions.progressCallback}
+ * @param doHideIndex See {@link GedcomReadingOptions.doHideIndex}
  */
 export const indexTree = (rootNode: GedcomTree.NodeRoot,
                           noBackwardsReferencesIndex = false,
-                          progressCallback: (() => void) | null = null): void => {
+                          progressCallback: (() => void) | null = null,
+                          doHideIndex = false): void => {
     if (progressCallback) {
         progressCallback();
     }
@@ -31,7 +33,7 @@ export const indexTree = (rootNode: GedcomTree.NodeRoot,
             if (stack.length > 0) {
                 stack[stack.length - 1][1]++; // Next child
             }
-            indexNode(node); // Index
+            indexNode(node, !doHideIndex); // Index
             if (stack.length === 0) {
                 indexRecords(node as GedcomTree.NodeRoot); // Index records on root node
             }
@@ -52,7 +54,7 @@ export const indexTree = (rootNode: GedcomTree.NodeRoot,
     }
 };
 
-const indexNode = (node: GedcomTree.Node): void => {
+const indexNode = (node: GedcomTree.Node, enumerable: boolean): void => {
     const byTag: { [tag: string]: GedcomTree.Node[] } = {};
     node.children.forEach(child => {
         if (child.tag !== null) {
@@ -61,6 +63,11 @@ const indexNode = (node: GedcomTree.Node): void => {
             }
             byTag[child.tag].push(child);
         }
+    });
+    Object.defineProperty(node, '_index', {
+        enumerable,
+        configurable: true,
+        writable: true,
     });
     node._index = { byTag } as GedcomTree.Index;
 };

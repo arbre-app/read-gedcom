@@ -6,6 +6,7 @@
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
     "out": "docs",
-    "excludeExternals": true
+    "excludeExternals": true,
+    "theme": "pages-plugin"
   }
 }

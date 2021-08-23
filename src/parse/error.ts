@@ -19,6 +19,8 @@ export namespace GedcomError {
         }
     }
 
+    export class InvalidFileTypeError extends ParseError {}
+
     export class DecodingError extends ParseError {
         constructor(message: string, public readonly illegalCode: number) {
             super(message);

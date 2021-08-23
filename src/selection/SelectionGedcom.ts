@@ -20,6 +20,7 @@ export class SelectionGedcom extends SelectionAny {
         return this.get(GedcomTag.Header, null, SelectionHeader);
     }
 
+    // TODO this method does the same thing as `get`, it can be remove
     getRecord<R extends SelectionRecord>(tag: string | string[] | null, pointer: string | string[] | null, SelectionAdapter: AnyConstructor<R>): R {
         return this.get(tag, pointer, SelectionAdapter);
     }

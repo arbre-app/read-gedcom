@@ -22,7 +22,6 @@ export const buildTree = (lines: Iterable<RegExpExecArray>,
     let currentLevel = -1; // Current level
     const stack: GedcomTree.Node[] = [{ tag: null, pointer: null, value: null, indexSource: -1, indexRelative: 0, children: [] }];
     for (const line of lines) {
-        // eslint-disable-next-line
         const [lineStr, levelStr, pointer, tag, value] = line;
         charsRead += lineStr.length;
         const level = parseInt(levelStr);

@@ -51,6 +51,6 @@ The API is very flexible and the interpretation context can be changed at will.
 Note that the library can very well be used without the selection API (it is implemented independently).
 The entry point in this case is `parseGedcom`.
 
-### Bug
+### Bug report
 
 A Gedcom file isn't parsed correctly? Please [open a ticket](https://github.com/arbre-app/read-gedcom/issues)!

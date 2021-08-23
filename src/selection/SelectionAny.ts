@@ -1,5 +1,5 @@
 import { AnyConstructor, enumerable } from '../meta';
-import { GedcomTree } from '../tree';
+import { GedcomTree, nodeToString } from '../tree';
 import { SelectionGedcom } from './SelectionGedcom';
 
 /**
@@ -227,6 +227,13 @@ export class SelectionAny implements ArrayLike<GedcomTree.Node> {
             array.push(new Constructor(this.rootNode, [this[i]]));
         }
         return array;
+    }
+
+    /**
+     * Returns a string representation for this selection.
+     */
+    toString(): string {
+        return this.length > 0 ? this.array().map(nodeToString).join('\n\n') : '(empty selection)';
     }
 
     /**

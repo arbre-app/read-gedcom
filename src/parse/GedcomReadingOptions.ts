@@ -1,8 +1,9 @@
+import { FileEncoding } from './decoder';
+import { GedcomReadingPhase } from './GedcomReadingPhase';
+
 /**
  * Options to control the parsing of the Gedcom tree.
  */
-import { GedcomReadingPhase } from './GedcomReadingPhase';
-
 export interface GedcomReadingOptions {
     /**
      * When set to <code>true</code> completely disabled the indexing in the tree.
@@ -30,7 +31,7 @@ export interface GedcomReadingOptions {
      * Otherwise the objects will remain normal.
      * This option is not enabled by default for performance reasons.
      */
-    doFreeze?: boolean;
+    /*doFreeze?: boolean;*/
 
     /**
      * An optional callback used to track the progress.
@@ -39,4 +40,17 @@ export interface GedcomReadingOptions {
      * @param progress The progress of the phase, indicated by a number between <code>0</code> and <code>1</code>, or <code>null</code> if the progress cannot be determined
      */
     progressCallback?: (phase: GedcomReadingPhase, progress: number | null) => void;
+
+    /**
+     * When set, disables the automatic charset detection mechanism and forces the parser to decode the file using the specified charset.
+     * This is an escape hatch and its usage is not recommended; if you encounter issues with the detection mechanism please open a ticket instead.
+     */
+    forcedCharset?: FileEncoding;
+
+    /**
+     * When set to <code>true</code>, the {@link GedcomTree.Node._index} attribute will be non-enumerable.
+     * As a consequence, {@link JSON.stringify} will not serialize the index.
+     * It is however still possible to recompute the index, by calling {@link indexTree}.
+     */
+    doHideIndex?: boolean;
 }
