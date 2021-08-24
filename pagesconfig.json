@@ -5,11 +5,15 @@
       "pages": [
         {
           "title": "Quick Start",
-          "source": "./documentation/quickstart.md"
+          "source": "./pages/quickstart.md"
         },
         {
-          "title": "Examples",
-          "source": "./documentation/examples.md"
+          "title": "Basic Examples",
+          "source": "./pages/basic-examples.md"
+        },
+        {
+          "title": "Advanced Examples",
+          "source": "./pages/advanced-examples.md"
         }
       ]
     }

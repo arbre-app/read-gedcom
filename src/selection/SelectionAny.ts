@@ -230,6 +230,74 @@ export class SelectionAny implements ArrayLike<GedcomTree.Node> {
     }
 
     /**
+     * Returns a concatenation of two selections.
+     * The right hand side selection should be a subtype of the left hand side's.
+     * The resulting selection will be the same type as the left hand side's.
+     * @param other The right hand side selection
+     */
+    concatenate<N extends this>(other: N): this {
+        const Constructor = this.selfConstructor();
+        const nodes: GedcomTree.Node[] = [];
+        for (let i = 0; i < this.length; i++) {
+            nodes.push(this[i]);
+        }
+        for (let i = 0; i < other.length; i++) {
+            nodes.push(other[i]);
+        }
+        return new Constructor(this.rootNode, nodes);
+    }
+
+    /**
+     * Returns a concatenation of two selections.
+     * The right hand side selection should be a subtype of the left hand side's.
+     * The resulting selection will be the same type as the left hand side's, with the elements of the right hand side's first.
+     * @param other The right hand side selection
+     */
+    concatenateLeft<N extends this>(other: N): this {
+        const Constructor = this.selfConstructor();
+        const nodes: GedcomTree.Node[] = [];
+        for (let i = 0; i < other.length; i++) {
+            nodes.push(other[i]);
+        }
+        for (let i = 0; i < this.length; i++) {
+            nodes.push(this[i]);
+        }
+        return new Constructor(this.rootNode, nodes);
+    }
+
+    /**
+     * Returns a sorted selection, with respect to the comparator.
+     * The default comparator relies on the {@link GedcomTree.Node.indexSource} attribute.
+     * @param comparator The comparator
+     */
+    sorted(comparator: (a: GedcomTree.Node, b: GedcomTree.Node) => number = (a, b) => a.indexSource - b.indexSource): this {
+        const Constructor = this.selfConstructor();
+        const nodes: GedcomTree.Node[] = [];
+        for (let i = 0; i < this.length; i++) {
+            nodes.push(this[i]);
+        }
+        nodes.sort(comparator);
+        return new Constructor(this.rootNode, nodes);
+    }
+
+    /**
+     * Checks whether two selections are equal.
+     * Note that the strategy used here is reference equality, hence for this method to return <code>true</code>, the nodes must be the same references (and in the same order).
+     * @param other The selection to compare it against
+     */
+    equals(other: SelectionAny): boolean {
+        if(this.length !== other.length) {
+            return false;
+        }
+        for(let i = 0; i < this.length; i++) {
+            if(this[i] !== other[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Returns a string representation for this selection.
      */
     toString(): string {
