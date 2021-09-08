@@ -19,7 +19,7 @@ const MONTHS_HEBREW = createIndices(['TSH', 'CSH', 'KSL', 'TVT', 'SHV', 'ADR', '
 
 const BEFORE_COMMON_ERA = createIndices(['BCE', 'BC', 'B.C.']);
 
-const rDateCalendarEscape = /^@#(.*)@$/;
+const rDateCalendarEscape = /^@@#(.*)@@|@#(.*)@$/; // FIXME
 const rDatePhrase = /^\\((.*)\\)$/;
 const rDatePhraseEnd = /\((.*)\)$/;
 
@@ -126,7 +126,7 @@ export const parseDate = (value: string | null):
             let escapeMatch;
             let calendar = CALENDAR_GREGORIAN;
             if ((escapeMatch = rDateCalendarEscape.exec(parts[i])) !== null) { // Starts with a calendar
-                calendar = escapeMatch[1];
+                calendar = escapeMatch[1] ?? escapeMatch[2];
                 i++;
             }
             const isGregorian = calendar === CALENDAR_GREGORIAN, isJulian = calendar === CALENDAR_JULIAN,
