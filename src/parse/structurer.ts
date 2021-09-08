@@ -48,7 +48,7 @@ export const buildTree = (lines: Iterable<RegExpExecArray>,
             if (parent.value == null) {
                 parent.value = '';
             }
-            parent.value += value;
+            parent.value += value ?? '';
             currentLevel = level - 1;
         } else if (tag === GedcomTag.Continuation && !noInlineContinuations) {
             if (pointer) {
@@ -61,7 +61,7 @@ export const buildTree = (lines: Iterable<RegExpExecArray>,
             if (parent.value == null) {
                 parent.value = '';
             }
-            parent.value += separator + value;
+            parent.value += separator + (value ?? '');
             currentLevel = level - 1;
         } else {
             const child: GedcomTree.Node = { tag, pointer: pointer ?? null, value: value ?? null, indexSource: i, indexRelative: parent.children.length, children: [] };
