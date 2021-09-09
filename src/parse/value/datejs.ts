@@ -29,3 +29,19 @@ export const toJsDate = (date: GedcomDate.FuzzyPart.Date): Date | null => {
         return null; // Unsupported calendar kind
     }
 };
+
+export const toJsDateTime = (date: GedcomDate.Exact, time?: GedcomDate.ExactTime): Date | null => {
+    // TODO check valid date
+    const dt = new Date(Date.UTC(date.year, date.month - 1, date.day));
+    if(time != null) {
+        dt.setUTCHours(time.hours); // Important to remain in UTC
+        dt.setUTCMinutes(time.minutes);
+        if(time.seconds !== undefined) {
+            dt.setUTCSeconds(time.seconds);
+            if(time.centiseconds !== undefined) {
+                dt.setUTCMilliseconds(time.centiseconds * 10);
+            }
+        }
+    }
+    return dt;
+};

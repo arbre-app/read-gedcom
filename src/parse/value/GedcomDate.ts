@@ -5,6 +5,13 @@ export namespace GedcomDate {
         year: number;
     }
 
+    export interface ExactTime {
+        hours: number;
+        minutes: number;
+        seconds?: number;
+        centiseconds?: number;
+    }
+
     export interface Fuzzy {
         /**
          * Indicates an instance of {@link Dated}.

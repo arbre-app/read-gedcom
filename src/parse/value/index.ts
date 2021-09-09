@@ -1,3 +1,3 @@
 export { GedcomDate } from './GedcomDate';
-export { parseDate, parseDateExact } from './date';
+export { parseDate, parseExactDate } from './date';
 export { toJsDate } from './datejs';

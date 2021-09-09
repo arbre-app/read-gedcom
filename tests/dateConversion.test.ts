@@ -1,6 +1,8 @@
 import 'mocha';
 import assert from 'assert';
-import { GedcomDate, parseDate, toJsDate } from '../src';
+import { GedcomDate, parseDate, parseExactDate, toJsDate } from '../src';
+import { parseExactTime } from '../src/parse/value/date';
+import { toJsDateTime } from '../src/parse/value/datejs';
 
 describe('Parsed dates to JS dates conversion', () => {
     const testPunctual = (value: string, expected: string | Date): void => {
@@ -50,5 +52,22 @@ describe('Parsed dates to JS dates conversion', () => {
         testPunctual(fr('11 FLOR 8'), '1800-05-01');
         testPunctual(fr('25 MESS 8'), '1800-07-14');
         testPunctual(fr('29 FRUC 8'), '1800-09-16');
+        testPunctual(fr('1 VEND 1'), '1792-09-22');
+        testPunctual(fr('10 NIVO 14'), '1805-12-31');
+    });
+
+    it('should correctly convert exact dates and times to JS dates', () => {
+        const test = (value: [string] | [string, string], expected: string) => {
+            const date = parseExactDate(value[0]);
+            assert(date !== null);
+            const time = value[1] !== undefined ? parseExactTime(value[1]) : undefined;
+            assert(time !== null);
+            assert.deepStrictEqual(toJsDateTime(date, time), new Date(expected))
+        };
+
+        test(['15 AUG 2015'], '2015-08-15');
+        test(['11 MAR 2002', '17:53'], '2002-03-11T17:53Z');
+        test(['28 FEB 1977', '05:47:11'], '1977-02-28T05:47:11Z');
+        test(['3 DEC 1956', '12:28:49.22'], '1956-12-03T12:28:49.220Z');
     });
 });
