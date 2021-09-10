@@ -2,6 +2,7 @@
 import { SelectionRecord } from './base';
 import { SelectionAddress } from './SelectionAddress';
 import { SelectionAdoption } from './SelectionAdoption';
+import { SelectionAge } from './SelectionAge';
 import { SelectionAssociation } from './SelectionAssociation';
 import { SelectionChanged } from './SelectionChanged';
 import { SelectionCharacterEncoding } from './SelectionCharacterEncoding';
@@ -32,6 +33,8 @@ import { SelectionIndividualEventFamily } from './SelectionIndividualEventFamily
 import { SelectionIndividualEvent } from './SelectionIndividualEvent';
 import { SelectionIndividualRecord } from './SelectionIndividualRecord';
 import { SelectionIndividualReference } from './SelectionIndividualReference';
+import { SelectionLatitude } from './SelectionLatitude';
+import { SelectionLongitude } from './SelectionLongitude';
 import { SelectionMediaType } from './SelectionMediaType';
 import { SelectionMetaEvent } from './SelectionMetaEvent';
 import { SelectionMultimediaFile } from './SelectionMultimediaFile';
@@ -75,6 +78,7 @@ namespace SelectionAny {}
 
 namespace SelectionAddress {}
 namespace SelectionAdoption {}
+namespace SelectionAge {}
 namespace SelectionAssociation {}
 namespace SelectionChanged {}
 namespace SelectionCharacterEncoding {}
@@ -106,6 +110,8 @@ namespace SelectionIndividualEventFamily {}
 namespace SelectionIndividualEvent {}
 namespace SelectionIndividualRecord {}
 namespace SelectionIndividualReference {}
+namespace SelectionLatitude {}
+namespace SelectionLongitude {}
 namespace SelectionMediaType {}
 namespace SelectionMetaEvent {}
 namespace SelectionMultimediaFile {}
@@ -150,6 +156,7 @@ namespace SelectionWithSourceCitationMixin {}
 export namespace GedcomSelection {
     export const Address: typeof SelectionAddress = require('./SelectionAddress').SelectionAddress;
     export const Adoption: typeof SelectionAdoption = require('./SelectionAdoption').SelectionAdoption;
+    export const Age: typeof SelectionAge = require('./SelectionAge').SelectionAge;
     export const Any: typeof SelectionAny = require('./SelectionAny').SelectionAny;
     export const Association: typeof SelectionAssociation = require('./SelectionAssociation').SelectionAssociation;
     export const Changed: typeof SelectionChanged = require('./SelectionChanged').SelectionChanged;
@@ -181,6 +188,8 @@ export namespace GedcomSelection {
     export const IndividualEvent: typeof SelectionIndividualEvent = require('./SelectionIndividualEvent').SelectionIndividualEvent;
     export const IndividualRecord: typeof SelectionIndividualRecord = require('./SelectionIndividualRecord').SelectionIndividualRecord;
     export const IndividualReference: typeof SelectionIndividualReference = require('./SelectionIndividualReference').SelectionIndividualReference;
+    export const Latitude: typeof SelectionLatitude = require('./SelectionLatitude').SelectionLatitude;
+    export const Longitude: typeof SelectionLongitude = require('./SelectionLongitude').SelectionLongitude;
     export const MediaType: typeof SelectionMediaType = require('./SelectionMediaType').SelectionMediaType;
     export const MetaEvent: typeof SelectionMetaEvent = require('./SelectionMetaEvent').SelectionMetaEvent;
     export const MultimediaFile: typeof SelectionMultimediaFile = require('./SelectionMultimediaFile').SelectionMultimediaFile;
@@ -219,6 +228,7 @@ export namespace GedcomSelection {
 export namespace GedcomSelection {
     export import Any = SelectionAny;
     export import Address = SelectionAddress;
+    export import Age = SelectionAge;
     export import Adoption = SelectionAdoption;
     export import Association = SelectionAssociation;
     export import Changed = SelectionChanged;
@@ -251,6 +261,8 @@ export namespace GedcomSelection {
     export import IndividualEvent = SelectionIndividualEvent;
     export import IndividualRecord = SelectionIndividualRecord;
     export import IndividualReference = SelectionIndividualReference;
+    export import Latitude = SelectionLatitude;
+    export import Longitude = SelectionLongitude;
     export import MediaType = SelectionMediaType;
     export import MetaEvent = SelectionMetaEvent;
     export import MultimediaFile = SelectionMultimediaFile;
@@ -299,6 +311,10 @@ export namespace GedcomSelection {
     export type Any = SelectionAny;
     /** @ignore */
     export type Address = SelectionAddress;
+    /**
+     * @ignore
+     */
+    export type Age = SelectionAge;
     /** @ignore */
     export type Adoption = SelectionAdoption;
     /** @ignore */
@@ -363,6 +379,14 @@ export namespace GedcomSelection {
     export type IndividualRecord = SelectionIndividualRecord;
     /** @ignore */
     export type IndividualReference = SelectionIndividualReference;
+    /**
+     * @ignore
+     */
+    export type Latitude = SelectionLatitude;
+    /**
+     * @ignore
+     */
+    export type Longitude = SelectionLongitude;
     /** @ignore */
     export type MediaType = SelectionMediaType;
     /** @ignore */

@@ -50,7 +50,7 @@ describe('Gedcom sample file', function () {
         assert(fileDate.getTime().value()[0] === '0:00:00'); // TODO
 
         assert(header.getFilename().value()[0] === '555Sample.ged');
-        assert(header.getLanguage().value()[0] === 'English');
+        assert(header.getLanguage().value()[0] === GedcomValue.Language.English);
 
         const submitter = header.getSubmitterReference().getSubmitterRecord();
 

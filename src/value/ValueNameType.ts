@@ -1,7 +1,7 @@
 export enum ValueNameType {
-    AliasName = 'aka',
-    BirthName = 'birth',
-    ImmigrationName = 'immigrant',
-    MaidenName = 'maiden',
-    MarriedName = 'married'
+    Alias = 'aka',
+    Birth = 'birth',
+    Immigration = 'immigrant',
+    Maiden = 'maiden',
+    Married = 'married'
 }
