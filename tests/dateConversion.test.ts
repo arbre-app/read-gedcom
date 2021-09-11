@@ -1,8 +1,6 @@
 import 'mocha';
-import assert from 'assert';
-import { GedcomDate, parseDate, parseExactDate, toJsDate } from '../src';
-import { parseExactTime } from '../src/parse/value/date';
-import { toJsDateTime } from '../src/parse/value/datejs';
+import { assert } from 'chai';
+import { GedcomDate, parseDate, parseExactDate, parseExactTime, toJsDate, toJsDateTime } from '../src';
 
 describe('Parsed dates to JS dates conversion', () => {
     const testPunctual = (value: string, expected: string | Date): void => {
@@ -18,7 +16,7 @@ describe('Parsed dates to JS dates conversion', () => {
         testPunctual('11 NOV 1918', '1918-11-11');
         testPunctual('8 MAY 1945', '1945-05-08');
         testPunctual('29 NOV 1226', '1226-11-29')
-        testPunctual('753 B.C.', new Date(Date.UTC(-753, 0, 1)));
+        testPunctual('753 BCE', new Date(Date.UTC(-753, 0, 1)));
     });
 
     it('should correctly convert French Republican dates to JS dates', () => {
@@ -62,7 +60,7 @@ describe('Parsed dates to JS dates conversion', () => {
             assert(date !== null);
             const time = value[1] !== undefined ? parseExactTime(value[1]) : undefined;
             assert(time !== null);
-            assert.deepStrictEqual(toJsDateTime(date, time), new Date(expected))
+            assert.deepStrictEqual(toJsDateTime(date as GedcomDate.Exact, time as GedcomDate.ExactTime), new Date(expected))
         };
 
         test(['15 AUG 2015'], '2015-08-15');

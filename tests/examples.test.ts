@@ -1,6 +1,6 @@
 import fs from 'fs';
 import 'mocha';
-import assert from 'assert';
+import { assert } from 'chai';
 import { GedcomSelection, readGedcom } from '../src';
 
 describe('Documentation examples tested on sample Gedcom file', () => {

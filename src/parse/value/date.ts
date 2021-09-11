@@ -22,14 +22,49 @@ const MONTHS_HEBREW = createIndices(['TSH', 'CSH', 'KSL', 'TVT', 'SHV', 'ADR', '
 
 const BEFORE_COMMON_ERA = createIndices(['BCE', 'BC', 'B.C.']);
 
-const rDateCalendarEscape = /^@@#(.*)@@|@#(.*)@$/; // FIXME
-const rDatePhrase = /^\\((.*)\\)$/;
+const rDateCalendarEscape = /^(?:@@#(.*)@@|@#(.*)@)$/; // FIXME
+const rDatePhrase = /^\((.*)\)$/;
 const rDatePhraseEnd = /\((.*)\)$/;
 
-const strYear = '[1-9][0-9]*|0|00[1-9]|0[1-9][0-9]';
-const rYear = new RegExp(`^${strYear}$`);
-const rYearDual = new RegExp(`^(${strYear})/([0-9]{2})$`);
-const rDay = /^[1-2]?[0-9]|3[0-1]$/;
+const gYear = '([1-9][0-9]*|0|00[1-9]|0[1-9][0-9])';
+const rYear = new RegExp(`^${gYear}$`);
+const rYearDual = new RegExp(`^${gYear}/([0-9]{2})$`);
+const rDay = /^(?:0?[1-9]|[1-2][0-9]|3[0-1])$/; // Allow leading zeros
+
+const isValidGregorian = (year: number, month: number, day?: number) => {
+    if(month !== undefined) {
+        if(month < 1 || month > 12) { // This check is redundant, but included for completeness
+            return false;
+        }
+        if(day !== undefined) {
+            const isBissextile = ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
+            const daysInMonth = month === 2 ? 28 + (isBissextile ? 1 : 0) : 30 + ([4, 6, 9, 11].includes(month) ? 0 : 1);
+            if(day < 1 || day > daysInMonth) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
+const isValidFrenchRepublican = (year: number, month?: number, day?: number) => {
+    if(!(year >= 1 && year <= 14)) {
+        return false;
+    }
+    if(month !== undefined) {
+        if(month < 1 || month > 13) {
+            return false;
+        }
+        if(day !== undefined) {
+            const isBissextile = year % 4 === 3;
+            const daysInMonth = month !== 13 ? 30 : 5 + (isBissextile ? 1 : 0);
+            if(day < 1 || day > daysInMonth) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
 
 export const parseDate = (value: string | null):
     (GedcomDate.Fuzzy.Normal | GedcomDate.Fuzzy.Approximated
@@ -155,6 +190,10 @@ export const parseDate = (value: string | null):
                 i++;
                 const year = parseYearPart(parts, false, isGregorianOrJulian);
                 if (year !== null) {
+                    if((isGregorian && !isValidGregorian(year.value, monthIndex))
+                        || (isFrenchRepublican && !isValidFrenchRepublican(year.value, monthIndex))) {
+                        return null;
+                    }
                     return {
                         calendar: calendarProps,
                         month: monthIndex,
@@ -164,6 +203,7 @@ export const parseDate = (value: string | null):
                     return null; // Invalid year
                 }
             } else {
+                const previousI = i;
                 const firstAsYear = parseYearPart(parts, isGregorianOrJulian, false);
                 if (firstAsYear !== null && firstAsYear.isBce) {
                     return {
@@ -171,7 +211,7 @@ export const parseDate = (value: string | null):
                         year: firstAsYear,
                     } as GedcomDate.FuzzyPart.Date;
                 }
-                i--; // Guaranteed that we only read one token
+                i = previousI; // Important: we need to backtrack since there can be an ambiguity
                 const firstAsDay = i < parts.length && rDay.exec(parts[i]) !== null ? parseInt(parts[i]) : null;
                 let secondAsMonth = null;
                 if (firstAsDay !== null && i + 1 < parts.length) {
@@ -185,6 +225,10 @@ export const parseDate = (value: string | null):
                     i += 2;
                     const year = parseYearPart(parts, false, isGregorianOrJulian);
                     if (year !== null) {
+                        if((isGregorian && !isValidGregorian(year.value, secondAsMonth, firstAsDay))
+                            || (isFrenchRepublican && !isValidFrenchRepublican(year.value, secondAsMonth, firstAsDay))) {
+                            return null;
+                        }
                         return {
                             calendar: calendarProps,
                             day: firstAsDay,
@@ -196,6 +240,9 @@ export const parseDate = (value: string | null):
                     }
                 } else if (firstAsYear !== null) { // Format year
                     i++;
+                    if(isFrenchRepublican && !isValidFrenchRepublican(firstAsYear.value)) {
+                        return null;
+                    }
                     return {
                         calendar: calendarProps,
                         year: firstAsYear,

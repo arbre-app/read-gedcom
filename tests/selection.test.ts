@@ -1,8 +1,6 @@
-/* eslint-disable no-undef */
 import fs from 'fs';
 import 'mocha';
-import assert from 'assert';
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import { GedcomSelection, GedcomTag, readGedcom } from '../src';
 
 describe('Gedcom sample file', function () {

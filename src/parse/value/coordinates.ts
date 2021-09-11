@@ -17,6 +17,6 @@ export const parseLatitude = (value: string | null): number | null => {
 };
 
 export const parseLongitude = (value: string | null): number | null => {
-    const rLongitude = /^(?:([EW])|([+-]?))([0-9]{1,2}(?:\.[0-9]{1,6})?)$/;
+    const rLongitude = /^(?:([EW])|([+-]?))([0-9]{1,3}(?:\.[0-9]{1,6})?)$/;
     return parseCoordinate(rLongitude, { E: 1, W: -1 }, value);
 };

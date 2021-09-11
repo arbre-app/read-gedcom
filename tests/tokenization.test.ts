@@ -1,6 +1,6 @@
-/* eslint-disable no-undef */
 import 'mocha';
-import assert from 'assert';
+import { assert, expect } from 'chai';
+import { GedcomError } from '../src';
 import { tokenize } from '../src/parse/tokenizer';
 
 describe('Gedcom tokenizer', () => {
@@ -43,10 +43,10 @@ describe('Gedcom tokenizer', () => {
 
     it('should throw an error on incorrect separate lines', () => {
         sampleIncorrectLines.forEach(mockLine => {
-            assert.throws(() => {
+            expect(() => {
                 // eslint-disable-next-line
                 for(const line of tokenize(mockLine)) { }
-            }, Error, mockLine);
+            }).to.throw(GedcomError.TokenizationError);
         });
     });
 });

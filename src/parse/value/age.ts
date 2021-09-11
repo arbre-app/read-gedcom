@@ -18,8 +18,8 @@ export const parseAge = (value: string | null): GedcomValue.Age | null => {
         if(parts.length > 3) {
             return null;
         }
-        const rNumber = /^0|[1-9][0-9]{0,2}$/;
-        const rFormat = /^ymd|y|m|d|ym|yd|md$/;
+        const rNumber = /^(?:0|[1-9][0-9]{0,2})$/;
+        const rFormat = /^(?:ymd|y|m|d|ym|yd|md)$/;
         const result = parts.map(part => {
             if(part.length < 2) {
                 return null;

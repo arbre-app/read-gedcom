@@ -1,7 +1,6 @@
 import fs from 'fs';
 import 'mocha';
-import assert from 'assert';
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import { GedcomDate, GedcomSelection, GedcomValue, readGedcom } from '../src';
 
 describe('Gedcom sample file', function () {

@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
 import 'mocha';
-import assert from 'assert';
+import { assert } from 'chai';
 import { parseGedcom } from '../src';
 
 describe('Gedcom header/trailer verification', () => {

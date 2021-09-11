@@ -2,6 +2,7 @@ This page showcases advanced examples:
 
 - [Detecting cycles](#detecting-cycles)
 - [Topological sorting of individuals](#topological-sorting-of-individuals)
+- [Extracting connected components](#extracting-connected-components)
 
 ## Detecting cycles
 

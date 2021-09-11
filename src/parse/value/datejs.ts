@@ -12,10 +12,7 @@ export const toJsDate = (date: GedcomDate.FuzzyPart.Date): Date | null => {
     if(date.calendar.isGregorian) {
         return new Date(Date.UTC(year, month - 1, day)); // All dates are UTC
     } else if(date.calendar.isFrenchRepublican) {
-        // We only support dates during which the calendar was in use
-        if(!(year >= 1 && year <= 14)) {
-            return null;
-        }
+        // We only support dates during which the calendar was in use; i.e. 1<=year<=14
         const startYear = 1791;
         const isB = year % 4 === 0;
 
