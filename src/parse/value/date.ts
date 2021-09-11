@@ -8,12 +8,15 @@ const DATE_RANGE_BEFORE = 'BEF', DATE_RANGE_AFTER = 'AFT', DATE_RANGE_BETWEEN = 
 const DATE_APPROXIMATED_ABOUT = 'ABT', DATE_APPROXIMATED_CALCULATED = 'CAL', DATE_APPROXIMATED_ESTIMATED = 'EST';
 const DATE_INT = 'INT';
 
-const createIndices = (array: string[]) => {
+const createIndices = (array: string[], looseCase: boolean = false) => {
     // Start with 1 to preserve the month numbers
-    return Object.fromEntries(array.map((value, i) => [value, i + 1]));
+    const entries: [string, number][] = array.map((value, i) => [value, i + 1]);
+    const capitalizeFirst = (v: string): string => v ? v[0].toUpperCase() + v.substring(1).toLowerCase() : v;
+    const finalEntries = looseCase ? entries.concat(entries.map(([value, n]) => [capitalizeFirst(value), n])) : entries;
+    return Object.fromEntries(finalEntries);
 };
 
-const MONTHS = createIndices(['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']);
+const MONTHS = createIndices(['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'], true); // Old software format months that way, so we allow them
 const MONTHS_FRENCH = createIndices(['VEND', 'BRUM', 'FRIM', 'NIVO', 'PLUV', 'VENT', 'GERM', 'FLOR', 'PRAI', 'MESS', 'THER', 'FRUC', 'COMP']);
 const MONTHS_HEBREW = createIndices(['TSH', 'CSH', 'KSL', 'TVT', 'SHV', 'ADR', 'ADS', 'NSN', 'IYR', 'SVN', 'TMZ', 'AAV', 'ELL']);
 

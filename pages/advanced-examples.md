@@ -56,7 +56,7 @@ This function is an adaptation of the above as it will detect if there is a cycl
 const topologicalIndividualSort = gedcom => {
   const PERMANENT_MARK = true, TEMPORARY_MARK = false;
 
-  const sorted = []; // <-- A sorted array of individuals (parents first, children next)
+  const sorted = []; // <-- A sorted array of individuals (children first, parents after)
   const marks = {};
   const nonPermanentlyMarked = new Set();
 
@@ -91,3 +91,53 @@ const topologicalIndividualSort = gedcom => {
 ```
 
 Such an ordering is crucial for many computations, for instance estimating dates or computing relatedness coefficients.
+
+## Extracting connected components
+
+It is not necessary at all for all the individuals in a Gedcom file to be connected to each other in some way: there can be several disconnected "islands" of individuals.
+This function identifies all the connected components with respect to filial and marital relationships.
+
+```javascript
+const connectedComponents = gedcom => {
+  const notVisited = new Set();
+
+  gedcom.getIndividualRecord().arraySelect().forEach(individual => notVisited.add(individual.pointer()[0]));
+
+  const bfs = individual => {
+    const id = individual.pointer()[0];
+    let toVisit = new Set([id]);
+    notVisited.delete(id);
+    const visited = [];
+    while(toVisit.size > 0) {
+      const nextVisit = new Set();
+      toVisit.forEach(id => {
+        if(id) {
+          const individual = gedcom.getIndividualRecord(id);
+          individual.getFamilyAsSpouse().concatenate(individual.getFamilyAsChild())
+            .arraySelect().forEach(family =>
+            [family.getHusband(), family.getWife(), family.getChild()].flatMap(ref => ref.arraySelect())
+              .map(ref => ref.value()[0]).filter(id => id).filter(id => notVisited.has(id)).filter(id => !toVisit.has(id))
+              .forEach(id => nextVisit.add(id))
+          );
+          visited.push(id);
+        }
+      });
+
+      nextVisit.forEach(id => notVisited.delete(id));
+      toVisit = nextVisit;
+    }
+    return visited;
+  };
+
+  const components = [];
+  while(notVisited.size > 0) {
+    const firstId = notVisited.values().next().value;
+    const individual = gedcom.getIndividualRecord(firstId);
+    components.push(bfs(individual));
+  }
+
+  return components;
+};
+```
+
+The Gedcom specification allows other relationships to exist such as witnesses, godparents, etc.; adapt this code to fit your needs.

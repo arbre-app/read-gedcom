@@ -24,12 +24,13 @@ npm install read-gedcom
 ```javascript
 import { readGedcom } from 'read-gedcom';
 
-const response = await fetch('https://mon.arbre.app/gedcoms/royal92.ged');
-const buffer = await response.arrayBuffer();
+const promise = fetch('https://mon.arbre.app/gedcoms/royal92.ged')
+  .then(r => r.arrayBuffer())
+  .then(readGedcom);
 
-const gedcom = readGedcom(buffer);
-
-console.log(gedcom.getHeader().getSourceSystem().value()[0]);
+promise.then(gedcom => {
+  console.log(gedcom.getHeader().toString());
+});
 ```
 
 ### Documentation
@@ -42,3 +43,6 @@ console.log(gedcom.getHeader().getSourceSystem().value()[0]);
 ### Bug report
 
 A Gedcom file isn't parsed correctly? Please [open a ticket](https://github.com/arbre-app/read-gedcom/issues)!
+
+Also make sure to attach a zipped version of the bogus Gedcom file.
+If you don't want to publicly share the file, you may send it to [this email address](https://github.com/arbre-app); we will create a minimal reproducible example based on what you sent us, which can be safely shared.

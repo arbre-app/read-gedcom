@@ -8,7 +8,7 @@ export const nodeToString = (node: GedcomTree.Node) => {
     const indent = '  ';
     const lineSeparator = '\n';
     const traverse = (node: GedcomTree.Node, totalIndent: string) => {
-        const fields = [node.tag, node.pointer, node.value ? node.value.replaceAll('\n', '\\n').replaceAll('\r', '\\r') : node.value];
+        const fields = [node.tag, node.pointer, node.value ? node.value.replace(/\n/g, '\\n').replace(/\r/g, '\\r') : node.value];
         const line = totalIndent + fields.filter(s => s).join(' ');
         lines.push(line);
         node.children.map(child => traverse(child, node.indexSource !== -1 ? totalIndent + indent : initialIndent))

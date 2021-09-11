@@ -5,7 +5,7 @@ import { SelectionDateExact } from './SelectionDateExact';
 
 export class SelectionChanged extends SelectionWithNoteMixin(SelectionAny) {
 
-    getDate() {
+    getExactDate() {
         return this.get(GedcomTag.Date, null, SelectionDateExact);
     }
 

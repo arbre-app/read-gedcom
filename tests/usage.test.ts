@@ -1,9 +1,8 @@
-/* eslint-disable no-undef */
 import fs from 'fs';
 import 'mocha';
 import assert from 'assert';
 import { expect } from 'chai';
-import { GedcomSelection, GedcomValue, readGedcom } from '../src';
+import { GedcomDate, GedcomSelection, GedcomValue, readGedcom } from '../src';
 
 describe('Gedcom sample file', function () {
     let gedcomWithIndex: GedcomSelection.Gedcom;
@@ -46,8 +45,8 @@ describe('Gedcom sample file', function () {
         assert(corporation.getWebAddress().value()[0] === 'www.gedcom.org');
 
         const fileDate = header.getFileCreationDate();
-        assert(fileDate.value()[0] === '2 Oct 2019'); // TODO parse it
-        assert(fileDate.getTime().value()[0] === '0:00:00'); // TODO
+        assert.deepStrictEqual(fileDate.valueAsExactDate()[0], { day: 2, month: 10, year: 2019 });
+        assert.deepStrictEqual(fileDate.getExactTime().valueAsExactTime()[0], { hours: 0, minutes: 0, seconds: 0 });
 
         assert(header.getFilename().value()[0] === '555Sample.ged');
         assert(header.getLanguage().value()[0] === GedcomValue.Language.English);
@@ -57,6 +56,20 @@ describe('Gedcom sample file', function () {
         assert(submitter.pointer()[0] === '@U1@');
         assert(gedcom.getSubmitterRecord('@U1@').length === 1);
         assert(submitter.getName().value()[0] === 'Reldon Poulson');
+
+        const ind1 = gedcom.getIndividualRecord('@I1@');
+        assert(ind1.length === 1);
+        assert.deepStrictEqual(ind1.getName().valueAsParts()[0], ["Robert Eugene", "Williams", undefined]);
+        assert(ind1.getSex().value()[0] === GedcomValue.Sex.Male);
+        const birth = ind1.getEventBirth();
+        const birthDate = birth.getDate().valueAsDate()[0];
+        assert(birthDate !== null && birthDate.hasDate);
+        const withoutCalendar = (date: GedcomDate.FuzzyPart.Date): object => {
+            const { calendar, ...rest } = date;
+            return rest;
+        };
+        assert.deepStrictEqual(withoutCalendar((birthDate as GedcomDate.Fuzzy.Normal).date), { day: 2, month: 10, year: { isBce: false, isDual: false, value: 1822 } });
+        assert.deepStrictEqual(birth.getPlace().valueAsParts()[0], ['Weston', 'Madison', 'Connecticut', 'United States of America']);
     };
 
     it('should handle the full workflow correctly on an indexed file', () => testUsage(gedcomWithIndex));

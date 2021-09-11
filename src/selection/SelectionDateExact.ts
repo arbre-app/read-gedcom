@@ -8,7 +8,7 @@ export class SelectionDateExact extends SelectionAny {
         return this.value().map(parseExactDate);
     }
 
-    getTime() {
+    getExactTime() {
         return this.get(GedcomTag.Time, null, SelectionTime);
     }
 }
