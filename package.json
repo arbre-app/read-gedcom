@@ -2,11 +2,13 @@
   "name": "read-gedcom",
   "description": "Gedcom file reader",
   "version": "0.2.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es6/index.js",
+  "types": "dist/cjs/index.d.ts",
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "keywords": [
     "gedcom",
     "genealogy"
@@ -14,7 +16,7 @@
   "author": "Florian Cassayre",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig-build.json",
+    "build": "tsc -p tsconfig-build.json && tsc -p tsconfig-build-es6.json",
     "build:clean": "rimraf dist && npm run build",
     "docs": "typedoc --tsconfig tsconfig-build.json",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
