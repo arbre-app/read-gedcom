@@ -1,7 +1,7 @@
 {
   "name": "read-gedcom",
   "description": "Gedcom file reader",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "dist/cjs/index.js",
   "module": "dist/es6/index.js",
   "types": "dist/cjs/index.d.ts",
