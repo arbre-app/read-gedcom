@@ -1,11 +1,17 @@
 import fs from 'fs';
-import 'mocha';
+import { before, describe, it } from 'mocha';
 import { assert, expect } from 'chai';
-import { GedcomDate, GedcomSelection, GedcomValue, readGedcom } from '../src';
+import {
+    readGedcom,
+    ValueDateNormal,
+    ValuePartDate,
+    ValueGedcomForm,
+    ValueCharacterEncoding, ValueLanguage, ValueSex, SelectionGedcom, ValuePartDateDay,
+} from '../src';
 
 describe('Gedcom sample file', function () {
-    let gedcomWithIndex: GedcomSelection.Gedcom;
-    let gedcomWithoutIndex: GedcomSelection.Gedcom;
+    let gedcomWithIndex: SelectionGedcom;
+    let gedcomWithoutIndex: SelectionGedcom;
 
     before(function (done) {
         fs.readFile('./tests/data/sample555.ged', (error, buffer) => {
@@ -18,7 +24,7 @@ describe('Gedcom sample file', function () {
         });
     });
 
-    const testUsage = (gedcom: GedcomSelection.Gedcom) => {
+    const testUsage = (gedcom: SelectionGedcom) => {
         const header = gedcom.getHeader();
         assert(header.length === 1);
 
@@ -28,10 +34,10 @@ describe('Gedcom sample file', function () {
         expect(version.valueAsVersion()[0]).to.deep.equal([5, 5, 5]);
 
         const gedcomForm = gedcomFile.getGedcomForm();
-        assert(gedcomForm.value()[0] === GedcomValue.GedcomForm.LineageLinked);
+        assert(gedcomForm.value()[0] === ValueGedcomForm.LineageLinked);
         assert(gedcomForm.getVersion().value()[0] === '5.5.5');
 
-        assert(header.getCharacterEncoding().value()[0] === GedcomValue.CharacterEncoding.Utf8);
+        assert(header.getCharacterEncoding().value()[0] === ValueCharacterEncoding.Utf8);
 
         const sourceSystem = header.getSourceSystem();
         assert(sourceSystem.value()[0] === 'GS');
@@ -48,7 +54,7 @@ describe('Gedcom sample file', function () {
         assert.deepStrictEqual(fileDate.getExactTime().valueAsExactTime()[0], { hours: 0, minutes: 0, seconds: 0 });
 
         assert(header.getFilename().value()[0] === '555Sample.ged');
-        assert(header.getLanguage().value()[0] === GedcomValue.Language.English);
+        assert(header.getLanguage().value()[0] === ValueLanguage.English);
 
         const submitter = header.getSubmitterReference().getSubmitterRecord();
 
@@ -58,16 +64,16 @@ describe('Gedcom sample file', function () {
 
         const ind1 = gedcom.getIndividualRecord('@I1@');
         assert(ind1.length === 1);
-        assert.deepStrictEqual(ind1.getName().valueAsParts()[0], ["Robert Eugene", "Williams", undefined]);
-        assert(ind1.getSex().value()[0] === GedcomValue.Sex.Male);
+        assert.deepStrictEqual(ind1.getName().valueAsParts()[0], ['Robert Eugene', 'Williams', undefined]);
+        assert(ind1.getSex().value()[0] === ValueSex.Male);
         const birth = ind1.getEventBirth();
         const birthDate = birth.getDate().valueAsDate()[0];
         assert(birthDate !== null && birthDate.hasDate);
-        const withoutCalendar = (date: GedcomDate.FuzzyPart.Date): object => {
-            const { calendar, ...rest } = date;
+        const withoutCalendar = <D extends ValuePartDate>(date: D): Omit<D, 'calendar'> => {
+            const { calendar, ...rest } = date; // eslint-disable-line
             return rest;
         };
-        assert.deepStrictEqual(withoutCalendar((birthDate as GedcomDate.Fuzzy.Normal).date), { day: 2, month: 10, year: { isBce: false, isDual: false, value: 1822 } });
+        assert.deepStrictEqual(withoutCalendar((birthDate as ValueDateNormal).date as ValuePartDateDay), { day: 2, month: 10, year: { isBce: false, isDual: false, value: 1822 } });
         assert.deepStrictEqual(birth.getPlace().valueAsParts()[0], ['Weston', 'Madison', 'Connecticut', 'United States of America']);
     };
 

@@ -1,9 +1,9 @@
 const parseCoordinate = (regex: RegExp, orientation: { [char: string]: number }, value: string | null): number | null => {
-    if(!value) {
+    if (!value) {
         return null;
     }
     const groups = regex.exec(value);
-    if(!groups) {
+    if (!groups) {
         return null;
     }
     const sign = groups[1] !== undefined ? orientation[groups[1]] : groups[2] === '-' ? -1 : 1;

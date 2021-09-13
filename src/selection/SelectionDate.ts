@@ -1,4 +1,4 @@
-import { SelectionAny } from './SelectionAny';
+import { SelectionAny } from './internal';
 import { parseDate } from '../parse';
 
 export class SelectionDate extends SelectionAny {

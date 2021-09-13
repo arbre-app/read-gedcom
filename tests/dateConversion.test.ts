@@ -1,12 +1,20 @@
-import 'mocha';
+import { describe, it } from 'mocha';
 import { assert } from 'chai';
-import { GedcomDate, parseDate, parseExactDate, parseExactTime, toJsDate, toJsDateTime } from '../src';
+import {
+    parseDate,
+    parseExactDate,
+    parseExactTime,
+    toJsDate,
+    toJsDateTime,
+    ValueDatePunctual,
+    ValueExactDate, ValueExactTime,
+} from '../src';
 
 describe('Parsed dates to JS dates conversion', () => {
     const testPunctual = (value: string, expected: string | Date): void => {
         const parsed = parseDate(value);
         assert(parsed !== null && parsed.isDatePunctual);
-        const { date } = parsed as GedcomDate.Fuzzy.Punctual;
+        const { date } = parsed as ValueDatePunctual;
         assert.deepStrictEqual(toJsDate(date), new Date(expected));
     };
 
@@ -15,7 +23,7 @@ describe('Parsed dates to JS dates conversion', () => {
         testPunctual('14 JUL 2000', '2000-07-14');
         testPunctual('11 NOV 1918', '1918-11-11');
         testPunctual('8 MAY 1945', '1945-05-08');
-        testPunctual('29 NOV 1226', '1226-11-29')
+        testPunctual('29 NOV 1226', '1226-11-29');
         testPunctual('753 BCE', new Date(Date.UTC(-753, 0, 1)));
     });
 
@@ -60,7 +68,7 @@ describe('Parsed dates to JS dates conversion', () => {
             assert(date !== null);
             const time = value[1] !== undefined ? parseExactTime(value[1]) : undefined;
             assert(time !== null);
-            assert.deepStrictEqual(toJsDateTime(date as GedcomDate.Exact, time as GedcomDate.ExactTime), new Date(expected))
+            assert.deepStrictEqual(toJsDateTime(date as ValueExactDate, time as ValueExactTime), new Date(expected));
         };
 
         test(['15 AUG 2015'], '2015-08-15');

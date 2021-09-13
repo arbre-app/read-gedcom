@@ -28,8 +28,8 @@
   },
   "devDependencies": {
     "@types/chai": "^4.2.19",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^15.12.5",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^15.14.9",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "chai": "^4.3.4",
@@ -42,11 +42,11 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
-    "mocha": "^9.0.1",
+    "mocha": "^9.0.0",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "ts-node": "^10.0.0",
-    "typedoc": "^0.21.0",
+    "typedoc": "^0.21.9",
     "typedoc-plugin-pages-fork": "0.0.1",
     "typescript": "^4.3.4"
   }

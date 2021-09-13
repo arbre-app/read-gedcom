@@ -1,12 +1,9 @@
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { Tag } from '../tag';
+import { SelectionAny, SelectionDateExact } from './internal';
 import { SelectionWithNoteMixin } from './mixin';
-import { SelectionDateExact } from './SelectionDateExact';
 
 export class SelectionChanged extends SelectionWithNoteMixin(SelectionAny) {
-
     getExactDate() {
-        return this.get(GedcomTag.Date, null, SelectionDateExact);
+        return this.get(Tag.Date, null, SelectionDateExact);
     }
-
 }

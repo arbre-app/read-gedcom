@@ -1,8 +1,8 @@
-import { GedcomTag } from '../tag';
+import { Tag } from '../tag';
 import { SelectionRecord } from './base';
 
 export class SelectionSubmitterRecord extends SelectionRecord {
     getName() {
-        return this.get(GedcomTag.Name);
+        return this.get(Tag.Name);
     }
 }

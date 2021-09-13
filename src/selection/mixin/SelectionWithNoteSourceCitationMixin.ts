@@ -1,7 +1,5 @@
 import { AnyConstructor, Mixin } from '../../meta';
-import { SelectionAny } from '../SelectionAny';
-import { SelectionWithNoteMixin } from './SelectionWithNoteMixin';
-import { SelectionWithSourceCitationMixin } from './SelectionWithSourceCitationMixin';
+import { SelectionAny, SelectionWithNoteMixin, SelectionWithSourceCitationMixin } from '../internal';
 
 /**
  * @ignore

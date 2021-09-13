@@ -1,4 +1,4 @@
-import { SelectionAny } from './SelectionAny';
+import { SelectionAny } from './internal';
 
 const rVersion = /^(0|[1-9][0-9]{0,2})\.(0|[1-9][0-9]{0,2})(?:\.(0|[1-9][0-9]{0,2}))?$/;
 

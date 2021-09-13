@@ -1,9 +1,8 @@
-import { SelectionPhonetizationMethod } from './SelectionPhonetizationMethod';
-import { GedcomTag } from '../tag';
-import { SelectionNamePieces } from './SelectionNamePieces';
+import { SelectionPhonetizationMethod, SelectionNamePieces } from './internal';
+import { Tag } from '../tag';
 
 export class SelectionNamePhonetization extends SelectionNamePieces {
     getMethod() {
-        return this.get(GedcomTag.Type, null, SelectionPhonetizationMethod);
+        return this.get(Tag.Type, null, SelectionPhonetizationMethod);
     }
 }

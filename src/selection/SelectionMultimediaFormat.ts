@@ -1,9 +1,8 @@
-import { SelectionMediaType } from './SelectionMediaType';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { SelectionMediaType, SelectionAny } from './internal';
+import { Tag } from '../tag';
 
 export class SelectionMultimediaFormat extends SelectionAny {
     getMediaType() {
-        return this.get(GedcomTag.Type, null, SelectionMediaType);
+        return this.get(Tag.Type, null, SelectionMediaType);
     }
 }

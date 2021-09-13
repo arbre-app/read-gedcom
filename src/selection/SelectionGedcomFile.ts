@@ -1,14 +1,13 @@
-import { SelectionGedcomVersion } from './SelectionGedcomVersion';
-import { SelectionGedcomForm } from './SelectionGedcomForm';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { SelectionGedcomVersion, SelectionGedcomForm, SelectionAny } from './internal';
+
+import { Tag } from '../tag';
 
 export class SelectionGedcomFile extends SelectionAny {
     getVersion() {
-        return this.get(GedcomTag.Version, null, SelectionGedcomVersion);
+        return this.get(Tag.Version, null, SelectionGedcomVersion);
     }
 
     getGedcomForm() {
-        return this.get(GedcomTag.Format, null, SelectionGedcomForm);
+        return this.get(Tag.Format, null, SelectionGedcomForm);
     }
 }

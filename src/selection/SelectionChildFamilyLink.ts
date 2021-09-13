@@ -1,6 +1,6 @@
-import { SelectionPedigreeLinkageType } from './SelectionPedigreeLinkageType';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { SelectionPedigreeLinkageType, SelectionAny } from './internal';
+import { Tag } from '../tag';
+
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionChildFamilyLink extends SelectionWithNoteMixin(SelectionAny) {
@@ -9,6 +9,6 @@ export class SelectionChildFamilyLink extends SelectionWithNoteMixin(SelectionAn
     }
 
     getPedigreeLinkageType() {
-        return this.get(GedcomTag.Pedigree, null, SelectionPedigreeLinkageType);
+        return this.get(Tag.Pedigree, null, SelectionPedigreeLinkageType);
     }
 }

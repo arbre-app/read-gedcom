@@ -1,5 +1,5 @@
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { Tag } from '../tag';
+import { SelectionAny } from './internal';
 
 export class SelectionRepositoryReference extends SelectionAny {
     getRepositoryRecord() {
@@ -7,6 +7,6 @@ export class SelectionRepositoryReference extends SelectionAny {
     }
 
     getSourceCallNumber() {
-        return this.get(GedcomTag.CallNumber);
+        return this.get(Tag.CallNumber);
     }
 }

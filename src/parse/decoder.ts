@@ -1,8 +1,8 @@
-import { GedcomNonStandardTag, GedcomTag } from '../tag';
+import { TagNonStandard, Tag } from '../tag';
+import { ValueCharacterEncoding } from '../value';
 import { tokenize } from './tokenizer';
 import { buildTree } from './structurer';
 import { decodeUtf8BOM } from './decoding';
-import { GedcomValue } from '../value';
 
 export enum FileEncoding {
     Utf8 = 'UTF-8',
@@ -41,12 +41,12 @@ export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 1000, maxPee
         i += 1;
     }
     const tree = buildTree(array);
-    const header = tree.children.filter(c => c.tag === GedcomTag.Header);
-    const char = header.flatMap(c => c.children.filter(n => n.tag === GedcomTag.Character || n.tag === GedcomNonStandardTag.CharacterAlt));
+    const header = tree.children.filter(c => c.tag === Tag.Header);
+    const char = header.flatMap(c => c.children.filter(n => n.tag === Tag.Character || n.tag === TagNonStandard.CharacterAlt));
     const charOpt = char.length > 0 ? char[0].value : null;
-    const source = header.flatMap(c => c.children.filter(n => n.tag === GedcomTag.Source));
+    const source = header.flatMap(c => c.children.filter(n => n.tag === Tag.Source));
     const sourceOpt = source.length > 0 ? source[0].value : null;
-    const version = source.flatMap(c => c.children.filter(n => n.tag === GedcomTag.Version));
+    const version = source.flatMap(c => c.children.filter(n => n.tag === Tag.Version));
     const versionOpt = version.length > 0 ? version[0].value : null;
 
     return { sourceEncoding: charOpt, sourceProvider: sourceOpt, sourceProviderVersion: versionOpt, fileHasBOM: hasBOM };
@@ -64,13 +64,13 @@ export const detectCharset = (buffer: ArrayBuffer): FileEncoding => {
 
     // Estimate an encoding without knowing the provider
     function estimateEncoding() {
-        if (sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
+        if (sourceEncoding === ValueCharacterEncoding.Utf8) {
             return FileEncoding.Utf8;
-        } else if (sourceEncoding === GedcomValue.CharacterEncoding.Ansel) {
+        } else if (sourceEncoding === ValueCharacterEncoding.Ansel) {
             return FileEncoding.Ansel;
-        } else if (sourceEncoding === GedcomValue.CharacterEncoding.Ascii) {
+        } else if (sourceEncoding === ValueCharacterEncoding.Ascii) {
             return FileEncoding.Cp1252;
-        } else if (sourceEncoding === GedcomValue.CharacterEncoding.Ansi) {
+        } else if (sourceEncoding === ValueCharacterEncoding.Ansi) {
             return FileEncoding.Cp1252;
         } else if (sourceEncoding === 'WINDOWS') {
             return FileEncoding.Cp1252;
@@ -94,27 +94,27 @@ export const detectCharset = (buffer: ArrayBuffer): FileEncoding => {
     }
 
     if (sourceProvider === 'GeneWeb') { // Geneweb
-        if (sourceEncoding === GedcomValue.CharacterEncoding.Ascii) {
+        if (sourceEncoding === ValueCharacterEncoding.Ascii) {
             return FileEncoding.Cp1252;
-        } else if (sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
+        } else if (sourceEncoding === ValueCharacterEncoding.Utf8) {
             return FileEncoding.Utf8;
         } else {
             return estimateEncoding();
         }
     } else if (sourceProvider != null && sourceProvider.startsWith('HEREDIS')) { // Heredis
-        if (sourceEncoding === GedcomValue.CharacterEncoding.Ansi) {
+        if (sourceEncoding === ValueCharacterEncoding.Ansi) {
             return FileEncoding.Cp1252;
         } else {
             return estimateEncoding();
         }
     } else if (sourceProvider === 'GENEATIQUE') { // Généatique
-        if (sourceEncoding === GedcomValue.CharacterEncoding.Ansel) {
+        if (sourceEncoding === ValueCharacterEncoding.Ansel) {
             return FileEncoding.Ansel;
         } else {
             return estimateEncoding();
         }
     } else if (sourceProvider === 'Gramps') { // Gramps
-        if (sourceEncoding === GedcomValue.CharacterEncoding.Utf8) {
+        if (sourceEncoding === ValueCharacterEncoding.Utf8) {
             return FileEncoding.Utf8;
         } else {
             return estimateEncoding();

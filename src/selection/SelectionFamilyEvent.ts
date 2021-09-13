@@ -1,13 +1,12 @@
-import { SelectionSpouseEventDetails } from './SelectionSpouseEventDetails';
-import { GedcomTag } from '../tag';
-import { SelectionEvent } from './SelectionEvent';
+import { SelectionSpouseEventDetails, SelectionEvent } from './internal';
+import { Tag } from '../tag';
 
 export class SelectionFamilyEvent extends SelectionEvent {
     getHusbandDetails() {
-        return this.get(GedcomTag.Husband, null, SelectionSpouseEventDetails);
+        return this.get(Tag.Husband, null, SelectionSpouseEventDetails);
     }
 
     getWifeDetails() {
-        return this.get(GedcomTag.Wife, null, SelectionSpouseEventDetails);
+        return this.get(Tag.Wife, null, SelectionSpouseEventDetails);
     }
 }

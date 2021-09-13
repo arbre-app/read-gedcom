@@ -1,9 +1,8 @@
-import { GedcomTag } from '../tag';
-import { SelectionAge } from './SelectionAge';
-import { SelectionAny } from './SelectionAny';
+import { Tag } from '../tag';
+import { SelectionAge, SelectionAny } from './internal';
 
 export class SelectionSpouseEventDetails extends SelectionAny {
     getAge() {
-        return this.get(GedcomTag.Age, null, SelectionAge);
+        return this.get(Tag.Age, null, SelectionAge);
     }
 }

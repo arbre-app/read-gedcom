@@ -1,8 +1,13 @@
-import { GedcomTag } from '../tag';
-import { GedcomTree } from '../tree';
+import { Tag } from '../tag';
+import { TreeNodeRoot } from '../tree';
 import { detectCharset, FileEncoding } from './decoder';
 import { decodeAnsel, decodeCp1252, decodeCp850, decodeMacintosh, decodeUtf8 } from './decoding';
-import { GedcomError } from './error';
+import {
+    ErrorEmptyTree,
+    ErrorInvalidFileType,
+    ErrorTreeStructure,
+    ErrorUnsupportedCharset,
+} from './error';
 import { GedcomReadingOptions } from './GedcomReadingOptions';
 import { GedcomReadingPhase } from './GedcomReadingPhase';
 import { indexTree } from './indexer';
@@ -13,9 +18,9 @@ import { tokenize } from './tokenizer';
  * Reads a Gedcom file and returns it as a tree representation.
  * @param buffer The content of the file
  * @param options Optional parameters
- * @throws GedcomError.ParseError If the file cannot be interpreted correctly
+ * @throws ErrorParse If the file cannot be interpreted correctly
  */
-export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions = {}): GedcomTree.NodeRoot => {
+export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions = {}): TreeNodeRoot => {
     checkMagicHeader(buffer);
 
     const charset: FileEncoding = options.forcedCharset == null ? detectCharset(buffer) : options.forcedCharset;
@@ -36,7 +41,7 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
     } else if (charset === FileEncoding.Cp850) {
         input = decodeCp850(buffer, decodingCallback);
     } else {
-        throw new GedcomError.UnsupportedCharsetError(`Unsupported charset: ${charset}`, charset);
+        throw new ErrorUnsupportedCharset(`Unsupported charset: ${charset}`, charset);
     }
 
     const totalChars = input.length;
@@ -61,42 +66,42 @@ const checkMagicHeader = (buffer: ArrayBuffer) => {
     const bom = [0xEF, 0xBB, 0xBF];
     const headStr = '0 HEAD';
     const head = [];
-    for(let i = 0; i < headStr.length; i++) {
+    for (let i = 0; i < headStr.length; i++) {
         head.push(headStr.charCodeAt(i));
     }
     const byteBuffer = new Uint8Array(buffer);
     const startsWith = (bytes: number[]) => {
-        if(byteBuffer.byteLength < bytes.length) {
+        if (byteBuffer.byteLength < bytes.length) {
             return false;
         }
-        for(let i = 0; i < bytes.length; i++) {
-            if(bytes[i] !== byteBuffer[i]) {
+        for (let i = 0; i < bytes.length; i++) {
+            if (bytes[i] !== byteBuffer[i]) {
                 return false;
             }
         }
         return true;
     };
 
-    if(!startsWith(head) && !startsWith(bom.concat(head))) {
-        throw new GedcomError.InvalidFileTypeError('Probably not a Gedcom file');
+    if (!startsWith(head) && !startsWith(bom.concat(head))) {
+        throw new ErrorInvalidFileType('Probably not a Gedcom file');
     }
 };
 
 /**
- * A simple procedure verifying that the root node starts with a {@link GedcomTag.Header} and ends with a {@link GedcomTag.Trailer}.
+ * A simple procedure verifying that the root node starts with a {@link Tag.Header} and ends with a {@link Tag.Trailer}.
  * @param rootNode The root node
  */
-const checkTreeStructure = (rootNode: GedcomTree.NodeRoot): void => {
+const checkTreeStructure = (rootNode: TreeNodeRoot): void => {
     const root = rootNode.children;
     if (root.length === 0) {
-        throw new GedcomError.EmptyTreeError('The tree is empty');
+        throw new ErrorEmptyTree('The tree is empty');
     }
     const header = root[0];
-    if (header.tag !== GedcomTag.Header) {
-        throw new GedcomError.TreeStructureError(`First node is not a header (got ${header.tag})`);
+    if (header.tag !== Tag.Header) {
+        throw new ErrorTreeStructure(`First node is not a header (got ${header.tag})`);
     }
     const trailer = root[root.length - 1];
-    if (trailer.tag !== GedcomTag.Trailer) {
-        throw new GedcomError.TreeStructureError(`Last node is not a trailer (got ${trailer.tag})`);
+    if (trailer.tag !== Tag.Trailer) {
+        throw new ErrorTreeStructure(`Last node is not a trailer (got ${trailer.tag})`);
     }
 };

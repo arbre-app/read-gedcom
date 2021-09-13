@@ -20,14 +20,14 @@ export interface GedcomReadingOptions {
     noBackwardsReferencesIndex?: boolean;
 
     /**
-     * When set to <code>true</code> the {@link GedcomTag.Concatenation} and {@link GedcomTag.Continuation} special tags will not get interpreted and will be preserved in the resulting tree.
+     * When set to <code>true</code> the {@link Tag.Concatenation} and {@link Tag.Continuation} special tags will not get interpreted and will be preserved in the resulting tree.
      * This option might affect the behavior of other components.
      * Otherwise the tags will get inlined according to their respective semantics, and thus will never appear in the output.
      */
     noInlineContinuations?: boolean;
 
     /**
-     * When set to <code>true</code> all the {@link GedcomTree.Node} in the tree will be frozen and modifications will be forbidden by the runtime.
+     * When set to <code>true</code> all the {@link TreeNode} in the tree will be frozen and modifications will be forbidden by the runtime.
      * Otherwise the objects will remain normal.
      * This option is not enabled by default for performance reasons.
      */
@@ -48,7 +48,7 @@ export interface GedcomReadingOptions {
     forcedCharset?: FileEncoding;
 
     /**
-     * When set to <code>true</code>, the {@link GedcomTree.Node._index} attribute will be non-enumerable.
+     * When set to <code>true</code>, the {@link TreeNode._index} attribute will be non-enumerable.
      * As a consequence, {@link JSON.stringify} will not serialize the index.
      * It is however still possible to recompute the index, by calling {@link indexTree}.
      */

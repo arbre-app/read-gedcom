@@ -1,9 +1,8 @@
-import { SelectionRomanizationMethod } from './SelectionRomanizationMethod';
-import { GedcomTag } from '../tag';
-import { SelectionNamePieces } from './SelectionNamePieces';
+import { SelectionRomanizationMethod, SelectionNamePieces } from './internal';
+import { Tag } from '../tag';
 
 export class SelectionNameRomanization extends SelectionNamePieces {
     getMethod() {
-        return this.get(GedcomTag.Type, null, SelectionRomanizationMethod);
+        return this.get(Tag.Type, null, SelectionRomanizationMethod);
     }
 }

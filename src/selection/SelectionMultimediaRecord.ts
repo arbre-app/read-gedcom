@@ -1,10 +1,10 @@
 import { SelectionWithNoteSourceCitationMixin } from './mixin';
-import { SelectionMultimediaFile } from './SelectionMultimediaFile';
-import { GedcomTag } from '../tag';
+import { SelectionMultimediaFile } from './internal';
+import { Tag } from '../tag';
 import { SelectionRecord } from './base';
 
 export class SelectionMultimediaRecord extends SelectionWithNoteSourceCitationMixin(SelectionRecord) {
     getFileReference() {
-        return this.get(GedcomTag.File, null, SelectionMultimediaFile);
+        return this.get(Tag.File, null, SelectionMultimediaFile);
     }
 }

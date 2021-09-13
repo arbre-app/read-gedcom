@@ -1,10 +1,8 @@
-import 'mocha';
+import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { parseDate } from '../src';
 
-
 describe('Dates parsing', () => {
-
     const common = {
         hasDate: false,
         hasPhrase: false,
@@ -129,7 +127,7 @@ describe('Dates parsing', () => {
                     value: 1951,
                     valueDual: 52,
                 },
-            }
+            },
         });
 
         expect(parseDate('INT DEC 1907 (this is a phrase)')).deep.equal({
@@ -214,5 +212,4 @@ describe('Dates parsing', () => {
         test('29 FEB 2021');
         test('29 FEB 1900');
     });
-
 });

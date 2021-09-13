@@ -1,9 +1,7 @@
-import { SelectionCitationEvent } from './SelectionCitationEvent';
-import { SelectionCitationData } from './SelectionCitationData';
-import { SelectionMultimediaReference } from './SelectionMultimediaReference';
-import { SelectionSourceCertainty } from './SelectionSourceCertainty';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { SelectionCitationEvent, SelectionCitationData, SelectionMultimediaReference, SelectionSourceCertainty, SelectionAny } from './internal';
+
+import { Tag } from '../tag';
+
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionSourceCitation extends SelectionWithNoteMixin(SelectionAny) {
@@ -12,22 +10,22 @@ export class SelectionSourceCitation extends SelectionWithNoteMixin(SelectionAny
     }
 
     getLocationInSource() {
-        return this.get(GedcomTag.Page);
+        return this.get(Tag.Page);
     }
 
     getEventCitedFrom() {
-        return this.get(GedcomTag.Event, null, SelectionCitationEvent);
+        return this.get(Tag.Event, null, SelectionCitationEvent);
     }
 
     getData() {
-        return this.get(GedcomTag.Data, null, SelectionCitationData);
+        return this.get(Tag.Data, null, SelectionCitationData);
     }
 
     getMultimedia() {
-        return this.get(GedcomTag.Object, null, SelectionMultimediaReference);
+        return this.get(Tag.Object, null, SelectionMultimediaReference);
     }
 
     getCertainty() {
-        return this.get(GedcomTag.QualityOfData, null, SelectionSourceCertainty);
+        return this.get(Tag.QualityOfData, null, SelectionSourceCertainty);
     }
 }

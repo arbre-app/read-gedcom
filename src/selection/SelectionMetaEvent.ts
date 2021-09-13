@@ -1,4 +1,4 @@
-import { SelectionAny } from './SelectionAny';
+import { SelectionAny } from './internal';
 
 export class SelectionMetaEvent extends SelectionAny {
     valueAsArray() {

@@ -1,5 +1,5 @@
 import { parseAge } from '../parse';
-import { SelectionAny } from './SelectionAny';
+import { SelectionAny } from './internal';
 
 export class SelectionAge extends SelectionAny {
     valueAsAge() {

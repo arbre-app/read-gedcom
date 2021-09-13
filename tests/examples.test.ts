@@ -1,10 +1,10 @@
 import fs from 'fs';
-import 'mocha';
+import { before, describe, it } from 'mocha';
 import { assert } from 'chai';
-import { GedcomSelection, readGedcom } from '../src';
+import { readGedcom, SelectionGedcom, SelectionIndividualRecord } from '../src';
 
 describe('Documentation examples tested on sample Gedcom file', () => {
-    let gedcom: GedcomSelection.Gedcom;
+    let gedcom: SelectionGedcom;
 
     before(function (done) {
         fs.readFile('./tests/data/sample555.ged', (error, buffer) => {
@@ -16,12 +16,12 @@ describe('Documentation examples tested on sample Gedcom file', () => {
         });
     });
 
-    const queryIndividual = (gedcom: GedcomSelection.Gedcom, query: string): GedcomSelection.IndividualRecord => {
+    const queryIndividual = (gedcom: SelectionGedcom, query: string): SelectionIndividualRecord => {
         const tokenize = (name: string) => name.trim().toLowerCase().split(/ +/);
         const queryTokens = tokenize(query);
         return gedcom.getIndividualRecord().filterSelect(individual => {
             const names = individual.getName().valueAsParts()[0];
-            if(names !== null) {
+            if (names !== null) {
                 const namesTokens = (names.filter(v => v) as string[]).flatMap(tokenize);
                 return queryTokens.every(s => namesTokens.includes(s));
             }
@@ -36,7 +36,7 @@ describe('Documentation examples tested on sample Gedcom file', () => {
         assert.deepStrictEqual(queryIndividual(gedcom, ' Williams  ').pointer(), ['@I1@', '@I3@']);
     });
 
-    const checkNoCycles = (gedcom: GedcomSelection.Gedcom) => {
+    const checkNoCycles = (gedcom: SelectionGedcom) => {
         const PERMANENT_MARK = true, TEMPORARY_MARK = false;
 
         const marks: { [id: string]: (typeof PERMANENT_MARK) | (typeof TEMPORARY_MARK) } = {};
@@ -44,12 +44,12 @@ describe('Documentation examples tested on sample Gedcom file', () => {
 
         gedcom.getIndividualRecord().arraySelect().forEach(individual => nonPermanentlyMarked.add(individual.pointer()[0]));
 
-        const visit = (individual: GedcomSelection.IndividualRecord) => {
+        const visit = (individual: SelectionIndividualRecord) => {
             const id = individual.pointer()[0] as string;
             const mark = marks[id];
-            if(mark === PERMANENT_MARK) {
+            if (mark === PERMANENT_MARK) {
                 return;
-            } else if(mark === TEMPORARY_MARK) {
+            } else if (mark === TEMPORARY_MARK) {
                 throw new Error('The Gedcom file contains a cycle!');
             }
             nonPermanentlyMarked.add(id);
@@ -61,7 +61,7 @@ describe('Documentation examples tested on sample Gedcom file', () => {
             marks[id] = PERMANENT_MARK;
         };
 
-        while(nonPermanentlyMarked.size > 0) {
+        while (nonPermanentlyMarked.size > 0) {
             const firstId = nonPermanentlyMarked.values().next().value;
             const individual = gedcom.getIndividualRecord(firstId);
             visit(individual);
@@ -72,7 +72,7 @@ describe('Documentation examples tested on sample Gedcom file', () => {
         checkNoCycles(gedcom);
     });
 
-    const topologicalIndividualSort = (gedcom: GedcomSelection.Gedcom) => {
+    const topologicalIndividualSort = (gedcom: SelectionGedcom) => {
         const PERMANENT_MARK = true, TEMPORARY_MARK = false;
 
         const sorted: string[] = []; // <-- A sorted array of individuals (children first, parents after)
@@ -81,7 +81,7 @@ describe('Documentation examples tested on sample Gedcom file', () => {
 
         gedcom.getIndividualRecord().arraySelect().forEach(individual => nonPermanentlyMarked.add(individual.pointer()[0]));
 
-        const visit = (individual: GedcomSelection.IndividualRecord) => {
+        const visit = (individual: SelectionIndividualRecord) => {
             const id = individual.pointer()[0] as string;
             const mark = marks[id];
             if (mark === PERMANENT_MARK) {
@@ -118,26 +118,26 @@ describe('Documentation examples tested on sample Gedcom file', () => {
         });
     });
 
-    const connectedComponents = (gedcom: GedcomSelection.Gedcom) => {
+    const connectedComponents = (gedcom: SelectionGedcom) => {
         const notVisited: Set<string | null> = new Set();
 
         gedcom.getIndividualRecord().arraySelect().forEach(individual => notVisited.add(individual.pointer()[0]));
 
-        const bfs = (individual: GedcomSelection.IndividualRecord) => {
+        const bfs = (individual: SelectionIndividualRecord) => {
             const id = individual.pointer()[0] as string;
             let toVisit: Set<string | null> = new Set([id]);
             notVisited.delete(id);
             const visited: string[] = [];
-            while(toVisit.size > 0) {
+            while (toVisit.size > 0) {
                 const nextVisit: Set<string | null> = new Set();
                 toVisit.forEach(id => {
-                    if(id) {
+                    if (id) {
                         const individual = gedcom.getIndividualRecord(id);
                         individual.getFamilyAsSpouse().concatenate(individual.getFamilyAsChild())
                             .arraySelect().forEach(family =>
                             [family.getHusband(), family.getWife(), family.getChild()].flatMap(ref => ref.arraySelect())
                                 .map(ref => ref.value()[0]).filter(id => id).filter(id => notVisited.has(id)).filter(id => !toVisit.has(id))
-                                .forEach(id => nextVisit.add(id))
+                                .forEach(id => nextVisit.add(id)),
                         );
                         visited.push(id);
                     }
@@ -150,7 +150,7 @@ describe('Documentation examples tested on sample Gedcom file', () => {
         };
 
         const components = [];
-        while(notVisited.size > 0) {
+        while (notVisited.size > 0) {
             const firstId = notVisited.values().next().value;
             const individual = gedcom.getIndividualRecord(firstId);
             components.push(bfs(individual));

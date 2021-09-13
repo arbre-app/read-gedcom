@@ -1,6 +1,5 @@
-import { SelectionAny } from './SelectionAny';
 import { parseDate } from '../parse';
-import { SelectionDate } from './SelectionDate';
+import { SelectionDate } from './internal';
 
 export class SelectionDatePeriod extends SelectionDate {
     valueAsDatePeriod() {

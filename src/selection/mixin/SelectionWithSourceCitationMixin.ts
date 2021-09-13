@@ -1,7 +1,6 @@
 import { AnyConstructor, Mixin } from '../../meta';
-import { SelectionAny } from '../SelectionAny';
-import { GedcomTag } from '../../tag';
-import { SelectionSourceCitation } from '../SelectionSourceCitation';
+import { SelectionAny, SelectionSourceCitation } from '../internal';
+import { Tag } from '../../tag';
 
 /**
  * @ignore
@@ -16,7 +15,7 @@ export const SelectionWithSourceCitationMixin = <C extends AnyConstructor<Select
          * </table>
          */
         getSourceCitation() {
-            return this.get(GedcomTag.Source, null, SelectionSourceCitation);
+            return this.get(Tag.Source, null, SelectionSourceCitation);
         }
     };
 

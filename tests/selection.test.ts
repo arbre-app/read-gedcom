@@ -1,10 +1,10 @@
 import fs from 'fs';
-import 'mocha';
+import { describe, it } from 'mocha';
 import { assert, expect } from 'chai';
-import { GedcomSelection, GedcomTag, readGedcom } from '../src';
+import { Tag, readGedcom, SelectionGedcom, SelectionHeader } from '../src';
 
 describe('Gedcom sample file', function () {
-    const gedcom: GedcomSelection.Gedcom = readGedcom(fs.readFileSync('./tests/data/sample555.ged'));
+    const gedcom: SelectionGedcom = readGedcom(fs.readFileSync('./tests/data/sample555.ged'));
 
     it('should resolve links', () => {
         const families = gedcom
@@ -26,6 +26,6 @@ describe('Gedcom sample file', function () {
     });
 
     it('should allow transtyping', () => {
-        assert(gedcom.get(GedcomTag.Header).as(GedcomSelection.Header).getCharacterEncoding()[0].value === 'UTF-8');
+        assert(gedcom.get(Tag.Header).as(SelectionHeader).getCharacterEncoding()[0].value === 'UTF-8');
     });
 });

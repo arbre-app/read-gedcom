@@ -205,14 +205,14 @@ It's also possible to retrieve several events at once:
 // Or directly with tags: (less recommended)
 
 individual.get(
-  [GedcomTag.Death, GedcomTag.Burial, GedcomTag.Cremation],
+  [Tag.Death, Tag.Burial, Tag.Cremation],
   null,
-  GedcomSelection.Event
+  SelectionEvent
 );
 ```
 
 There is no concise way to retrieve _all_ event types, you must use either of the two suggested approaches and explicitly specify the tags that you are interested in.
-You can find the complete list of available tags under {@link GedcomSelection.IndividualRecord} and {@link GedcomSelection.FamilyRecord}.
+You can find the complete list of available tags under {@link SelectionIndividualRecord} and {@link SelectionFamilyRecord}.
 
 ## Interpreting dates
 

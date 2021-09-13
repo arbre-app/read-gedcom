@@ -3,7 +3,7 @@ export enum ValueLanguage {
     Albanian = 'Albanian',
     AngloSaxon = 'Anglo-Saxon',
     Catalan = 'Catalan',
-    Catalan_Spn = 'Catalan_Spn',
+    CatalanSpn = 'Catalan_Spn',
     Czech = 'Czech',
     Danish = 'Danish',
     Dutch = 'Dutch',

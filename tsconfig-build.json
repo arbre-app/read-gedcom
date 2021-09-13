@@ -4,7 +4,7 @@
     "tests/**/*"
   ],
   "typedocOptions": {
-    "entryPoints": ["src/index.ts"],
+    "entryPoints": ["src/parse/index.ts", "src/selection/index.ts", "src/tag/index.ts", "src/tree/index.ts", "src/value/index.ts"],
     "out": "docs",
     "excludeExternals": true,
     "theme": "pages-plugin"

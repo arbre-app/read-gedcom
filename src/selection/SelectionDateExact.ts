@@ -1,6 +1,6 @@
-import { SelectionTime } from './SelectionTime';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { SelectionTime, SelectionAny } from './internal';
+import { Tag } from '../tag';
+
 import { parseExactDate } from '../parse';
 
 export class SelectionDateExact extends SelectionAny {
@@ -9,6 +9,6 @@ export class SelectionDateExact extends SelectionAny {
     }
 
     getExactTime() {
-        return this.get(GedcomTag.Time, null, SelectionTime);
+        return this.get(Tag.Time, null, SelectionTime);
     }
 }

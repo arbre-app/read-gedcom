@@ -1,40 +1,39 @@
-import { SelectionSourceData } from './SelectionSourceData';
-import { SelectionRepositoryReference } from './SelectionRepositoryReference';
-import { SelectionMultimediaReference } from './SelectionMultimediaReference';
-import { GedcomTag } from '../tag';
+import { SelectionSourceData, SelectionRepositoryReference, SelectionMultimediaReference } from './internal';
+
+import { Tag } from '../tag';
 import { SelectionRecord } from './base';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionSourceRecord extends SelectionWithNoteMixin(SelectionRecord) {
     getData() {
-        return this.get(GedcomTag.Data, null, SelectionSourceData);
+        return this.get(Tag.Data, null, SelectionSourceData);
     }
 
     getOriginator() {
-        return this.get(GedcomTag.Author);
+        return this.get(Tag.Author);
     }
 
     getDescriptiveTitle() {
-        return this.get(GedcomTag.Title);
+        return this.get(Tag.Title);
     }
 
     getShortTitle() {
-        return this.get(GedcomTag.Abbreviation);
+        return this.get(Tag.Abbreviation);
     }
 
     getPublicationFacts() {
-        return this.get(GedcomTag.Publication);
+        return this.get(Tag.Publication);
     }
 
     getText() {
-        return this.get(GedcomTag.Text);
+        return this.get(Tag.Text);
     }
 
     getRepository() {
-        return this.get(GedcomTag.Repository, null, SelectionRepositoryReference);
+        return this.get(Tag.Repository, null, SelectionRepositoryReference);
     }
 
     getMultimedia() {
-        return this.get(GedcomTag.Object, null, SelectionMultimediaReference);
+        return this.get(Tag.Object, null, SelectionMultimediaReference);
     }
 }

@@ -1,46 +1,43 @@
-import { SelectionGedcomFile } from './SelectionGedcomFile';
-import { SelectionCharacterEncoding } from './SelectionCharacterEncoding';
-import { SelectionGedcomSource } from './SelectionGedcomSource';
-import { SelectionDateExact } from './SelectionDateExact';
-import { SelectionSubmitterReference } from './SelectionSubmitterReference';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { SelectionGedcomFile, SelectionCharacterEncoding, SelectionGedcomSource, SelectionDateExact, SelectionSubmitterReference, SelectionAny } from './internal';
+
+import { Tag } from '../tag';
+
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionHeader extends SelectionWithNoteMixin(SelectionAny) {
     getGedcomFile() {
-        return this.get(GedcomTag.Gedcom, null, SelectionGedcomFile);
+        return this.get(Tag.Gedcom, null, SelectionGedcomFile);
     }
 
     getCharacterEncoding() {
-        return this.get(GedcomTag.Character, null, SelectionCharacterEncoding);
+        return this.get(Tag.Character, null, SelectionCharacterEncoding);
     }
 
     getSourceSystem() {
-        return this.get(GedcomTag.Source, null, SelectionGedcomSource);
+        return this.get(Tag.Source, null, SelectionGedcomSource);
     }
 
     getDestinationSystem() {
-        return this.get(GedcomTag.Destination);
+        return this.get(Tag.Destination);
     }
 
     getFileCreationDate() {
-        return this.get(GedcomTag.Date, null, SelectionDateExact);
+        return this.get(Tag.Date, null, SelectionDateExact);
     }
 
     getLanguage() {
-        return this.get(GedcomTag.Language);
+        return this.get(Tag.Language);
     }
 
     getSubmitterReference() {
-        return this.get(GedcomTag.Submitter, null, SelectionSubmitterReference);
+        return this.get(Tag.Submitter, null, SelectionSubmitterReference);
     }
 
     getFilename() {
-        return this.get(GedcomTag.File);
+        return this.get(Tag.File);
     }
 
     getCopyright() {
-        return this.get(GedcomTag.Copyright);
+        return this.get(Tag.Copyright);
     }
 }

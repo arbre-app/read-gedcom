@@ -1,17 +1,8 @@
-import { GedcomTree } from '../tree';
+import { TreeNode, TreeRootIndex } from '../tree';
 import { SelectionWithNoteSourceCitationMixin } from './mixin';
-import { SelectionFamilyRecord } from './SelectionFamilyRecord';
-import { SelectionName } from './SelectionName';
-import { SelectionSex } from './SelectionSex';
-import { SelectionIndividualEventFamily } from './SelectionIndividualEventFamily';
-import { SelectionIndividualEventFamilyAdoption } from './SelectionIndividualEventFamilyAdoption';
-import { SelectionIndividualEvent } from './SelectionIndividualEvent';
-import { SelectionIndividualAttribute } from './SelectionIndividualAttribute';
-import { SelectionChildFamilyLink } from './SelectionChildFamilyLink';
-import { SelectionSpouseFamilyLink } from './SelectionSpouseFamilyLink';
-import { SelectionAssociation } from './SelectionAssociation';
-import { SelectionMultimediaReference } from './SelectionMultimediaReference';
-import { GedcomTag } from '../tag';
+import { SelectionFamilyRecord, SelectionName, SelectionSex, SelectionIndividualEventFamily, SelectionIndividualEventFamilyAdoption, SelectionIndividualEvent, SelectionIndividualAttribute, SelectionChildFamilyLink, SelectionSpouseFamilyLink, SelectionAssociation, SelectionMultimediaReference } from './internal';
+
+import { Tag } from '../tag';
 import { SelectionRecord } from './base';
 
 /**
@@ -23,16 +14,16 @@ import { SelectionRecord } from './base';
  */
 export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMixin(SelectionRecord) {
     getName() {
-        return this.get(GedcomTag.Name, null, SelectionName);
+        return this.get(Tag.Name, null, SelectionName);
     }
 
     getSex() {
-        return this.get(GedcomTag.Sex, null, SelectionSex);
+        return this.get(Tag.Sex, null, SelectionSex);
     }
 
     getFamilyAsChild() {
-        const children: GedcomTree.Node[] = [];
-        const rootIndex = this.rootNode._index as GedcomTree.RootIndex | undefined;
+        const children: TreeNode[] = [];
+        const rootIndex = this.rootNode._index as TreeRootIndex | undefined;
         if (rootIndex !== undefined && rootIndex.asChild !== undefined) {
             for (let i = 0; i < this.length; i++) {
                 const node = this[i];
@@ -53,8 +44,8 @@ export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMi
     }
 
     getFamilyAsSpouse() {
-        const children: GedcomTree.Node[] = [];
-        const rootIndex = this.rootNode._index as GedcomTree.RootIndex | undefined;
+        const children: TreeNode[] = [];
+        const rootIndex = this.rootNode._index as TreeRootIndex | undefined;
         if (rootIndex !== undefined && rootIndex.asSpouse !== undefined) {
             for (let i = 0; i < this.length; i++) {
                 const node = this[i];
@@ -77,87 +68,87 @@ export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMi
     /* Events */
 
     getEventBirth() {
-        return this.get(GedcomTag.Birth, null, SelectionIndividualEventFamily);
+        return this.get(Tag.Birth, null, SelectionIndividualEventFamily);
     }
 
     getEventChristening() {
-        return this.get(GedcomTag.Christening, null, SelectionIndividualEventFamily);
+        return this.get(Tag.Christening, null, SelectionIndividualEventFamily);
     }
 
     getEventDeath() {
-        return this.get(GedcomTag.Death, null, SelectionIndividualEvent);
+        return this.get(Tag.Death, null, SelectionIndividualEvent);
     }
 
     getEventBurial() {
-        return this.get(GedcomTag.Burial, null, SelectionIndividualEvent);
+        return this.get(Tag.Burial, null, SelectionIndividualEvent);
     }
 
     getEventCremation() {
-        return this.get(GedcomTag.Cremation, null, SelectionIndividualEvent);
+        return this.get(Tag.Cremation, null, SelectionIndividualEvent);
     }
 
     getEventAdoption() {
-        return this.get(GedcomTag.Adoption, null, SelectionIndividualEventFamilyAdoption);
+        return this.get(Tag.Adoption, null, SelectionIndividualEventFamilyAdoption);
     }
 
     getEventBaptism() {
-        return this.get(GedcomTag.Baptism, null, SelectionIndividualEvent);
+        return this.get(Tag.Baptism, null, SelectionIndividualEvent);
     }
 
     getEventBarMitzvah() {
-        return this.get(GedcomTag.BarMitzvah, null, SelectionIndividualEvent);
+        return this.get(Tag.BarMitzvah, null, SelectionIndividualEvent);
     }
 
     getEventBatMitzvah() {
-        return this.get(GedcomTag.BatMitzvah, null, SelectionIndividualEvent);
+        return this.get(Tag.BatMitzvah, null, SelectionIndividualEvent);
     }
 
     getEventAdultChristening() {
-        return this.get(GedcomTag.AdultChristening, null, SelectionIndividualEvent);
+        return this.get(Tag.AdultChristening, null, SelectionIndividualEvent);
     }
 
     getEventConfirmation() {
-        return this.get(GedcomTag.Confirmation, null, SelectionIndividualEvent);
+        return this.get(Tag.Confirmation, null, SelectionIndividualEvent);
     }
 
     getEventFirstCommunion() {
-        return this.get(GedcomTag.FirstCommunion, null, SelectionIndividualEvent);
+        return this.get(Tag.FirstCommunion, null, SelectionIndividualEvent);
     }
 
     getEventNaturalization() {
-        return this.get(GedcomTag.Naturalization, null, SelectionIndividualEvent);
+        return this.get(Tag.Naturalization, null, SelectionIndividualEvent);
     }
 
     getEventEmigration() {
-        return this.get(GedcomTag.Emigration, null, SelectionIndividualEvent);
+        return this.get(Tag.Emigration, null, SelectionIndividualEvent);
     }
 
     getEventImmigration() {
-        return this.get(GedcomTag.Immigration, null, SelectionIndividualEvent);
+        return this.get(Tag.Immigration, null, SelectionIndividualEvent);
     }
 
     getEventCensus() {
-        return this.get(GedcomTag.Census, null, SelectionIndividualEvent);
+        return this.get(Tag.Census, null, SelectionIndividualEvent);
     }
 
     getEventProbate() {
-        return this.get(GedcomTag.Probate, null, SelectionIndividualEvent);
+        return this.get(Tag.Probate, null, SelectionIndividualEvent);
     }
 
     getEventWill() {
-        return this.get(GedcomTag.Will, null, SelectionIndividualEvent);
+        return this.get(Tag.Will, null, SelectionIndividualEvent);
     }
 
     getEventGraduation() {
-        return this.get(GedcomTag.Graduation, null, SelectionIndividualEvent);
+        return this.get(Tag.Graduation, null, SelectionIndividualEvent);
     }
 
     getEventRetirement() {
-        return this.get(GedcomTag.Retirement, null, SelectionIndividualEvent);
+        return this.get(Tag.Retirement, null, SelectionIndividualEvent);
     }
 
     getEventOther() {
-        return this.get(GedcomTag.Event, null, SelectionIndividualEvent);
+        return this.get(Tag.Event, null, SelectionIndividualEvent);
     }
 
     /* End events */
@@ -165,72 +156,72 @@ export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMi
     /* Attributes */
 
     getAttributeCaste() {
-        return this.get(GedcomTag.Caste, null, SelectionIndividualAttribute);
+        return this.get(Tag.Caste, null, SelectionIndividualAttribute);
     }
 
     getAttributePhysicalDescription() {
-        return this.get(GedcomTag.PhysicalDescription, null, SelectionIndividualAttribute);
+        return this.get(Tag.PhysicalDescription, null, SelectionIndividualAttribute);
     }
 
     getAttributeScholasticAchievement() {
-        return this.get(GedcomTag.Education, null, SelectionIndividualAttribute);
+        return this.get(Tag.Education, null, SelectionIndividualAttribute);
     }
 
     getAttributeIdentificationNumber() {
-        return this.get(GedcomTag.IdentificationNumber, null, SelectionIndividualAttribute);
+        return this.get(Tag.IdentificationNumber, null, SelectionIndividualAttribute);
     }
 
     getAttributeNationality() {
-        return this.get(GedcomTag.Nationality, null, SelectionIndividualAttribute);
+        return this.get(Tag.Nationality, null, SelectionIndividualAttribute);
     }
 
     getAttributeChildrenCount() {
-        return this.get(GedcomTag.ChildrenCount, null, SelectionIndividualAttribute);
+        return this.get(Tag.ChildrenCount, null, SelectionIndividualAttribute);
     }
 
     getAttributeRelationshipCount() {
-        return this.get(GedcomTag.MarriageCount, null, SelectionIndividualAttribute);
+        return this.get(Tag.MarriageCount, null, SelectionIndividualAttribute);
     }
 
     getAttributeOccupation() {
-        return this.get(GedcomTag.Occupation, null, SelectionIndividualAttribute);
+        return this.get(Tag.Occupation, null, SelectionIndividualAttribute);
     }
 
     getAttributePossessions() {
-        return this.get(GedcomTag.Property, null, SelectionIndividualAttribute);
+        return this.get(Tag.Property, null, SelectionIndividualAttribute);
     }
 
     getAttributeReligiousAffiliation() {
-        return this.get(GedcomTag.Religion, null, SelectionIndividualAttribute);
+        return this.get(Tag.Religion, null, SelectionIndividualAttribute);
     }
 
     getAttributeResidence() {
-        return this.get(GedcomTag.Residence, null, SelectionIndividualAttribute);
+        return this.get(Tag.Residence, null, SelectionIndividualAttribute);
     }
 
     getAttributeNobilityTitle() {
-        return this.get(GedcomTag.Title, null, SelectionIndividualAttribute);
+        return this.get(Tag.Title, null, SelectionIndividualAttribute);
     }
 
     getAttributeFact() {
-        return this.get(GedcomTag.Fact, null, SelectionIndividualAttribute);
+        return this.get(Tag.Fact, null, SelectionIndividualAttribute);
     }
 
     /* End attributes */
 
     getChildFamilyLink() {
-        return this.get(GedcomTag.FamilyChild, null, SelectionChildFamilyLink);
+        return this.get(Tag.FamilyChild, null, SelectionChildFamilyLink);
     }
 
     getSpouseFamilyLink() {
-        return this.get(GedcomTag.FamilySpouse, null, SelectionSpouseFamilyLink);
+        return this.get(Tag.FamilySpouse, null, SelectionSpouseFamilyLink);
     }
 
     getAssociation() {
-        return this.get(GedcomTag.Associates, null, SelectionAssociation);
+        return this.get(Tag.Associates, null, SelectionAssociation);
     }
 
     getMultimedia() {
-        return this.get(GedcomTag.Object, null, SelectionMultimediaReference);
+        return this.get(Tag.Object, null, SelectionMultimediaReference);
     }
 }

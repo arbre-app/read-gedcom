@@ -1,80 +1,79 @@
 import { SelectionWithNoteSourceCitationMixin } from './mixin';
-import { SelectionIndividualReference } from './SelectionIndividualReference';
-import { SelectionMultimediaReference } from './SelectionMultimediaReference';
-import { GedcomTag } from '../tag';
+import { SelectionIndividualReference, SelectionMultimediaReference, SelectionFamilyEvent } from './internal';
+
+import { Tag } from '../tag';
 import { SelectionRecord } from './base';
-import { SelectionFamilyEvent } from './SelectionFamilyEvent';
 
 export class SelectionFamilyRecord extends SelectionWithNoteSourceCitationMixin(SelectionRecord) {
     /* Events */
 
     getEventAnnulment() {
-        return this.get(GedcomTag.Annulment, null, SelectionFamilyEvent);
+        return this.get(Tag.Annulment, null, SelectionFamilyEvent);
     }
 
     getEventCensus() {
-        return this.get(GedcomTag.Census, null, SelectionFamilyEvent);
+        return this.get(Tag.Census, null, SelectionFamilyEvent);
     }
 
     getEventDivorce() {
-        return this.get(GedcomTag.Divorce, null, SelectionFamilyEvent);
+        return this.get(Tag.Divorce, null, SelectionFamilyEvent);
     }
 
     getEventDivorceFiled() {
-        return this.get(GedcomTag.DivorceFiled, null, SelectionFamilyEvent);
+        return this.get(Tag.DivorceFiled, null, SelectionFamilyEvent);
     }
 
     getEventEngagement() {
-        return this.get(GedcomTag.Engagement, null, SelectionFamilyEvent);
+        return this.get(Tag.Engagement, null, SelectionFamilyEvent);
     }
 
     getEventMarriageBann() {
-        return this.get(GedcomTag.MarriageBan, null, SelectionFamilyEvent);
+        return this.get(Tag.MarriageBan, null, SelectionFamilyEvent);
     }
 
     getEventMarriageContract() {
-        return this.get(GedcomTag.MarriageContract, null, SelectionFamilyEvent);
+        return this.get(Tag.MarriageContract, null, SelectionFamilyEvent);
     }
 
     getEventMarriage() {
-        return this.get(GedcomTag.Marriage, null, SelectionFamilyEvent);
+        return this.get(Tag.Marriage, null, SelectionFamilyEvent);
     }
 
     getEventMarriageLicense() {
-        return this.get(GedcomTag.MarriageLicense, null, SelectionFamilyEvent);
+        return this.get(Tag.MarriageLicense, null, SelectionFamilyEvent);
     }
 
     getEventMarriageSettlement() {
-        return this.get(GedcomTag.MarriageSettlement, null, SelectionFamilyEvent);
+        return this.get(Tag.MarriageSettlement, null, SelectionFamilyEvent);
     }
 
     getEventResidence() {
-        return this.get(GedcomTag.Residence, null, SelectionFamilyEvent); // Residence is normally an attribute
+        return this.get(Tag.Residence, null, SelectionFamilyEvent); // Residence is normally an attribute
     }
 
     getEventOther() {
-        return this.get(GedcomTag.Event, null, SelectionFamilyEvent);
+        return this.get(Tag.Event, null, SelectionFamilyEvent);
     }
 
     /* End events */
 
     getHusband() {
-        return this.get(GedcomTag.Husband, null, SelectionIndividualReference);
+        return this.get(Tag.Husband, null, SelectionIndividualReference);
     }
 
     getWife() {
-        return this.get(GedcomTag.Wife, null, SelectionIndividualReference);
+        return this.get(Tag.Wife, null, SelectionIndividualReference);
     }
 
     getChild() {
-        return this.get(GedcomTag.Child, null, SelectionIndividualReference);
+        return this.get(Tag.Child, null, SelectionIndividualReference);
     }
 
     getChildrenCount() {
-        return this.get(GedcomTag.ChildrenCount);
+        return this.get(Tag.ChildrenCount);
     }
 
     getMultimedia() {
-        return this.get(GedcomTag.Object, null, SelectionMultimediaReference);
+        return this.get(Tag.Object, null, SelectionMultimediaReference);
     }
 }

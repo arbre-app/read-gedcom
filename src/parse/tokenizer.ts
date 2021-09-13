@@ -1,4 +1,4 @@
-import { GedcomError } from './error';
+import { ErrorTokenization } from './error';
 
 const ccAlpha = 'A-Za-z';
 const ccDigit = '0-9', ccNonZeroDigit = '1-9';
@@ -45,7 +45,7 @@ class GedcomTokenizer implements IterableIterator<RegExpExecArray> {
             if (this.strict && !success) {
                 const printCharactersMax = 256; // Avoid printing a super long line
                 const errorLine = this.input.substring(this.charactersRead, Math.min(this.charactersRead + printCharactersMax, this.input.length)).split(/[\r\n]+/, 1)[0];
-                throw new GedcomError.TokenizationError(`Invalid format for line ${this.linesRead + 1}: "${errorLine}"`, this.linesRead + 1, errorLine);
+                throw new ErrorTokenization(`Invalid format for line ${this.linesRead + 1}: "${errorLine}"`, this.linesRead + 1, errorLine);
             }
 
             return { done: true, value: null }; // Return

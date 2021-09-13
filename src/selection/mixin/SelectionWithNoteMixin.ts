@@ -1,7 +1,6 @@
 import { AnyConstructor, Mixin } from '../../meta';
-import { SelectionAny } from '../SelectionAny';
-import { GedcomTag } from '../../tag';
-import { SelectionNoteReferenceMixin } from '../SelectionNoteReferenceMixin';
+import { SelectionAny, SelectionNoteReferenceMixin } from '../internal';
+import { Tag } from '../../tag';
 
 /**
  * @ignore
@@ -16,7 +15,7 @@ export const SelectionWithNoteMixin = <C extends AnyConstructor<SelectionAny>>(B
          * </table>
          */
         getNote(): SelectionAny {
-            return this.get(GedcomTag.Note, null, SelectionNoteReferenceMixin);
+            return this.get(Tag.Note, null, SelectionNoteReferenceMixin);
         }
     };
 

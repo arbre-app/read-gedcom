@@ -1,5 +1,5 @@
 import { parseLatitude } from '../parse';
-import { SelectionAny } from './SelectionAny';
+import { SelectionAny } from './internal';
 
 export class SelectionLatitude extends SelectionAny {
     valueAsLatitude() {

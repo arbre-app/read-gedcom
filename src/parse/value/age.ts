@@ -1,7 +1,7 @@
-import { GedcomValue } from '../../value';
+import { ValueAge } from './ValueAge';
 
-export const parseAge = (value: string | null): GedcomValue.Age | null => {
-    if(!value) {
+export const parseAge = (value: string | null): ValueAge | null => {
+    if (!value) {
         return null;
     }
     const sign = '<>'.indexOf(value[0]);
@@ -10,28 +10,28 @@ export const parseAge = (value: string | null): GedcomValue.Age | null => {
     const isChild = remaining === 'CHILD';
     const isInfant = remaining === 'INFANT';
     const isStillborn = remaining === 'STILLBORN';
-    const common = { isGreaterThan: sign === 1, isLessThan: sign === 0, isChild, isInfant, isStillborn }
-    if(isChild || isInfant || isStillborn) {
+    const common = { isGreaterThan: sign === 1, isLessThan: sign === 0, isChild, isInfant, isStillborn };
+    if (isChild || isInfant || isStillborn) {
         return { hasDate: false, ...common };
     } else {
         const parts = remaining.split(' ');
-        if(parts.length > 3) {
+        if (parts.length > 3) {
             return null;
         }
         const rNumber = /^(?:0|[1-9][0-9]{0,2})$/;
         const rFormat = /^(?:ymd|y|m|d|ym|yd|md)$/;
         const result = parts.map(part => {
-            if(part.length < 2) {
+            if (part.length < 2) {
                 return null;
             }
             const suffix = part[part.length - 1];
-            if(!'ymd'.includes(suffix)) {
+            if (!'ymd'.includes(suffix)) {
                 return null;
             }
             const init = part.substring(0, part.length - 1);
-            if(init.match(rNumber) !== null) {
+            if (init.match(rNumber) !== null) {
                 const number = parseInt(init);
-                if((suffix === 'd' && number > 365) || (suffix === 'm' && number > 11)) {
+                if ((suffix === 'd' && number > 365) || (suffix === 'm' && number > 11)) {
                     return null;
                 }
                 return [suffix, number];
@@ -39,18 +39,18 @@ export const parseAge = (value: string | null): GedcomValue.Age | null => {
                 return null;
             }
         });
-        if(result.includes(null)) {
+        if (result.includes(null)) {
             return null;
         }
-        const resultNonNull = result as [string, number][]
-        if(resultNonNull.map(r => r[0]).join('').match(rFormat) === null) {
+        const resultNonNull = result as [string, number][];
+        if (resultNonNull.map(r => r[0]).join('').match(rFormat) === null) {
             return null;
         }
         let years = 0, months = 0, days = 0;
         resultNonNull.forEach(([identifier, number]) => {
-            if(identifier === 'y') {
+            if (identifier === 'y') {
                 years = number;
-            } else if(identifier === 'm') {
+            } else if (identifier === 'm') {
                 months = number;
             } else {
                 days = number;

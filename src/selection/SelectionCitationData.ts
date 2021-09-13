@@ -1,13 +1,12 @@
-import { SelectionDate } from './SelectionDate';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
+import { SelectionDate, SelectionAny } from './internal';
+import { Tag } from '../tag';
 
 export class SelectionCitationData extends SelectionAny {
     getDate() {
-        return this.get(GedcomTag.Date, null, SelectionDate);
+        return this.get(Tag.Date, null, SelectionDate);
     }
 
     getText() {
-        return this.get(GedcomTag.Text);
+        return this.get(Tag.Text);
     }
 }

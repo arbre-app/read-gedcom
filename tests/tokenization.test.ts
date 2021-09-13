@@ -1,6 +1,6 @@
-import 'mocha';
+import { describe, it } from 'mocha';
 import { assert, expect } from 'chai';
-import { GedcomError } from '../src';
+import { ErrorTokenization } from '../src';
 import { tokenize } from '../src/parse/tokenizer';
 
 describe('Gedcom tokenizer', () => {
@@ -46,7 +46,7 @@ describe('Gedcom tokenizer', () => {
             expect(() => {
                 // eslint-disable-next-line
                 for(const line of tokenize(mockLine)) { }
-            }).to.throw(GedcomError.TokenizationError);
+            }).to.throw(ErrorTokenization);
         });
     });
 });

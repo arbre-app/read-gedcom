@@ -3,21 +3,14 @@
  * Remark that the actual root is a pseudo node, and hence will store <code>null</code> for the attributes {@link tag}, {@link pointer} and {@link value}.
  */
 import { AnyConstructor } from '../meta';
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
-import { SelectionFamilyRecord } from './SelectionFamilyRecord';
-import { SelectionHeader } from './SelectionHeader';
-import { SelectionIndividualRecord } from './SelectionIndividualRecord';
-import { SelectionMultimediaRecord } from './SelectionMultimediaRecord';
-import { SelectionNoteRecord } from './SelectionNoteRecord';
+import { Tag } from '../tag';
+import { SelectionAny, SelectionFamilyRecord, SelectionHeader, SelectionIndividualRecord, SelectionMultimediaRecord, SelectionNoteRecord, SelectionRepositoryRecord, SelectionSourceRecord, SelectionSubmitterRecord } from './internal';
+
 import { SelectionRecord } from './base';
-import { SelectionRepositoryRecord } from './SelectionRepositoryRecord';
-import { SelectionSourceRecord } from './SelectionSourceRecord';
-import { SelectionSubmitterRecord } from './SelectionSubmitterRecord';
 
 export class SelectionGedcom extends SelectionAny {
     getHeader() {
-        return this.get(GedcomTag.Header, null, SelectionHeader);
+        return this.get(Tag.Header, null, SelectionHeader);
     }
 
     // TODO this method does the same thing as `get`, it can be remove
@@ -26,31 +19,31 @@ export class SelectionGedcom extends SelectionAny {
     }
 
     getSubmitterRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Submitter, pointer ?? null, SelectionSubmitterRecord);
+        return this.getRecord(Tag.Submitter, pointer ?? null, SelectionSubmitterRecord);
     }
 
     getIndividualRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Individual, pointer ?? null, SelectionIndividualRecord);
+        return this.getRecord(Tag.Individual, pointer ?? null, SelectionIndividualRecord);
     }
 
     getFamilyRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Family, pointer ?? null, SelectionFamilyRecord);
+        return this.getRecord(Tag.Family, pointer ?? null, SelectionFamilyRecord);
     }
 
     getMultimediaRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Object, pointer ?? null, SelectionMultimediaRecord);
+        return this.getRecord(Tag.Object, pointer ?? null, SelectionMultimediaRecord);
     }
 
     getNoteRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Note, pointer ?? null, SelectionNoteRecord);
+        return this.getRecord(Tag.Note, pointer ?? null, SelectionNoteRecord);
     }
 
     getSourceRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Source, pointer ?? null, SelectionSourceRecord);
+        return this.getRecord(Tag.Source, pointer ?? null, SelectionSourceRecord);
     }
 
     getRepositoryRecord(pointer?: string | string[] | null) {
-        return this.getRecord(GedcomTag.Repository, pointer ?? null, SelectionRepositoryRecord);
+        return this.getRecord(Tag.Repository, pointer ?? null, SelectionRepositoryRecord);
     }
 
     // TODO

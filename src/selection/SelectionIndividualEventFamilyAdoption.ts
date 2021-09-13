@@ -1,9 +1,8 @@
-import { SelectionFamilyReferenceAdoption } from './SelectionFamilyReferenceAdoption';
-import { GedcomTag } from '../tag';
-import { SelectionIndividualEvent } from './SelectionIndividualEvent';
+import { SelectionFamilyReferenceAdoption, SelectionIndividualEvent } from './internal';
+import { Tag } from '../tag';
 
 export class SelectionIndividualEventFamilyAdoption extends SelectionIndividualEvent {
     getFamilyAsChildReference() {
-        return this.get(GedcomTag.FamilyChild, null, SelectionFamilyReferenceAdoption);
+        return this.get(Tag.FamilyChild, null, SelectionFamilyReferenceAdoption);
     }
 }

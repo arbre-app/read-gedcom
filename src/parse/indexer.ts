@@ -1,6 +1,6 @@
-import { GedcomTag } from '../tag';
-import { GedcomTree } from '../tree';
-import { GedcomError } from './error';
+import { Tag } from '../tag';
+import { TreeIndex, TreeNode, TreeNodeRoot, TreeRootIndex } from '../tree';
+import { ErrorDuplicatePointer } from './error';
 
 const PROGRESS_TRAVERSE_INTERVAL = 50000;
 const PROGRESS_ITERATE_INTERVAL = 5000;
@@ -13,7 +13,7 @@ const PROGRESS_ITERATE_INTERVAL = 5000;
  * @param progressCallback See {@link GedcomReadingOptions.progressCallback}
  * @param doHideIndex See {@link GedcomReadingOptions.doHideIndex}
  */
-export const indexTree = (rootNode: GedcomTree.NodeRoot,
+export const indexTree = (rootNode: TreeNodeRoot,
                           noBackwardsReferencesIndex = false,
                           progressCallback: (() => void) | null = null,
                           doHideIndex = false): void => {
@@ -22,20 +22,20 @@ export const indexTree = (rootNode: GedcomTree.NodeRoot,
     }
 
     let i = 0;
-    const stack: [node: GedcomTree.Node, childIndex: number][] = [[rootNode, 0]];
+    const stack: [node: TreeNode, childIndex: number][] = [[rootNode, 0]];
     while (stack.length > 0) {
         const [node, childIndex] = stack[stack.length - 1]; // Peek
         if (childIndex < node.children.length) {
             stack.push([node.children[childIndex], 0]); // Push
         } else {
             // eslint-disable-next-line
-            const [node, _] = stack.pop() as [GedcomTree.Node, number]; // Pop
+            const [node, _] = stack.pop() as [TreeNode, number]; // Pop
             if (stack.length > 0) {
                 stack[stack.length - 1][1]++; // Next child
             }
             indexNode(node, !doHideIndex); // Index
             if (stack.length === 0) {
-                indexRecords(node as GedcomTree.NodeRoot); // Index records on root node
+                indexRecords(node as TreeNodeRoot); // Index records on root node
             }
         }
 
@@ -54,8 +54,8 @@ export const indexTree = (rootNode: GedcomTree.NodeRoot,
     }
 };
 
-const indexNode = (node: GedcomTree.Node, enumerable: boolean): void => {
-    const byTag: { [tag: string]: GedcomTree.Node[] } = {};
+const indexNode = (node: TreeNode, enumerable: boolean): void => {
+    const byTag: { [tag: string]: TreeNode[] } = {};
     node.children.forEach(child => {
         if (child.tag !== null) {
             if (byTag[child.tag] === undefined) {
@@ -69,11 +69,11 @@ const indexNode = (node: GedcomTree.Node, enumerable: boolean): void => {
         configurable: true,
         writable: true,
     });
-    node._index = { byTag } as GedcomTree.Index;
+    node._index = { byTag } as TreeIndex;
 };
 
-const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
-    const byTagPointer: { [tag: string]: { [pointer: string]: GedcomTree.Node } } = {};
+const indexRecords = (nodeRoot: TreeNodeRoot): void => {
+    const byTagPointer: { [tag: string]: { [pointer: string]: TreeNode } } = {};
     nodeRoot.children.forEach(child => {
         if (child.tag !== null) {
             if (child.pointer !== null) {
@@ -81,7 +81,7 @@ const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
                     byTagPointer[child.tag] = {};
                 }
                 if (byTagPointer[child.tag][child.pointer] !== undefined) {
-                    throw new GedcomError.DuplicatePointerError(
+                    throw new ErrorDuplicatePointer(
                         `Duplicate pointer: ${child.pointer}`,
                         child.indexSource + 1,
                         byTagPointer[child.tag][child.pointer].indexSource,
@@ -92,23 +92,23 @@ const indexRecords = (nodeRoot: GedcomTree.NodeRoot): void => {
         }
     });
     // We assume that the index is defined
-    (nodeRoot._index as GedcomTree.RootIndex).byTagPointer = byTagPointer;
+    (nodeRoot._index as TreeRootIndex).byTagPointer = byTagPointer;
 };
 
 // eslint-disable-next-line
-const indexBackwardsReferences = (rootNode: GedcomTree.NodeRoot, progressCallback: (() => void) | null = null): void => {
+const indexBackwardsReferences = (rootNode: TreeNodeRoot, progressCallback: (() => void) | null = null): void => {
     const get = <V, D>(object: { [k: string]: V }, key: string, def: D): V | D => {
         const value = object[key];
         return value != null ? value : def;
     };
 
-    const index = rootNode._index as GedcomTree.RootIndex; // We assume that the index is defined
+    const index = rootNode._index as TreeRootIndex; // We assume that the index is defined
 
-    const families = get(index.byTagPointer, GedcomTag.Family, {} as { [p: string]: GedcomTree.Node });
-    const asSpouse: { [spouseId: string]: GedcomTree.Node[] } = {}, asChild: { [childId: string]: GedcomTree.Node[] } = {};
+    const families = get(index.byTagPointer, Tag.Family, {} as { [p: string]: TreeNode });
+    const asSpouse: { [spouseId: string]: TreeNode[] } = {}, asChild: { [childId: string]: TreeNode[] } = {};
     Object.values(families).forEach((familyData, i) => {
-        const familyIndex = familyData._index as GedcomTree.Index; // Also safe, by assumption
-        for (const spouseType of [GedcomTag.Husband, GedcomTag.Wife]) {
+        const familyIndex = familyData._index as TreeIndex; // Also safe, by assumption
+        for (const spouseType of [Tag.Husband, Tag.Wife]) {
             for (const spouse of get(familyIndex.byTag, spouseType, [])) {
                 const spouseId = spouse.value;
                 if (spouseId !== null) { // We ignore the other possibility (even though it is a hard violation)
@@ -120,7 +120,7 @@ const indexBackwardsReferences = (rootNode: GedcomTree.NodeRoot, progressCallbac
                 }
             }
         }
-        for (const child of get(familyIndex.byTag, GedcomTag.Child, [])) {
+        for (const child of get(familyIndex.byTag, Tag.Child, [])) {
             const childId = child.value;
             if (childId !== null) { // ditto
                 if (asChild[childId] !== undefined) {

@@ -1,5 +1,5 @@
 import { parseLongitude } from '../parse';
-import { SelectionAny } from './SelectionAny';
+import { SelectionAny } from './internal';
 
 export class SelectionLongitude extends SelectionAny {
     valueAsLongitude() {

@@ -1,2 +1,6 @@
-export { GedcomTag } from './GedcomTag';
-export { GedcomNonStandardTag } from './GedcomNonStandardTag';
+/**
+ * @module Tags
+ */
+
+export { Tag } from './Tag';
+export { TagNonStandard } from './TagNonStandard';

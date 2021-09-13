@@ -1,4 +1,4 @@
 import { SelectionWithAddressMixin } from './mixin';
-import { SelectionAny } from './SelectionAny';
+import { SelectionAny } from './internal';
 
 export class SelectionCorporation extends SelectionWithAddressMixin(SelectionAny) {}

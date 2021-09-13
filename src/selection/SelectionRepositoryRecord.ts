@@ -1,32 +1,32 @@
-import { SelectionAddress } from './SelectionAddress';
-import { GedcomTag } from '../tag';
+import { SelectionAddress } from './internal';
+import { Tag } from '../tag';
 import { SelectionRecord } from './base';
 import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionRepositoryRecord extends SelectionWithNoteMixin(SelectionRecord) {
     getName() {
-        return this.get(GedcomTag.Name);
+        return this.get(Tag.Name);
     }
 
     // Address structure borrowed from AddressStructure
 
     getAddress() {
-        return this.get(GedcomTag.Address, null, SelectionAddress);
+        return this.get(Tag.Address, null, SelectionAddress);
     }
 
     getPhoneNumber() {
-        return this.get(GedcomTag.Phone);
+        return this.get(Tag.Phone);
     }
 
     getEmailAddress() {
-        return this.get(GedcomTag.Email);
+        return this.get(Tag.Email);
     }
 
     getFaxAddress() {
-        return this.get(GedcomTag.Fax);
+        return this.get(Tag.Fax);
     }
 
     getWebAddress() {
-        return this.get(GedcomTag.Web);
+        return this.get(Tag.Web);
     }
 }

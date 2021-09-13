@@ -1,14 +1,12 @@
-import { GedcomTag } from '../tag';
-import { SelectionAny } from './SelectionAny';
-import { SelectionLatitude } from './SelectionLatitude';
-import { SelectionLongitude } from './SelectionLongitude';
+import { Tag } from '../tag';
+import { SelectionAny, SelectionLatitude, SelectionLongitude } from './internal';
 
 export class SelectionCoordinates extends SelectionAny {
     getLatitude() {
-        return this.get(GedcomTag.Latitude, null, SelectionLatitude);
+        return this.get(Tag.Latitude, null, SelectionLatitude);
     }
 
     getLongitude() {
-        return this.get(GedcomTag.Longitude, null, SelectionLongitude);
+        return this.get(Tag.Longitude, null, SelectionLongitude);
     }
 }

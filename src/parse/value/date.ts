@@ -1,4 +1,18 @@
-import { GedcomDate } from './GedcomDate';
+import {
+    ValueDate,
+    ValueDateApproximated,
+    ValueDateInterpreted,
+    ValueDateNormal,
+    ValueDatePeriodFrom,
+    ValueDatePeriodFull,
+    ValueDatePeriodTo,
+    ValueDatePhraseOnly,
+    ValueDateRangeAfter,
+    ValueDateRangeBefore,
+    ValueDateRangeFull, ValuePartDate, ValuePartDateDay, ValuePartDateMonth,
+    ValuePartYear, ValuePartYearDual,
+} from './dates';
+import { ValueExactDate } from './ValueExactDate';
 
 const CALENDAR_GREGORIAN = 'DGREGORIAN', CALENDAR_JULIAN = 'DJULIAN', CALENDAR_HEBREW = 'DHEBREW',
     CALENDAR_FRENCH_REPUBLICAN = 'DFRENCH R', CALENDAR_UNKNOWN = 'DUNKNOWN';
@@ -8,7 +22,7 @@ const DATE_RANGE_BEFORE = 'BEF', DATE_RANGE_AFTER = 'AFT', DATE_RANGE_BETWEEN = 
 const DATE_APPROXIMATED_ABOUT = 'ABT', DATE_APPROXIMATED_CALCULATED = 'CAL', DATE_APPROXIMATED_ESTIMATED = 'EST';
 const DATE_INT = 'INT';
 
-const createIndices = (array: string[], looseCase: boolean = false) => {
+const createIndices = (array: string[], looseCase = false) => {
     // Start with 1 to preserve the month numbers
     const entries: [string, number][] = array.map((value, i) => [value, i + 1]);
     const capitalizeFirst = (v: string): string => v ? v[0].toUpperCase() + v.substring(1).toLowerCase() : v;
@@ -32,14 +46,14 @@ const rYearDual = new RegExp(`^${gYear}/([0-9]{2})$`);
 const rDay = /^(?:0?[1-9]|[1-2][0-9]|3[0-1])$/; // Allow leading zeros
 
 const isValidGregorian = (year: number, month: number, day?: number) => {
-    if(month !== undefined) {
-        if(month < 1 || month > 12) { // This check is redundant, but included for completeness
+    if (month !== undefined) {
+        if (month < 1 || month > 12) { // This check is redundant, but included for completeness
             return false;
         }
-        if(day !== undefined) {
+        if (day !== undefined) {
             const isBissextile = ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
             const daysInMonth = month === 2 ? 28 + (isBissextile ? 1 : 0) : 30 + ([4, 6, 9, 11].includes(month) ? 0 : 1);
-            if(day < 1 || day > daysInMonth) {
+            if (day < 1 || day > daysInMonth) {
                 return false;
             }
         }
@@ -48,17 +62,17 @@ const isValidGregorian = (year: number, month: number, day?: number) => {
 };
 
 const isValidFrenchRepublican = (year: number, month?: number, day?: number) => {
-    if(!(year >= 1 && year <= 14)) {
+    if (!(year >= 1 && year <= 14)) {
         return false;
     }
-    if(month !== undefined) {
-        if(month < 1 || month > 13) {
+    if (month !== undefined) {
+        if (month < 1 || month > 13) {
             return false;
         }
-        if(day !== undefined) {
+        if (day !== undefined) {
             const isBissextile = year % 4 === 3;
             const daysInMonth = month !== 13 ? 30 : 5 + (isBissextile ? 1 : 0);
-            if(day < 1 || day > daysInMonth) {
+            if (day < 1 || day > daysInMonth) {
                 return false;
             }
         }
@@ -67,17 +81,17 @@ const isValidFrenchRepublican = (year: number, month?: number, day?: number) => 
 };
 
 export const parseDate = (value: string | null):
-    (GedcomDate.Fuzzy.Normal | GedcomDate.Fuzzy.Approximated
-        | GedcomDate.Fuzzy.PeriodFrom | GedcomDate.Fuzzy.PeriodTo | GedcomDate.Fuzzy.PeriodFull
-        | GedcomDate.Fuzzy.RangeAfter | GedcomDate.Fuzzy.RangeBefore | GedcomDate.Fuzzy.RangeFull
-        | GedcomDate.Fuzzy.Interpreted | GedcomDate.Fuzzy.PhraseOnly) | null => {
+    (ValueDateNormal | ValueDateApproximated
+        | ValueDatePeriodFrom | ValueDatePeriodTo | ValueDatePeriodFull
+        | ValueDateRangeAfter | ValueDateRangeBefore | ValueDateRangeFull
+        | ValueDateInterpreted | ValueDatePhraseOnly) | null => {
     if (!value) {
         return null;
     }
 
     value = value.trim(); // Some files contain leading/trailing spaces
 
-    const defaultDateKinds: GedcomDate.Fuzzy = {
+    const defaultDateKinds: ValueDate = {
         hasDate: true,
         hasPhrase: false,
 
@@ -96,7 +110,7 @@ export const parseDate = (value: string | null):
             hasDate: false,
             hasPhrase: true,
             phrase: text,
-        } as GedcomDate.Fuzzy.PhraseOnly;
+        } as ValueDatePhraseOnly;
     }
 
     const parts = [];
@@ -119,7 +133,7 @@ export const parseDate = (value: string | null):
 
     let i = 0;
 
-    const parseYearPart = (parts: string[], allowBce: boolean, allowDual: boolean): GedcomDate.FuzzyPart.Year | null => {
+    const parseYearPart = (parts: string[], allowBce: boolean, allowDual: boolean): ValuePartYear | null => {
         const defaultYearModifiers = {
             isBce: false,
             isDual: false,
@@ -153,13 +167,13 @@ export const parseDate = (value: string | null):
                 value,
                 isDual: true,
                 valueDual,
-            } as GedcomDate.FuzzyPart.YearDual;
+            } as ValuePartYearDual;
         } else {
             return null; // Underflow or not a year
         }
     };
 
-    const parseDatePart = (parts: string[]): GedcomDate.FuzzyPart.Date | null => {
+    const parseDatePart = (parts: string[]): ValuePartDate | null => {
         if (i < parts.length) {
             let escapeMatch;
             let calendar = CALENDAR_GREGORIAN;
@@ -190,15 +204,15 @@ export const parseDate = (value: string | null):
                 i++;
                 const year = parseYearPart(parts, false, isGregorianOrJulian);
                 if (year !== null) {
-                    if((isGregorian && !isValidGregorian(year.value, monthIndex))
-                        || (isFrenchRepublican && !isValidFrenchRepublican(year.value, monthIndex))) {
+                    if ((isGregorian && !isValidGregorian(year.value, monthIndex)) ||
+                        (isFrenchRepublican && !isValidFrenchRepublican(year.value, monthIndex))) {
                         return null;
                     }
                     return {
                         calendar: calendarProps,
                         month: monthIndex,
                         year: year,
-                    } as GedcomDate.FuzzyPart.DateMonth;
+                    } as ValuePartDateMonth;
                 } else {
                     return null; // Invalid year
                 }
@@ -209,7 +223,7 @@ export const parseDate = (value: string | null):
                     return {
                         calendar: calendarProps,
                         year: firstAsYear,
-                    } as GedcomDate.FuzzyPart.Date;
+                    } as ValuePartDate;
                 }
                 i = previousI; // Important: we need to backtrack since there can be an ambiguity
                 const firstAsDay = i < parts.length && rDay.exec(parts[i]) !== null ? parseInt(parts[i]) : null;
@@ -225,8 +239,8 @@ export const parseDate = (value: string | null):
                     i += 2;
                     const year = parseYearPart(parts, false, isGregorianOrJulian);
                     if (year !== null) {
-                        if((isGregorian && !isValidGregorian(year.value, secondAsMonth, firstAsDay))
-                            || (isFrenchRepublican && !isValidFrenchRepublican(year.value, secondAsMonth, firstAsDay))) {
+                        if ((isGregorian && !isValidGregorian(year.value, secondAsMonth, firstAsDay)) ||
+                            (isFrenchRepublican && !isValidFrenchRepublican(year.value, secondAsMonth, firstAsDay))) {
                             return null;
                         }
                         return {
@@ -234,13 +248,13 @@ export const parseDate = (value: string | null):
                             day: firstAsDay,
                             month: secondAsMonth,
                             year: year,
-                        } as GedcomDate.FuzzyPart.DateDay;
+                        } as ValuePartDateDay;
                     } else {
                         return null; // Invalid year (or the format is day-month, which is not supported here)
                     }
                 } else if (firstAsYear !== null) { // Format year
                     i++;
-                    if(isFrenchRepublican && !isValidFrenchRepublican(firstAsYear.value)) {
+                    if (isFrenchRepublican && !isValidFrenchRepublican(firstAsYear.value)) {
                         return null;
                     }
                     return {
@@ -268,7 +282,7 @@ export const parseDate = (value: string | null):
                     ...defaultDateKinds,
                     isDatePeriod: true,
                     dateFrom: date,
-                } as GedcomDate.Fuzzy.PeriodFrom;
+                } as ValueDatePeriodFrom;
             }
             if (i < parts.length && parts[i] === DATE_PERIOD_TO) {
                 i++;
@@ -279,7 +293,7 @@ export const parseDate = (value: string | null):
                         isDatePeriod: true,
                         dateFrom: date,
                         dateTo: date2,
-                    } as GedcomDate.Fuzzy.PeriodFull;
+                    } as ValueDatePeriodFull;
                 }
             }
         }
@@ -290,7 +304,7 @@ export const parseDate = (value: string | null):
                 ...defaultDateKinds,
                 isDatePeriod: true,
                 dateTo: date,
-            } as GedcomDate.Fuzzy.PeriodTo;
+            } as ValueDatePeriodTo;
         }
     } else if (parts[0] === DATE_RANGE_BEFORE) {
         const date = parseDatePart(parts);
@@ -299,7 +313,7 @@ export const parseDate = (value: string | null):
                 ...defaultDateKinds,
                 isDateRange: true,
                 dateBefore: date,
-            } as GedcomDate.Fuzzy.RangeBefore;
+            } as ValueDateRangeBefore;
         }
     } else if (parts[0] === DATE_RANGE_AFTER) {
         const date = parseDatePart(parts);
@@ -308,7 +322,7 @@ export const parseDate = (value: string | null):
                 ...defaultDateKinds,
                 isDateRange: true,
                 dateAfter: date,
-            } as GedcomDate.Fuzzy.RangeAfter;
+            } as ValueDateRangeAfter;
         }
     } else if (parts[0] === DATE_RANGE_BETWEEN) {
         const date1 = parseDatePart(parts);
@@ -322,7 +336,7 @@ export const parseDate = (value: string | null):
                         isDateRange: true,
                         dateAfter: date1,
                         dateBefore: date2,
-                    } as GedcomDate.Fuzzy.RangeFull;
+                    } as ValueDateRangeFull;
                 }
             }
         }
@@ -339,7 +353,7 @@ export const parseDate = (value: string | null):
                     isEstimated: parts[0] === DATE_APPROXIMATED_ESTIMATED,
                 },
                 date,
-            } as GedcomDate.Fuzzy.Approximated;
+            } as ValueDateApproximated;
         }
     } else if (parts[0] === DATE_INT) {
         const date = parseDatePart(parts);
@@ -354,7 +368,7 @@ export const parseDate = (value: string | null):
                     isDateInterpreted: true,
                     date,
                     phrase: text,
-                } as GedcomDate.Fuzzy.Interpreted;
+                } as ValueDateInterpreted;
             }
         }
     } else { // Normal date
@@ -365,13 +379,13 @@ export const parseDate = (value: string | null):
                 ...defaultDateKinds,
                 isDatePunctual: true,
                 date,
-            } as GedcomDate.Fuzzy.Normal;
+            } as ValueDateNormal;
         }
     }
     return null; // All other invalid cases
 };
 
-export const parseExactDate = (value: string | null): GedcomDate.Exact | null => {
+export const parseExactDate = (value: string | null): ValueExactDate | null => {
     if (!value) {
         return null;
     }
@@ -395,42 +409,5 @@ export const parseExactDate = (value: string | null): GedcomDate.Exact | null =>
         };
     } else { // Invalid date
         return null;
-    }
-};
-
-export const parseExactTime = (value: string | null): GedcomDate.ExactTime | null => {
-    // Note: Gedcom 5.5.5 says *no* leading zeros are allowed on hours. For compatibility purposes we *do* accept them anyway
-    const rTime = /^(0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9])(?:\.([0-9]{2}))?)?$/;
-
-    if (!value) {
-        return null;
-    }
-    const groups = rTime.exec(value);
-    if (!groups) {
-        return null;
-    }
-    const hours = parseInt(groups[1]);
-    const minutes = parseInt(groups[2]);
-    const hoursMinutes = {
-        hours,
-        minutes,
-    };
-    if (groups[3] !== undefined) {
-        const seconds = parseInt(groups[3]);
-        const hoursMinutesSeconds = {
-            ...hoursMinutes,
-            seconds,
-        };
-        if (groups[4] !== undefined) {
-            const centiseconds = parseInt(groups[4]);
-            return {
-                ...hoursMinutesSeconds,
-                centiseconds,
-            };
-        } else {
-            return hoursMinutesSeconds;
-        }
-    } else {
-        return hoursMinutes;
     }
 };

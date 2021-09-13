@@ -1,9 +1,8 @@
-import { SelectionNameType } from './SelectionNameType';
-import { SelectionNamePhonetization } from './SelectionNamePhonetization';
-import { SelectionNameRomanization } from './SelectionNameRomanization';
-import { GedcomTag } from '../tag';
-import { SelectionNamePieces } from './SelectionNamePieces';
+import { SelectionNameType, SelectionNamePhonetization, SelectionNameRomanization, SelectionNamePieces } from './internal';
 
+import { Tag } from '../tag';
+
+// eslint-disable-next-line
 const rNameParts = /^(?:([^\/]*)|(?:(?:([^\/]*?) ?)?\/([^\/]*)\/(?: ?([^\/]*))?))$/;
 
 export class SelectionName extends SelectionNamePieces {
@@ -25,14 +24,14 @@ export class SelectionName extends SelectionNamePieces {
     }
 
     getType() {
-        return this.get(GedcomTag.Type, null, SelectionNameType);
+        return this.get(Tag.Type, null, SelectionNameType);
     }
 
     getNamePhonetization() {
-        return this.get(GedcomTag.Phonetic, null, SelectionNamePhonetization);
+        return this.get(Tag.Phonetic, null, SelectionNamePhonetization);
     }
 
     getNameRomanization() {
-        return this.get(GedcomTag.Phonetic, null, SelectionNameRomanization);
+        return this.get(Tag.Phonetic, null, SelectionNameRomanization);
     }
 }

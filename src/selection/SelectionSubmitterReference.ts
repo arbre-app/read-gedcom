@@ -1,4 +1,4 @@
-import { SelectionReference } from './SelectionReference';
+import { SelectionReference } from './internal';
 
 export class SelectionSubmitterReference extends SelectionReference {
     getSubmitterRecord() {
