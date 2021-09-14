@@ -19,6 +19,7 @@ import { tokenize } from './tokenizer';
  * @param buffer The content of the file
  * @param options Optional parameters
  * @throws ErrorParse If the file cannot be interpreted correctly
+ * @category Gedcom parser
  */
 export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions = {}): TreeNodeRoot => {
     checkMagicHeader(buffer);

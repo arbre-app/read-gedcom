@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["src/parse/index.ts", "src/selection/index.ts", "src/tag/index.ts", "src/tree/index.ts", "src/value/index.ts"],
+  "out": "docs",
+  "media": "pages/static",
+  "readme": "pages/readme.md",
+  "excludeExternals": true,
+  "theme": "pages-plugin",
+  "includeVersion": true,
+  "categorizeByGroup": true
+}

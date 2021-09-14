@@ -1,3 +1,6 @@
+/**
+ * The base type for all Gedcom related errors. All errors are currently also instances of {@link ErrorParse}.
+ */
 export abstract class ErrorGedcomBase extends Error {
     constructor(message?: string) {
         super(message);

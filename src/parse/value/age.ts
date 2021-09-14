@@ -1,5 +1,9 @@
 import { ValueAge } from './ValueAge';
 
+/**
+ * @param value
+ * @category Value parsers
+ */
 export const parseAge = (value: string | null): ValueAge | null => {
     if (!value) {
         return null;

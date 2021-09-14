@@ -4,8 +4,17 @@
 
 export * from './value';
 export { parseGedcom } from './reader';
+/**
+ * @category Gedcom parser
+ */
 export { GedcomReadingOptions } from './GedcomReadingOptions';
+/**
+ * @category Gedcom parser
+ */
 export { GedcomReadingPhase } from './GedcomReadingPhase';
+/**
+ * @category Errors
+ */
 export {
     ErrorGedcomBase,
     ErrorParse,

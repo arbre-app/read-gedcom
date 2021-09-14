@@ -80,6 +80,11 @@ const isValidFrenchRepublican = (year: number, month?: number, day?: number) => 
     return true;
 };
 
+/**
+ * Parses a Gedcom date. These dates can take many different forms, see {@link ValueDate}.
+ * @param value The value to parse
+ * @category Value parsers
+ */
 export const parseDate = (value: string | null):
     (ValueDateNormal | ValueDateApproximated
         | ValueDatePeriodFrom | ValueDatePeriodTo | ValueDatePeriodFull
@@ -385,6 +390,10 @@ export const parseDate = (value: string | null):
     return null; // All other invalid cases
 };
 
+/**
+ * @param value
+ * @category Value parsers
+ */
 export const parseExactDate = (value: string | null): ValueExactDate | null => {
     if (!value) {
         return null;

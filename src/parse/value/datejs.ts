@@ -2,6 +2,10 @@ import { ValuePartDate, ValuePartDateDay, ValuePartDateMonth } from './dates';
 import { ValueExactDate } from './ValueExactDate';
 import { ValueExactTime } from './ValueExactTime';
 
+/**
+ * @param date
+ * @category Parsed value converters
+ */
 export const toJsDate = (date: ValuePartDate): Date | null => {
     const day = (date as ValuePartDateDay).day ?? 1; // Dirty; if you find a better way to do it, submit PR
     const month = (date as ValuePartDateMonth).month ?? 1;
@@ -29,6 +33,11 @@ export const toJsDate = (date: ValuePartDate): Date | null => {
     }
 };
 
+/**
+ * @param date
+ * @param time
+ * @category Parsed value converters
+ */
 export const toJsDateTime = (date: ValueExactDate, time?: ValueExactTime): Date | null => {
     // TODO check valid date
     const dt = new Date(Date.UTC(date.year, date.month - 1, date.day));

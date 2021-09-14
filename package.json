@@ -47,7 +47,7 @@
     "rimraf": "^3.0.2",
     "ts-node": "^10.0.0",
     "typedoc": "^0.21.9",
-    "typedoc-plugin-pages-fork": "0.0.1",
+    "typedoc-plugin-pages-fork-fork": "0.0.3",
     "typescript": "^4.3.4"
   }
 }

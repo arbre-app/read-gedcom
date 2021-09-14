@@ -1,5 +1,9 @@
 import { ValueExactTime } from './ValueExactTime';
 
+/**
+ * @param value
+ * @category Value parsers
+ */
 export const parseExactTime = (value: string | null): ValueExactTime | null => {
     // Note: Gedcom 5.5.5 says *no* leading zeros are allowed on hours. For compatibility purposes we *do* accept them anyway
     const rTime = /^(0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9])(?:\.([0-9]{2}))?)?$/;
