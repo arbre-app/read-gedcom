@@ -16,12 +16,14 @@ export { parseAge } from './age';
  */
 export {
     ValuePartYear,
+    ValuePartYearNormal,
     ValuePartYearDual,
     ValuePartCalendar,
-    ValuePartDate,
+    ValuePartDateYear,
     ValuePartDateMonth,
     ValuePartDateDay,
-    ValueDate,
+    ValuePartDate,
+    ValueDateBase,
     ValueDatePhrased,
     ValueDatePhraseOnly,
     ValueDateDated,
@@ -37,6 +39,7 @@ export {
     ValueDatePeriodFrom,
     ValueDatePeriodTo,
     ValueDatePeriodFull,
+    ValueDate,
 } from './dates';
 export { parseDate, parseExactDate } from './date';
 export { toJsDate, toJsDateTime } from './datejs';

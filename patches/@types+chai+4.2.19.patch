@@ -1,0 +1,13 @@
+diff --git a/node_modules/@types/chai/index.d.ts b/node_modules/@types/chai/index.d.ts
+index 542faf5..32c974e 100755
+--- a/node_modules/@types/chai/index.d.ts
++++ b/node_modules/@types/chai/index.d.ts
+@@ -408,7 +408,7 @@ declare namespace Chai {
+          * @param expression    Expression to test for truthiness.
+          * @param message    Message to display on error.
+          */
+-        (expression: any, message?: string): void;
++        (expression: any, message?: string): asserts expression;
+ 
+         /**
+          * Throws a failure.

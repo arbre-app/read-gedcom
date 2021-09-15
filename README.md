@@ -1,9 +1,9 @@
 # read-gedcom
 
 ![](https://github.com/arbre-app/read-gedcom/actions/workflows/build.yml/badge.svg)
-![](https://img.shields.io/npm/v/read-gedcom)
+![](https://img.shields.io/npm/v/read-gedcom?color=brightgreen)
 ![](https://img.shields.io/librariesio/dependents/npm/read-gedcom)
-![](https://img.shields.io/npm/l/read-gedcom)
+![](https://img.shields.io/npm/l/read-gedcom?color=brightgreen)
 
 ***A Gedcom file reader written in Typescript.*** See the **[documentation](https://docs.arbre.app/read-gedcom/)**.
 

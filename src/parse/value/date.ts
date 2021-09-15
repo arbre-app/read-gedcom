@@ -9,8 +9,8 @@ import {
     ValueDatePhraseOnly,
     ValueDateRangeAfter,
     ValueDateRangeBefore,
-    ValueDateRangeFull, ValuePartDate, ValuePartDateDay, ValuePartDateMonth,
-    ValuePartYear, ValuePartYearDual,
+    ValueDateRangeFull, ValuePartDateYear, ValuePartDateDay, ValuePartDateMonth,
+    ValuePartYear, ValuePartYearDual, ValueDateBase,
 } from './dates';
 import { ValueExactDate } from './ValueExactDate';
 
@@ -85,18 +85,14 @@ const isValidFrenchRepublican = (year: number, month?: number, day?: number) => 
  * @param value The value to parse
  * @category Value parsers
  */
-export const parseDate = (value: string | null):
-    (ValueDateNormal | ValueDateApproximated
-        | ValueDatePeriodFrom | ValueDatePeriodTo | ValueDatePeriodFull
-        | ValueDateRangeAfter | ValueDateRangeBefore | ValueDateRangeFull
-        | ValueDateInterpreted | ValueDatePhraseOnly) | null => {
+export const parseDate = (value: string | null): ValueDate | null => {
     if (!value) {
         return null;
     }
 
     value = value.trim(); // Some files contain leading/trailing spaces
 
-    const defaultDateKinds: ValueDate = {
+    const defaultDateKinds: ValueDateBase = {
         hasDate: true,
         hasPhrase: false,
 
@@ -178,7 +174,7 @@ export const parseDate = (value: string | null):
         }
     };
 
-    const parseDatePart = (parts: string[]): ValuePartDate | null => {
+    const parseDatePart = (parts: string[]): ValuePartDateYear | null => {
         if (i < parts.length) {
             let escapeMatch;
             let calendar = CALENDAR_GREGORIAN;
@@ -228,7 +224,7 @@ export const parseDate = (value: string | null):
                     return {
                         calendar: calendarProps,
                         year: firstAsYear,
-                    } as ValuePartDate;
+                    } as ValuePartDateYear;
                 }
                 i = previousI; // Important: we need to backtrack since there can be an ambiguity
                 const firstAsDay = i < parts.length && rDay.exec(parts[i]) !== null ? parseInt(parts[i]) : null;
@@ -265,7 +261,7 @@ export const parseDate = (value: string | null):
                     return {
                         calendar: calendarProps,
                         year: firstAsYear,
-                    };
+                    } as ValuePartDateYear;
                 } else {
                     return null; // Invalid year (or first token)
                 }

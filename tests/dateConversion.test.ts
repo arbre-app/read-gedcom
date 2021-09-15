@@ -6,15 +6,13 @@ import {
     parseExactTime,
     toJsDate,
     toJsDateTime,
-    ValueDatePunctual,
-    ValueExactDate, ValueExactTime,
 } from '../src';
 
 describe('Parsed dates to JS dates conversion', () => {
     const testPunctual = (value: string, expected: string | Date): void => {
         const parsed = parseDate(value);
         assert(parsed !== null && parsed.isDatePunctual);
-        const { date } = parsed as ValueDatePunctual;
+        const { date } = parsed;
         assert.deepStrictEqual(toJsDate(date), new Date(expected));
     };
 
@@ -68,7 +66,7 @@ describe('Parsed dates to JS dates conversion', () => {
             assert(date !== null);
             const time = value[1] !== undefined ? parseExactTime(value[1]) : undefined;
             assert(time !== null);
-            assert.deepStrictEqual(toJsDateTime(date as ValueExactDate, time as ValueExactTime), new Date(expected));
+            assert.deepStrictEqual(toJsDateTime(date, time), new Date(expected));
         };
 
         test(['15 AUG 2015'], '2015-08-15');

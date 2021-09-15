@@ -4,6 +4,10 @@ export interface ValuePartYear {
     isDual: boolean;
 }
 
+export interface ValuePartYearNormal extends ValuePartYear {
+    isDual: false;
+}
+
 export interface ValuePartYearDual extends ValuePartYear {
     isDual: true;
     valueDual: number;
@@ -17,20 +21,26 @@ export interface ValuePartCalendar {
     isUnknown: boolean;
 }
 
-export interface ValuePartDate {
+export interface ValuePartDateYear {
     calendar: ValuePartCalendar;
-    year: ValuePartYear;
+    year: ValuePartYearNormal | ValuePartYearDual;
 }
 
-export interface ValuePartDateMonth extends ValuePartDate {
+export interface ValuePartDateMonth extends ValuePartDateYear {
     month: number;
+    // `year` type could be refined (no BCE)
 }
 
 export interface ValuePartDateDay extends ValuePartDateMonth {
     day: number;
 }
 
-export interface ValueDate {
+export type ValuePartDate = ValuePartDateYear | ValuePartDateMonth | ValuePartDateDay;
+
+/**
+ * The base type for all date values.
+ */
+export interface ValueDateBase {
     /**
      * Indicates an instance of {@link ValueDateDated}.
      */
@@ -41,23 +51,23 @@ export interface ValueDate {
     hasPhrase: boolean;
 
     /**
-     * Indicates an instance of {@link ValueDatePunctual}.
+     * Indicates an instance of {@link ValueDatePunctual}. Implies {@link hasDate}.
      */
     isDatePunctual: boolean;
     /**
-     * Indicates an instance of {@link ValueDatePeriod}.
+     * Indicates an instance of {@link ValueDatePeriod}. Implies {@link hasDate}.
      */
     isDatePeriod: boolean;
     /**
-     * Indicates an instance of {@link ValueDateRange}.
+     * Indicates an instance of {@link ValueDateRange}. Implies {@link hasDate}.
      */
     isDateRange: boolean;
     /**
-     * Indicates an instance of {@link ValueDateApproximated}.
+     * Indicates an instance of {@link ValueDateApproximated}. Implies {@link hasDate}.
      */
     isDateApproximated: boolean;
     /**
-     * Indicates an instance of {@link ValueDateInterpreted}.
+     * Indicates an instance of {@link ValueDateInterpreted}. Implies {@link hasDate}.
      */
     isDateInterpreted: boolean;
 }
@@ -65,17 +75,29 @@ export interface ValueDate {
 /**
  * An instance is indicated by {@link hasPhrase}.
  */
-export interface ValueDatePhrased extends ValueDate {
+export interface ValueDatePhrased extends ValueDateBase {
     hasPhrase: true;
     phrase: string;
+
+    isDatePeriod: false;
+    isDateRange: false;
+    isDateApproximated: false;
 }
 
-export type ValueDatePhraseOnly = ValueDatePhrased; // FIXME?
+/**
+ * An instance is indicated by the conjunction of {@link hasPhrase} and negated {@link hasDate} (or equivalently, {@link hasPhrase} and negated {@link isDateInterpreted}).
+ */
+export interface ValueDatePhraseOnly extends ValueDatePhrased {
+    hasDate: false;
+    isDatePunctual: false;
+    isDateApproximated: false;
+    isDateInterpreted: false;
+}
 
 /**
  * An instance is indicated by {@link hasDate}.
  */
-export interface ValueDateDated extends ValueDate {
+export interface ValueDateDated extends ValueDateBase {
     hasDate: true;
 }
 
@@ -85,6 +107,9 @@ export interface ValueDateDated extends ValueDate {
 export interface ValueDatePunctual extends ValueDateDated {
     isDatePunctual: true;
     date: ValuePartDate;
+
+    isDatePeriod: false;
+    isDateRange: false;
 }
 
 /**
@@ -97,6 +122,9 @@ export interface ValueDateApproximated extends ValueDatePunctual {
         isCalculated: boolean,
         isEstimated: boolean,
     };
+
+    hasPhrase: false;
+    isDateInterpreted: false;
 }
 
 /**
@@ -109,25 +137,49 @@ export interface ValueDateInterpreted extends ValueDatePunctual, ValueDatePhrase
     hasPhrase: true;
 
     isDateInterpreted: true;
+
+    isDateApproximated: false; // Also required by the compiler
 }
 
-export type ValueDateNormal = ValueDatePunctual;
+/**
+ * An instance is indicated by the conjunction of {@link isDatePunctual}, negated {@link isDateApproximated} and negated {@link isDateInterpreted}.
+ */
+export interface ValueDateNormal extends ValueDatePunctual {
+    hasPhrase: false;
+    isDateApproximated: false;
+    isDateInterpreted: false;
+}
 
 /**
  * An instance is indicated by {@link isDateRange}.
  */
 export interface ValueDateRange extends ValueDateDated {
     isDateRange: true;
+
+    hasPhrase: false;
+    isDatePunctual: false;
+    isDatePeriod: false;
+    isDateApproximated: false;
+    isDateInterpreted: false;
 }
 
+/**
+ * An instance is indicated by {@link isDateRange} and defined {@link dateAfter}.
+ */
 export interface ValueDateRangeAfter extends ValueDateRange {
     dateAfter: ValuePartDate;
 }
 
+/**
+ * An instance is indicated by {@link isDateRange} and defined {@link dateBefore}.
+ */
 export interface ValueDateRangeBefore extends ValueDateRange {
     dateBefore: ValuePartDate;
 }
 
+/**
+ * An instance is indicated by {@link isDateRange}, defined {@link dateAfter} and defined {@link dateBefore}.
+ */
 export interface ValueDateRangeFull extends ValueDateRangeAfter, ValueDateRangeBefore {}
 
 /**
@@ -135,14 +187,37 @@ export interface ValueDateRangeFull extends ValueDateRangeAfter, ValueDateRangeB
  */
 export interface ValueDatePeriod extends ValueDateDated {
     isDatePeriod: true;
+
+    hasPhrase: false;
+    isDatePunctual: false;
+    isDateRange: false;
+    isDateApproximated: false;
+    isDateInterpreted: false;
 }
 
+/**
+ * An instance is indicated by {@link isDatePeriod} and defined {@link dateFrom}.
+ */
 export interface ValueDatePeriodFrom extends ValueDatePeriod {
     dateFrom: ValuePartDate;
 }
 
+/**
+ * An instance is indicated by {@link isDatePeriod} and defined {@link dateTo}.
+ */
 export interface ValueDatePeriodTo extends ValueDatePeriod {
     dateTo: ValuePartDate;
 }
 
+/**
+ * An instance is indicated by {@link isDatePeriod}, defined {@link dateFrom} and defined {@link dateTo}.
+ */
 export interface ValueDatePeriodFull extends ValueDatePeriodFrom, ValueDatePeriodTo {}
+
+/**
+ * A valid Gedcom date. See {@link ValueDateBase}, the base type for all of them.
+ */
+export type ValueDate = ValueDateNormal | ValueDateApproximated
+    | ValueDatePeriodFrom | ValueDatePeriodTo | ValueDatePeriodFull
+    | ValueDateRangeAfter | ValueDateRangeBefore | ValueDateRangeFull
+    | ValueDateInterpreted | ValueDatePhraseOnly;

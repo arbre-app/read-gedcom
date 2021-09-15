@@ -20,7 +20,8 @@
     "build:clean": "rimraf dist && npm run build",
     "docs": "typedoc --tsconfig tsconfig-build.json",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
-    "lint": "npx eslint src/ tests/ --ext .ts --fix"
+    "lint": "npx eslint src/ tests/ --ext .ts --fix",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
     "mocha": "^9.0.0",
+    "patch-package": "^6.4.7",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "ts-node": "^10.0.0",

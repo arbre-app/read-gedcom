@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import { assert } from 'chai';
-import { parseGedcom } from '../src';
+import { ErrorInvalidFileType, ErrorTreeStructure, parseGedcom } from '../src';
 
 describe('Gedcom header/trailer verification', () => {
     const header = [
@@ -29,14 +29,20 @@ describe('Gedcom header/trailer verification', () => {
     });
 
     it('should reject a file without a header', () => {
-        assert.throws(function() {
+        assert.throws(() => {
             read([...record, ...trailer]);
-        }); // TODO add error type
+        }, ErrorInvalidFileType);
+    });
+
+    it('should reject a file that does not start with a header', () => {
+        assert.throws(() => {
+            read([...record, ...header, ...trailer]);
+        }, ErrorInvalidFileType);
     });
 
     it('should reject a file without a trailer', () => {
-        assert.throws(function() {
+        assert.throws(() => {
             read([...header, ...record]);
-        }); // TODO
+        }, ErrorTreeStructure);
     });
 });

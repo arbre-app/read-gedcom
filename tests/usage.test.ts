@@ -3,8 +3,6 @@ import { before, describe, it } from 'mocha';
 import { assert, expect } from 'chai';
 import {
     readGedcom,
-    ValueDateNormal,
-    ValuePartDate,
     ValueGedcomForm,
     ValueCharacterEncoding, ValueLanguage, ValueSex, SelectionGedcom, ValuePartDateDay,
 } from '../src';
@@ -68,12 +66,12 @@ describe('Gedcom sample file', function () {
         assert(ind1.getSex().value()[0] === ValueSex.Male);
         const birth = ind1.getEventBirth();
         const birthDate = birth.getDate().valueAsDate()[0];
-        assert(birthDate !== null && birthDate.hasDate);
-        const withoutCalendar = <D extends ValuePartDate>(date: D): Omit<D, 'calendar'> => {
+        assert(birthDate !== null && birthDate.isDatePunctual && !birthDate.isDateApproximated && !birthDate.isDateInterpreted);
+        const withoutCalendar = <D extends ValuePartDateDay>(date: D): Omit<D, 'calendar'> => {
             const { calendar, ...rest } = date; // eslint-disable-line
             return rest;
         };
-        assert.deepStrictEqual(withoutCalendar((birthDate as ValueDateNormal).date as ValuePartDateDay), { day: 2, month: 10, year: { isBce: false, isDual: false, value: 1822 } });
+        assert.deepStrictEqual(withoutCalendar(birthDate.date as ValuePartDateDay), { day: 2, month: 10, year: { isBce: false, isDual: false, value: 1822 } });
         assert.deepStrictEqual(birth.getPlace().valueAsParts()[0], ['Weston', 'Madison', 'Connecticut', 'United States of America']);
     };
 
