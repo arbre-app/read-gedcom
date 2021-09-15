@@ -2,7 +2,7 @@
  * The base type for all Gedcom related errors. All errors are currently also instances of {@link ErrorParse}.
  */
 export abstract class ErrorGedcomBase extends Error {
-    constructor(message?: string) {
+    protected constructor(message?: string) {
         super(message);
 
         // See https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work

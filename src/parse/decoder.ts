@@ -2,7 +2,7 @@ import { TagNonStandard, Tag } from '../tag';
 import { ValueCharacterEncoding } from '../value';
 import { tokenize } from './tokenizer';
 import { buildTree } from './structurer';
-import { decodeUtf8BOM } from './decoding';
+import { decodeUtfBOM } from './decoding';
 
 export const enum FileEncoding {
     Utf8 = 'UTF-8',
@@ -28,7 +28,9 @@ export interface FileMetadata {
  * @param maxPeekLines Maximum number of lines to read
  */
 export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 1000, maxPeekLines = 100): FileMetadata => {
-    const [inputHead, hasBOM] = decodeUtf8BOM(buffer.slice(0, maxPeekBytes)); // Start with UTF-8 since file can contain a BOM
+    const { output: inputHead, bomCharset } = decodeUtfBOM(buffer.slice(0, maxPeekBytes)); // Start with UTF-8 since file can contain a BOM
+
+    const hasBOM = bomCharset !== null;
 
     const it = tokenize(inputHead, false); // Non-strict mode: break silently on error
     let i = 0;

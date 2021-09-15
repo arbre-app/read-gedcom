@@ -1,7 +1,15 @@
 import { Tag } from '../tag';
 import { TreeNodeRoot } from '../tree';
 import { detectCharset, FileEncoding } from './decoder';
-import { decodeAnsel, decodeCp1252, decodeCp850, decodeMacintosh, decodeUtf8 } from './decoding';
+import {
+    BOM_UTF16_BE, BOM_UTF16_LE, BOM_UTF32_BE, BOM_UTF32_LE,
+    BOM_UTF8,
+    decodeAnsel,
+    decodeCp1252,
+    decodeCp850,
+    decodeMacintosh,
+    decodeUtf,
+} from './decoding';
 import {
     ErrorEmptyTree,
     ErrorInvalidFileType,
@@ -32,7 +40,7 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
     const decodingCallback = callback ? (bytesRead: number) => callback(GedcomReadingPhase.Decoding, bytesRead / totalBytes) : undefined;
     let input;
     if (charset === FileEncoding.Utf8) {
-        input = decodeUtf8(buffer, decodingCallback);
+        input = decodeUtf(buffer, decodingCallback);
     } else if (charset === FileEncoding.Cp1252) {
         input = decodeCp1252(buffer, decodingCallback);
     } else if (charset === FileEncoding.Ansel) {
@@ -64,9 +72,8 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
  * @param buffer The content of the file
  */
 const checkMagicHeader = (buffer: ArrayBuffer) => {
-    const bom = [0xEF, 0xBB, 0xBF];
     const headStr = '0 HEAD';
-    const head = [];
+    const head: number[] = [];
     for (let i = 0; i < headStr.length; i++) {
         head.push(headStr.charCodeAt(i));
     }
@@ -83,8 +90,16 @@ const checkMagicHeader = (buffer: ArrayBuffer) => {
         return true;
     };
 
-    if (!startsWith(head) && !startsWith(bom.concat(head))) {
-        throw new ErrorInvalidFileType('Probably not a Gedcom file');
+    if (!startsWith(head) && !startsWith(BOM_UTF8.concat(head))) { // Not ASCII nor any of its extensions, including UTF-8
+        const headUtf16 = head.map(b => [0, b]);
+        if (!startsWith(BOM_UTF16_BE.concat(headUtf16.flat())) &&
+            !startsWith(BOM_UTF16_LE.concat(headUtf16.map(bs => bs.slice().reverse()).flat()))) { // Not UTF-16
+            const headUtf32 = head.map(b => [0, 0, 0, b]);
+            if (!startsWith(BOM_UTF32_BE.concat(headUtf32.flat())) &&
+                !startsWith(BOM_UTF32_LE.concat(headUtf32.map(bs => bs.slice().reverse()).flat()))) { // Not UTF-32
+                throw new ErrorInvalidFileType('Probably not a Gedcom file');
+            }
+        }
     }
 };
 
