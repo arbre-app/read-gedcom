@@ -1,4 +1,4 @@
-export enum ValueMediaType {
+export const enum ValueMediaType {
     Audio = 'audio',
     Book = 'book',
     Card = 'card',

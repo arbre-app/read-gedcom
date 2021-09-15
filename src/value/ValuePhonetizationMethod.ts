@@ -1,4 +1,4 @@
-export enum ValuePhonetizationMethod {
+export const enum ValuePhonetizationMethod {
     Hangul = 'Hangul',
     Kana = 'kana'
 }

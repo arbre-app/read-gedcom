@@ -1,4 +1,4 @@
-export enum ValueNameType {
+export const enum ValueNameType {
     Alias = 'aka',
     Birth = 'birth',
     Immigration = 'immigrant',

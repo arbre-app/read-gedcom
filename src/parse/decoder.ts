@@ -4,7 +4,7 @@ import { tokenize } from './tokenizer';
 import { buildTree } from './structurer';
 import { decodeUtf8BOM } from './decoding';
 
-export enum FileEncoding {
+export const enum FileEncoding {
     Utf8 = 'UTF-8',
     Ansel = 'ANSEL',
     Cp1252 = 'Cp1252',

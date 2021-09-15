@@ -1,4 +1,4 @@
-export enum ValueLanguage {
+export const enum ValueLanguage {
     Afrikaans = 'Afrikaans',
     Albanian = 'Albanian',
     AngloSaxon = 'Anglo-Saxon',

@@ -1,7 +1,7 @@
 /**
  * Reading phases.
  */
-export enum GedcomReadingPhase {
+export const enum GedcomReadingPhase {
     Decoding,
     TokenizationAndStructuring,
     Indexing,
