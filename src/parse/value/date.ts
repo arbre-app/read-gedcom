@@ -45,7 +45,7 @@ const rYear = new RegExp(`^${gYear}$`);
 const rYearDual = new RegExp(`^${gYear}/([0-9]{2})$`);
 const rDay = /^(?:0?[1-9]|[1-2][0-9]|3[0-1])$/; // Allow leading zeros
 
-const isValidGregorian = (year: number, month: number, day?: number) => {
+const isValidDateGregorian = (year: number, month: number, day?: number): boolean => {
     if (month !== undefined) {
         if (month < 1 || month > 12) { // This check is redundant, but included for completeness
             return false;
@@ -61,7 +61,7 @@ const isValidGregorian = (year: number, month: number, day?: number) => {
     return true;
 };
 
-const isValidFrenchRepublican = (year: number, month?: number, day?: number) => {
+const isValidDateFrenchRepublican = (year: number, month?: number, day?: number): boolean => {
     if (!(year >= 1 && year <= 14)) {
         return false;
     }
@@ -205,8 +205,8 @@ export const parseDate = (value: string | null): ValueDate | null => {
                 i++;
                 const year = parseYearPart(parts, false, isGregorianOrJulian);
                 if (year !== null) {
-                    if ((isGregorian && !isValidGregorian(year.value, monthIndex)) ||
-                        (isFrenchRepublican && !isValidFrenchRepublican(year.value, monthIndex))) {
+                    if ((isGregorian && !isValidDateGregorian(year.value, monthIndex)) ||
+                        (isFrenchRepublican && !isValidDateFrenchRepublican(year.value, monthIndex))) {
                         return null;
                     }
                     return {
@@ -240,8 +240,8 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     i += 2;
                     const year = parseYearPart(parts, false, isGregorianOrJulian);
                     if (year !== null) {
-                        if ((isGregorian && !isValidGregorian(year.value, secondAsMonth, firstAsDay)) ||
-                            (isFrenchRepublican && !isValidFrenchRepublican(year.value, secondAsMonth, firstAsDay))) {
+                        if ((isGregorian && !isValidDateGregorian(year.value, secondAsMonth, firstAsDay)) ||
+                            (isFrenchRepublican && !isValidDateFrenchRepublican(year.value, secondAsMonth, firstAsDay))) {
                             return null;
                         }
                         return {
@@ -255,7 +255,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     }
                 } else if (firstAsYear !== null) { // Format year
                     i++;
-                    if (isFrenchRepublican && !isValidFrenchRepublican(firstAsYear.value)) {
+                    if (isFrenchRepublican && !isValidDateFrenchRepublican(firstAsYear.value)) {
                         return null;
                     }
                     return {

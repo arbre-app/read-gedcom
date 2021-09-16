@@ -28,6 +28,8 @@ export const toJsDate = (date: ValuePartDateYear): Date | null => {
             (month < 7 && isB ? 1 : 0) +
             (year > sYear || (year === sYear && (month > sMonth || (month === sMonth && day >= sDay))) ? 1 : 0);
         return new Date(Date.UTC(startYear + year + (month > 4 ? 1 : 0), ((month - 1) + 8) % 12, day + index));
+    } else if (date.calendar.isHebrew) {
+        return null;
     } else {
         return null; // Unsupported calendar kind
     }

@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { describe, it } from 'mocha';
 import { assert } from 'chai';
 import { TextDecoder } from 'util';
@@ -65,7 +66,7 @@ describe('Detect the encoding and decode it accordingly', () => {
         assert(gedcom.getNoteRecord().value()[0] === textDecoded);
     };
 
-    it('should decode and parse files in the allowed charsets', () => {
+    it('should decode and parse generated files in the allowed charsets', () => {
         const decoded = 'aéôå';
         const utf8Decoded = [...new Uint8Array(Buffer.from(decoded))];
 
@@ -78,5 +79,16 @@ describe('Detect the encoding and decode it accordingly', () => {
         test(utf8Decoded, decoded, { charset: ValueCharacterEncoding.Utf8, bom: BOM_UTF8 }); // UTF-8 BOM
         test(utf8Decoded, decoded, { charset: ValueCharacterEncoding.Unicode, bom: BOM_UTF16_BE, reencode: 'utf-16be' }); // UTF-16 BOM Big-endian
         test(utf8Decoded, decoded, { charset: ValueCharacterEncoding.Unicode, bom: BOM_UTF16_LE, reencode: 'utf-16le' }); // UTF-16 BOM Little-endian
+    });
+
+    it('should parse known files in UTF-16', () => {
+        const filenames = ['sample55516be.ged', 'sample55516le.ged'];
+        filenames.map(filename =>
+            fs.readFile(`./tests/data/${filename}`, (error, buffer) => {
+                if (error) {
+                    throw error;
+                }
+                assert(readGedcom(buffer).getSubmitterRecord().getName().value()[0] === 'Reldon Poulson');
+            }));
     });
 });
