@@ -1,8 +1,8 @@
 import { TreeNode } from './TreeNode';
-import { TreeRootIndex } from './TreeRootIndex';
+import { TreeIndexRoot } from './TreeIndexRoot';
 
 /**
- * The root node of a Gedcom file.
+ * The (virtual) root node of a Gedcom file.
  */
 export interface TreeNodeRoot extends TreeNode {
     tag: null;
@@ -11,5 +11,5 @@ export interface TreeNodeRoot extends TreeNode {
     indexSource: -1;
     indexRelative: 0;
 
-    _index?: TreeRootIndex;
+    _index?: TreeIndexRoot;
 }

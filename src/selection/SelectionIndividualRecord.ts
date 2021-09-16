@@ -1,4 +1,4 @@
-import { TreeNode, TreeRootIndex } from '../tree';
+import { TreeNode, TreeIndexRoot } from '../tree';
 import { SelectionWithNoteSourceCitationMixin } from './mixin';
 import { SelectionFamilyRecord, SelectionName, SelectionSex, SelectionIndividualEventFamily, SelectionIndividualEventFamilyAdoption, SelectionIndividualEvent, SelectionIndividualAttribute, SelectionChildFamilyLink, SelectionSpouseFamilyLink, SelectionAssociation, SelectionMultimediaReference } from './internal';
 
@@ -23,21 +23,30 @@ export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMi
 
     getFamilyAsChild() {
         const children: TreeNode[] = [];
-        const rootIndex = this.rootNode._index as TreeRootIndex | undefined;
+        const rootIndex = this.rootNode._index as TreeIndexRoot | undefined;
         if (rootIndex !== undefined && rootIndex.asChild !== undefined) {
             for (let i = 0; i < this.length; i++) {
                 const node = this[i];
                 if (node.pointer !== null) {
-                    const families = rootIndex.asChild[node.pointer];
-                    if (families !== undefined) { // TODO this shouldn't happen, is it necessary?
-                        families.forEach(family => {
-                            children.push(family);
+                    const familiesIdx = rootIndex.asChild[node.pointer];
+                    if (familiesIdx !== undefined) { // TODO this shouldn't happen, is it necessary?
+                        familiesIdx.forEach(familyIdx => {
+                            children.push(this.rootNode.children[familyIdx]);
                         });
                     }
                 }
             }
         } else {
-            throw new Error('Not implemented');
+            // Pretty bad performance when the index is not available, but we don't have any other choice
+            // Cost could be mitigated for large selections by using a hash set (but tricky due to multiplicity)
+            const nodesFamily = this.rootNode.children.filter(nodeFamily => nodeFamily.tag === Tag.Family);
+            for (let i = 0; i < this.length; i++) {
+                const node = this[i];
+                if (node.pointer !== null) {
+                    nodesFamily.filter(nodeFamily => nodeFamily.children.some(nodeChild => nodeChild.tag === Tag.Child && nodeChild.value === node.pointer))
+                        .forEach(nodeFamily => children.push(nodeFamily));
+                }
+            }
         }
 
         return new SelectionFamilyRecord(this.rootNode, children);
@@ -45,21 +54,28 @@ export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMi
 
     getFamilyAsSpouse() {
         const children: TreeNode[] = [];
-        const rootIndex = this.rootNode._index as TreeRootIndex | undefined;
+        const rootIndex = this.rootNode._index as TreeIndexRoot | undefined;
         if (rootIndex !== undefined && rootIndex.asSpouse !== undefined) {
             for (let i = 0; i < this.length; i++) {
                 const node = this[i];
                 if (node.pointer !== null) {
-                    const families = rootIndex.asSpouse[node.pointer];
-                    if (families !== undefined) { // ditto
-                        families.forEach(family => {
-                            children.push(family);
+                    const familiesIdx = rootIndex.asSpouse[node.pointer];
+                    if (familiesIdx !== undefined) { // ditto
+                        familiesIdx.forEach(familyIdx => {
+                            children.push(this.rootNode.children[familyIdx]);
                         });
                     }
                 }
             }
         } else {
-            throw new Error('Not implemented');
+            const nodesFamily = this.rootNode.children.filter(nodeFamily => nodeFamily.tag === Tag.Family);
+            for (let i = 0; i < this.length; i++) {
+                const node = this[i];
+                if (node.pointer !== null) {
+                    nodesFamily.filter(nodeFamily => nodeFamily.children.some(nodeChild => (nodeChild.tag === Tag.Husband || nodeChild.tag === Tag.Wife) && nodeChild.value === node.pointer))
+                        .forEach(nodeFamily => children.push(nodeFamily));
+                }
+            }
         }
 
         return new SelectionFamilyRecord(this.rootNode, children);

@@ -30,3 +30,4 @@ export {
     ErrorIndexing,
     ErrorDuplicatePointer,
 } from './error';
+export { indexTree } from './indexer';

@@ -2,7 +2,10 @@ import { Tag } from '../tag';
 import { TreeNodeRoot } from '../tree';
 import { detectCharset, FileEncoding } from './decoder';
 import {
-    BOM_UTF16_BE, BOM_UTF16_LE, BOM_UTF32_BE, BOM_UTF32_LE,
+    BOM_UTF16_BE,
+    BOM_UTF16_LE,
+    BOM_UTF32_BE,
+    BOM_UTF32_LE,
     BOM_UTF8,
     decodeAnsel,
     decodeCp1252,
@@ -10,12 +13,7 @@ import {
     decodeMacintosh,
     decodeUtf,
 } from './decoding';
-import {
-    ErrorEmptyTree,
-    ErrorInvalidFileType,
-    ErrorTreeStructure,
-    ErrorUnsupportedCharset,
-} from './error';
+import { ErrorEmptyTree, ErrorInvalidFileType, ErrorTreeStructure, ErrorUnsupportedCharset } from './error';
 import { GedcomReadingOptions } from './GedcomReadingOptions';
 import { GedcomReadingPhase } from './GedcomReadingPhase';
 import { indexTree } from './indexer';
@@ -39,7 +37,7 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
     const totalBytes = buffer.byteLength;
     const decodingCallback = callback ? (bytesRead: number) => callback(GedcomReadingPhase.Decoding, bytesRead / totalBytes) : undefined;
     let input;
-    if (charset === FileEncoding.Utf8) {
+    if (charset === FileEncoding.Utf8 || charset === FileEncoding.Utf16be || charset === FileEncoding.Utf16le) {
         input = decodeUtf(buffer, decodingCallback);
     } else if (charset === FileEncoding.Cp1252) {
         input = decodeCp1252(buffer, decodingCallback);
@@ -61,7 +59,11 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
     checkTreeStructure(rootNode);
 
     if (!options.noIndex) {
-        indexTree(rootNode, !!options.noBackwardsReferencesIndex, callback ? () => callback(GedcomReadingPhase.Indexing, null) : null);
+        indexTree(rootNode, !!options.noBackwardsReferencesIndex, !!options.doHideIndex, callback ? () => callback(GedcomReadingPhase.Indexing, null) : null);
+    }
+
+    if (options.doFreeze) {
+        deepFreeze(rootNode);
     }
 
     return rootNode;
@@ -119,5 +121,23 @@ const checkTreeStructure = (rootNode: TreeNodeRoot): void => {
     const trailer = root[root.length - 1];
     if (trailer.tag !== Tag.Trailer) {
         throw new ErrorTreeStructure(`Last node is not a trailer (got ${trailer.tag})`);
+    }
+};
+
+/**
+ * Freezes this object to prevent further modifications.
+ * @param object The object to be frozen
+ */
+const deepFreeze = (object: any): void => {
+    let queue = [object];
+    while (queue.length > 0) {
+        const next: any[] = [];
+        queue.forEach(obj => {
+            if (obj != null && typeof obj === 'object' && !Object.isFrozen(obj)) {
+                Object.freeze(obj);
+                Object.getOwnPropertyNames(obj).forEach(property => next.push(obj[property]));
+            }
+        });
+        queue = next;
     }
 };

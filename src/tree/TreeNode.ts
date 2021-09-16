@@ -38,6 +38,7 @@ export interface TreeNode {
 
     /**
      * The index for this node, if computed.
+     * It can be safely serialized as it does not contain any reference, but rather indices (represented as integers).
      */
     _index?: TreeIndex;
 }

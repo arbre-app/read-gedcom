@@ -9,10 +9,21 @@
 
 ### Features
 
-* Support for the full Gedcom specification
-* Versatile API
-* Good-effort charset detection
-* No dependencies
+* Tolerant parsing
+  * Character encoding detection (ASCII, CP1252, UTF-8, UTF-16, CP850, and more)
+  * Good effort of parsing and interpreting non-standard data
+* Near full specification coverage
+  * Mostly Gedcom 5.5.5 compliant while being as much backward compatible as possible
+  * Parser for dates in any standard calendars
+* Unopinionated API
+  * We provide the API, but the user has full control over the interpretation of the data
+  * It's also possible to not use the API, in which case it can be shaken off the tree
+* Strongly typed
+* Zero dependencies; compatible on browser and Node.js
+* ...and more:
+  * Conversion of dates
+  * Serialization-friendly
+  * Progress tracking for larger files
 
 ### Installation and Usage
 

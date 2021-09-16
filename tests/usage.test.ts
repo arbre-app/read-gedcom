@@ -73,6 +73,9 @@ describe('Gedcom sample file', function () {
         };
         assert.deepStrictEqual(withoutCalendar(birthDate.date as ValuePartDateDay), { day: 2, month: 10, year: { isBce: false, isDual: false, value: 1822 } });
         assert.deepStrictEqual(birth.getPlace().valueAsParts()[0], ['Weston', 'Madison', 'Connecticut', 'United States of America']);
+
+        const fam1 = gedcom.getIndividualRecord('@I2@').getFamilyAsSpouse();
+        assert(fam1.pointer()[0] === '@F1@');
     };
 
     it('should handle the full workflow correctly on an indexed file', () => testUsage(gedcomWithIndex));

@@ -31,7 +31,7 @@ export interface GedcomReadingOptions {
      * Otherwise the objects will remain normal.
      * This option is not enabled by default for performance reasons.
      */
-    /*doFreeze?: boolean;*/
+    doFreeze?: boolean;
 
     /**
      * An optional callback used to track the progress.

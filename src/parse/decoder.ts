@@ -10,6 +10,8 @@ export const enum FileEncoding {
     Cp1252 = 'Cp1252',
     Macintosh = 'Macintosh',
     Cp850 = 'Cp850',
+    Utf16be = 'UTF-16be',
+    Utf16le = 'UTF-16le',
 }
 
 export interface FileMetadata {
@@ -74,6 +76,8 @@ export const detectCharset = (buffer: ArrayBuffer): FileEncoding => {
             return FileEncoding.Cp1252;
         } else if (sourceEncoding === ValueCharacterEncoding.Ansi) {
             return FileEncoding.Cp1252;
+        } else if (sourceEncoding === ValueCharacterEncoding.Unicode) {
+            return FileEncoding.Utf16be; // RFC 2781
         } else if (sourceEncoding === 'WINDOWS') {
             return FileEncoding.Cp1252;
         } else if (sourceEncoding === 'MACINTOSH') {

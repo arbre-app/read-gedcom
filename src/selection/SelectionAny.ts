@@ -1,5 +1,5 @@
 import { AnyConstructor, enumerable } from '../meta';
-import { TreeIndex, TreeNode, TreeNodeRoot, TreeRootIndex, nodeToString } from '../tree';
+import { TreeIndex, TreeNode, TreeNodeRoot, TreeIndexRoot, nodeToString } from '../tree';
 import { SelectionGedcom } from './internal';
 
 /**
@@ -35,7 +35,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @private
      */
     selfConstructor(): AnyConstructor<this> {
-        if (Object.setPrototypeOf !== undefined) {
+        if (Object.getPrototypeOf !== undefined) {
             return Object.getPrototypeOf(this).constructor as AnyConstructor<this>;
         } else {
             return (this as any).__proto__.constructor; // eslint-disable-line no-proto
@@ -130,20 +130,20 @@ export class SelectionAny implements ArrayLike<TreeNode> {
                 const intermediary: TreeNode[] = [];
                 const requiresSorting = (tags !== null && tags.length > 0) || (pointers !== null && pointers.length > 0);
                 if (pointers !== null) {
-                    const rootIndex = index as TreeRootIndex;
+                    const rootIndex = index as TreeIndexRoot;
                     if (rootIndex.byTagPointer !== undefined) { // If the cast is unsafe then the selection should be empty
                         if (tags !== null) {
                             tags.forEach(t => pointers.forEach(p => {
-                                const child = rootIndex.byTagPointer[t][p];
-                                if (child !== undefined) {
-                                    intermediary.push(child);
+                                const childIdx = rootIndex.byTagPointer[t][p];
+                                if (childIdx !== undefined) {
+                                    intermediary.push(node.children[childIdx]);
                                 }
                             }));
                         } else {
                             Object.values(rootIndex.byTagPointer).forEach(nodes => pointers.forEach(p => {
-                                const child = nodes[p];
-                                if (child !== undefined) {
-                                    intermediary.push(child);
+                                const childIdx = nodes[p];
+                                if (childIdx !== undefined) {
+                                    intermediary.push(node.children[childIdx]);
                                 }
                             }));
                         }
@@ -151,9 +151,9 @@ export class SelectionAny implements ArrayLike<TreeNode> {
                 } else {
                     const tagsNonNull = tags as string[]; // Safe cast
                     tagsNonNull.forEach(t => {
-                        const nodes = index.byTag[t];
-                        if (nodes !== undefined) {
-                            nodes.forEach(child => intermediary.push(child));
+                        const nodesIdx = index.byTag[t];
+                        if (nodesIdx !== undefined) {
+                            nodesIdx.forEach(childIdx => intermediary.push(node.children[childIdx]));
                         }
                     });
                 }
