@@ -1,6 +1,3 @@
 import { SelectionAny } from './internal';
 
-/**
- * @deprecated
- */
-export class SelectionSex extends SelectionAny {}
+export type SelectionSex = SelectionAny;

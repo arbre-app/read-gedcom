@@ -1,6 +1,6 @@
 import { TreeNode, TreeIndexRoot } from '../tree';
-import { SelectionWithNoteSourceCitationMixin } from './mixin';
-import { SelectionFamilyRecord, SelectionName, SelectionSex, SelectionIndividualEventFamily, SelectionIndividualEventFamilyAdoption, SelectionIndividualEvent, SelectionIndividualAttribute, SelectionChildFamilyLink, SelectionSpouseFamilyLink, SelectionAssociation, SelectionMultimediaReference } from './internal';
+import { SelectionWithMultimediaMixin, SelectionWithNoteSourceCitationMixin } from './mixin';
+import { SelectionFamilyRecord, SelectionName, SelectionSex, SelectionIndividualEventFamily, SelectionIndividualEventFamilyAdoption, SelectionIndividualEvent, SelectionIndividualAttribute, SelectionChildFamilyLink, SelectionSpouseFamilyLink, SelectionAssociation } from './internal';
 
 import { Tag } from '../tag';
 import { SelectionRecord } from './base';
@@ -12,13 +12,13 @@ import { SelectionRecord } from './base';
  *  <tr><th>Value</th><td>No</td></tr>
  * </table>
  */
-export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMixin(SelectionRecord) {
+export class SelectionIndividualRecord extends SelectionWithMultimediaMixin(SelectionWithNoteSourceCitationMixin(SelectionRecord)) {
     getName() {
         return this.get(Tag.Name, null, SelectionName);
     }
 
-    getSex() {
-        return this.get(Tag.Sex, null, SelectionSex);
+    getSex(): SelectionSex {
+        return this.get(Tag.Sex);
     }
 
     getFamilyAsChild() {
@@ -235,9 +235,5 @@ export class SelectionIndividualRecord extends SelectionWithNoteSourceCitationMi
 
     getAssociation() {
         return this.get(Tag.Associates, null, SelectionAssociation);
-    }
-
-    getMultimedia() {
-        return this.get(Tag.Object, null, SelectionMultimediaReference);
     }
 }

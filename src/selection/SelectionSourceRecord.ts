@@ -1,10 +1,14 @@
-import { SelectionSourceData, SelectionRepositoryReference, SelectionMultimediaReference } from './internal';
+import {
+    SelectionSourceData,
+    SelectionRepositoryReference,
+    SelectionWithMultimediaMixin,
+} from './internal';
 
 import { Tag } from '../tag';
 import { SelectionRecord } from './base';
 import { SelectionWithNoteMixin } from './mixin';
 
-export class SelectionSourceRecord extends SelectionWithNoteMixin(SelectionRecord) {
+export class SelectionSourceRecord extends SelectionWithMultimediaMixin(SelectionWithNoteMixin(SelectionRecord)) {
     getData() {
         return this.get(Tag.Data, null, SelectionSourceData);
     }
@@ -31,9 +35,5 @@ export class SelectionSourceRecord extends SelectionWithNoteMixin(SelectionRecor
 
     getRepository() {
         return this.get(Tag.Repository, null, SelectionRepositoryReference);
-    }
-
-    getMultimedia() {
-        return this.get(Tag.Object, null, SelectionMultimediaReference);
     }
 }

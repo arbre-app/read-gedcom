@@ -1,6 +1,3 @@
 import { SelectionAny } from './internal';
 
-/**
- * @deprecated
- */
-export class SelectionPhonetizationMethod extends SelectionAny {}
+export type SelectionPhonetizationMethod = SelectionAny;

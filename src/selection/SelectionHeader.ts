@@ -9,8 +9,8 @@ export class SelectionHeader extends SelectionWithNoteMixin(SelectionAny) {
         return this.get(Tag.Gedcom, null, SelectionGedcomFile);
     }
 
-    getCharacterEncoding() {
-        return this.get(Tag.Character, null, SelectionCharacterEncoding);
+    getCharacterEncoding(): SelectionCharacterEncoding {
+        return this.get(Tag.Character);
     }
 
     getSourceSystem() {

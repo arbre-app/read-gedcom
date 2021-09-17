@@ -1,3 +1,4 @@
+import { parsePlaceParts } from '../parse';
 import { SelectionPhonetization, SelectionRomanization, SelectionCoordinates, SelectionAny } from './internal';
 
 import { Tag } from '../tag';
@@ -6,12 +7,7 @@ import { SelectionWithNoteMixin } from './mixin';
 
 export class SelectionPlace extends SelectionWithNoteMixin(SelectionAny) {
     valueAsParts() {
-        return this.value().map(v => {
-            if (v === null) {
-                return null;
-            }
-            return v.split(/, ?/); // Space is mandatory according to specification, but we still accept it if it's missing
-        });
+        return this.value().map(parsePlaceParts);
     }
 
     getPhonetization() {

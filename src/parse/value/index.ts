@@ -45,3 +45,6 @@ export { parseDate, parseExactDate } from './date';
 export { toJsDate, toJsDateTime } from './datejs';
 export { parseLatitude, parseLongitude } from './coordinates';
 export { parseExactTime } from './exacttime';
+export { parsePlaceParts } from './place';
+export { parseNameParts } from './name';
+export { parseVersionParts } from './version';

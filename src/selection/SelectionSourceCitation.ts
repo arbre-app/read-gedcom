@@ -1,10 +1,16 @@
-import { SelectionCitationEvent, SelectionCitationData, SelectionMultimediaReference, SelectionSourceCertainty, SelectionAny } from './internal';
+import {
+    SelectionCitationEvent,
+    SelectionCitationData,
+    SelectionSourceCertainty,
+    SelectionAny,
+    SelectionWithMultimediaMixin,
+} from './internal';
 
 import { Tag } from '../tag';
 
 import { SelectionWithNoteMixin } from './mixin';
 
-export class SelectionSourceCitation extends SelectionWithNoteMixin(SelectionAny) {
+export class SelectionSourceCitation extends SelectionWithMultimediaMixin(SelectionWithNoteMixin(SelectionAny)) {
     getSourceRecord() {
         return this.root().getSourceRecord(this.valueNonNull());
     }
@@ -21,11 +27,7 @@ export class SelectionSourceCitation extends SelectionWithNoteMixin(SelectionAny
         return this.get(Tag.Data, null, SelectionCitationData);
     }
 
-    getMultimedia() {
-        return this.get(Tag.Object, null, SelectionMultimediaReference);
-    }
-
-    getCertainty() {
-        return this.get(Tag.QualityOfData, null, SelectionSourceCertainty);
+    getCertainty(): SelectionSourceCertainty {
+        return this.get(Tag.QualityOfData);
     }
 }

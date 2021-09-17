@@ -1,10 +1,10 @@
-import { SelectionWithNoteSourceCitationMixin } from './mixin';
-import { SelectionIndividualReference, SelectionMultimediaReference, SelectionFamilyEvent } from './internal';
+import { SelectionWithMultimediaMixin, SelectionWithNoteSourceCitationMixin } from './mixin';
+import { SelectionIndividualReference, SelectionFamilyEvent } from './internal';
 
 import { Tag } from '../tag';
 import { SelectionRecord } from './base';
 
-export class SelectionFamilyRecord extends SelectionWithNoteSourceCitationMixin(SelectionRecord) {
+export class SelectionFamilyRecord extends SelectionWithMultimediaMixin(SelectionWithNoteSourceCitationMixin(SelectionRecord)) {
     /* Events */
 
     getEventAnnulment() {
@@ -71,9 +71,5 @@ export class SelectionFamilyRecord extends SelectionWithNoteSourceCitationMixin(
 
     getChildrenCount() {
         return this.get(Tag.ChildrenCount);
-    }
-
-    getMultimedia() {
-        return this.get(Tag.Object, null, SelectionMultimediaReference);
     }
 }

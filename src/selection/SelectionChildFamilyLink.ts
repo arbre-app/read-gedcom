@@ -8,7 +8,7 @@ export class SelectionChildFamilyLink extends SelectionWithNoteMixin(SelectionAn
         return this.root().getFamilyRecord(this.valueNonNull());
     }
 
-    getPedigreeLinkageType() {
-        return this.get(Tag.Pedigree, null, SelectionPedigreeLinkageType);
+    getPedigreeLinkageType(): SelectionPedigreeLinkageType {
+        return this.get(Tag.Pedigree);
     }
 }

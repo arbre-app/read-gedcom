@@ -1,10 +1,10 @@
 import { ValueEvent } from '../value';
-import { SelectionWithAddressMixin, SelectionWithNoteSourceCitationMixin } from './mixin';
-import { SelectionAny, SelectionDate, SelectionPlace, SelectionMultimediaReference } from './internal';
+import { SelectionWithAddressMixin, SelectionWithMultimediaMixin, SelectionWithNoteSourceCitationMixin } from './mixin';
+import { SelectionAny, SelectionDate, SelectionPlace } from './internal';
 
 import { Tag } from '../tag';
 
-export class SelectionEvent extends SelectionWithAddressMixin(SelectionWithNoteSourceCitationMixin(SelectionAny)) {
+export class SelectionEvent extends SelectionWithAddressMixin(SelectionWithMultimediaMixin(SelectionWithNoteSourceCitationMixin(SelectionAny))) {
     valueAsHappened() {
         return this.value().map(v => v ? (v === ValueEvent.Yes ? true : null) : false);
     }
@@ -31,9 +31,5 @@ export class SelectionEvent extends SelectionWithAddressMixin(SelectionWithNoteS
 
     getCause() {
         return this.get(Tag.Cause);
-    }
-
-    getMultimedia() {
-        return this.get(Tag.Object, null, SelectionMultimediaReference);
     }
 }
