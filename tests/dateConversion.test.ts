@@ -25,6 +25,27 @@ describe('Parsed dates to JS dates conversion', () => {
         testPunctual('753 BCE', new Date(Date.UTC(-753, 0, 1)));
     });
 
+    it('should correctly convert Julian dates to JS dates', () => {
+        const jl = (date: string) => `@@#DJULIAN@@ ${date}`;
+        testPunctual(jl('4 OCT 1582'), '1582-10-14'); // Last official day of the Julian calendar
+        testPunctual(jl('5 OCT 1582'), '1582-10-15'); // Introduction of the Gregorian calendar
+        testPunctual(jl('25 APR 1214'), '1214-05-02'); // Birth of Louix IX
+        // Source: https://fr.wikipedia.org/wiki/Formules_de_calcul_du_calendrier_gr%C3%A9gorien#Conversion_d%E2%80%99un_jour_julien_en_%C3%A9l%C3%A9ments_de_date_gr%C3%A9gorienne
+        testPunctual(jl('16 FEB 1895'), '1895-02-28');
+        testPunctual(jl('17 FEB 1895'), '1895-03-01');
+        testPunctual(jl('17 FEB 1896'), '1896-02-29');
+        testPunctual(jl('18 FEB 1896'), '1896-03-01');
+        testPunctual(jl('16 FEB 1900'), '1900-02-28');
+        testPunctual(jl('17 FEB 1900'), '1900-03-01');
+        testPunctual(jl('16 FEB 2000'), '2000-02-29');
+        testPunctual(jl('17 FEB 2000'), '2000-03-01');
+        testPunctual(jl('18 MAR 2000'), '2000-03-31');
+        testPunctual(jl('19 MAR 2000'), '2000-04-01');
+        testPunctual(jl('17 APR 2000'), '2000-04-30');
+        testPunctual(jl('18 APR 2000'), '2000-05-01');
+        testPunctual(jl('18 DEC 2000'), '2000-12-31');
+    });
+
     it('should correctly convert French Republican dates to JS dates', () => {
         // Source: https://fr.wikipedia.org/wiki/Concordance_des_dates_des_calendriers_r%C3%A9publicain_et_gr%C3%A9gorien
         const fr = (date: string) => `@@#DFRENCH R@@ ${date}`;

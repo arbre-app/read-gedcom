@@ -45,14 +45,16 @@ const rYear = new RegExp(`^${gYear}$`);
 const rYearDual = new RegExp(`^${gYear}/([0-9]{2})$`);
 const rDay = /^(?:0?[1-9]|[1-2][0-9]|3[0-1])$/; // Allow leading zeros
 
-const isValidDateGregorian = (year: number, month: number, day?: number): boolean => {
-    if (month !== undefined) {
+const daysInJulianMonth = (month: number, isBissextile: boolean): number =>
+    month === 2 ? 28 + (isBissextile ? 1 : 0) : 30 + ([4, 6, 9, 11].includes(month) ? 0 : 1);
+
+const isValidPartialDateJulian = (isBissextile: boolean, month?: number, day?: number): boolean => {
+    if (month != null) {
         if (month < 1 || month > 12) { // This check is redundant, but included for completeness
             return false;
         }
-        if (day !== undefined) {
-            const isBissextile = ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
-            const daysInMonth = month === 2 ? 28 + (isBissextile ? 1 : 0) : 30 + ([4, 6, 9, 11].includes(month) ? 0 : 1);
+        if (day != null) {
+            const daysInMonth = daysInJulianMonth(month, isBissextile);
             if (day < 1 || day > daysInMonth) {
                 return false;
             }
@@ -61,15 +63,25 @@ const isValidDateGregorian = (year: number, month: number, day?: number): boolea
     return true;
 };
 
+const isValidDateGregorian = (year: number, month?: number, day?: number): boolean => {
+    const isBissextile = ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
+    return isValidPartialDateJulian(isBissextile, month, day);
+};
+
+const isValidDateJulian = (year: number, month: number, day?: number): boolean => {
+    const isBissextile = year % 4 === 0;
+    return isValidPartialDateJulian(isBissextile, month, day);
+};
+
 const isValidDateFrenchRepublican = (year: number, month?: number, day?: number): boolean => {
     if (!(year >= 1 && year <= 14)) {
         return false;
     }
-    if (month !== undefined) {
+    if (month != null) {
         if (month < 1 || month > 13) {
             return false;
         }
-        if (day !== undefined) {
+        if (day != null) {
             const isBissextile = year % 4 === 3;
             const daysInMonth = month !== 13 ? 30 : 5 + (isBissextile ? 1 : 0);
             if (day < 1 || day > daysInMonth) {
@@ -206,6 +218,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                 const year = parseYearPart(parts, false, isGregorianOrJulian);
                 if (year !== null) {
                     if ((isGregorian && !isValidDateGregorian(year.value, monthIndex)) ||
+                        (isJulian && !isValidDateJulian(year.value, monthIndex)) ||
                         (isFrenchRepublican && !isValidDateFrenchRepublican(year.value, monthIndex))) {
                         return null;
                     }
@@ -241,6 +254,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     const year = parseYearPart(parts, false, isGregorianOrJulian);
                     if (year !== null) {
                         if ((isGregorian && !isValidDateGregorian(year.value, secondAsMonth, firstAsDay)) ||
+                            (isJulian && !isValidDateJulian(year.value, secondAsMonth, firstAsDay)) ||
                             (isFrenchRepublican && !isValidDateFrenchRepublican(year.value, secondAsMonth, firstAsDay))) {
                             return null;
                         }
