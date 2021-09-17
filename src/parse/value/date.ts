@@ -1,16 +1,7 @@
 import {
     ValueDate,
-    ValueDateApproximated,
-    ValueDateInterpreted,
-    ValueDateNormal,
-    ValueDatePeriodFrom,
-    ValueDatePeriodFull,
-    ValueDatePeriodTo,
-    ValueDatePhraseOnly,
-    ValueDateRangeAfter,
-    ValueDateRangeBefore,
-    ValueDateRangeFull, ValuePartDateYear, ValuePartDateDay, ValuePartDateMonth,
-    ValuePartYear, ValuePartYearDual, ValueDateBase,
+    ValuePartYear,
+    ValuePartDate,
 } from './dates';
 import { ValueExactDate } from './ValueExactDate';
 
@@ -104,7 +95,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
 
     value = value.trim(); // Some files contain leading/trailing spaces
 
-    const defaultDateKinds: ValueDateBase = {
+    const defaultDateKinds = {
         hasDate: true,
         hasPhrase: false,
 
@@ -113,7 +104,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
         isDateRange: false,
         isDateApproximated: false,
         isDateInterpreted: false,
-    };
+    } as const;
 
     let textMatch;
     if ((textMatch = rDatePhrase.exec(value)) !== null) {
@@ -123,7 +114,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
             hasDate: false,
             hasPhrase: true,
             phrase: text,
-        } as ValueDatePhraseOnly;
+        };
     }
 
     const parts = [];
@@ -150,7 +141,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
         const defaultYearModifiers = {
             isBce: false,
             isDual: false,
-        };
+        } as const;
         let dual;
         if (i < parts.length && rYear.exec(parts[i]) !== null) {
             const value = parseInt(parts[i]);
@@ -180,13 +171,13 @@ export const parseDate = (value: string | null): ValueDate | null => {
                 value,
                 isDual: true,
                 valueDual,
-            } as ValuePartYearDual;
+            };
         } else {
             return null; // Underflow or not a year
         }
     };
 
-    const parseDatePart = (parts: string[]): ValuePartDateYear | null => {
+    const parseDatePart = (parts: string[]): ValuePartDate | null => {
         if (i < parts.length) {
             let escapeMatch;
             let calendar = CALENDAR_GREGORIAN;
@@ -226,7 +217,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                         calendar: calendarProps,
                         month: monthIndex,
                         year: year,
-                    } as ValuePartDateMonth;
+                    };
                 } else {
                     return null; // Invalid year
                 }
@@ -237,7 +228,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     return {
                         calendar: calendarProps,
                         year: firstAsYear,
-                    } as ValuePartDateYear;
+                    };
                 }
                 i = previousI; // Important: we need to backtrack since there can be an ambiguity
                 const firstAsDay = i < parts.length && rDay.exec(parts[i]) !== null ? parseInt(parts[i]) : null;
@@ -263,7 +254,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                             day: firstAsDay,
                             month: secondAsMonth,
                             year: year,
-                        } as ValuePartDateDay;
+                        };
                     } else {
                         return null; // Invalid year (or the format is day-month, which is not supported here)
                     }
@@ -275,7 +266,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     return {
                         calendar: calendarProps,
                         year: firstAsYear,
-                    } as ValuePartDateYear;
+                    };
                 } else {
                     return null; // Invalid year (or first token)
                 }
@@ -297,7 +288,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     ...defaultDateKinds,
                     isDatePeriod: true,
                     dateFrom: date,
-                } as ValueDatePeriodFrom;
+                };
             }
             if (i < parts.length && parts[i] === DATE_PERIOD_TO) {
                 i++;
@@ -308,7 +299,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                         isDatePeriod: true,
                         dateFrom: date,
                         dateTo: date2,
-                    } as ValueDatePeriodFull;
+                    };
                 }
             }
         }
@@ -319,7 +310,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                 ...defaultDateKinds,
                 isDatePeriod: true,
                 dateTo: date,
-            } as ValueDatePeriodTo;
+            };
         }
     } else if (parts[0] === DATE_RANGE_BEFORE) {
         const date = parseDatePart(parts);
@@ -328,7 +319,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                 ...defaultDateKinds,
                 isDateRange: true,
                 dateBefore: date,
-            } as ValueDateRangeBefore;
+            };
         }
     } else if (parts[0] === DATE_RANGE_AFTER) {
         const date = parseDatePart(parts);
@@ -337,7 +328,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                 ...defaultDateKinds,
                 isDateRange: true,
                 dateAfter: date,
-            } as ValueDateRangeAfter;
+            };
         }
     } else if (parts[0] === DATE_RANGE_BETWEEN) {
         const date1 = parseDatePart(parts);
@@ -351,7 +342,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                         isDateRange: true,
                         dateAfter: date1,
                         dateBefore: date2,
-                    } as ValueDateRangeFull;
+                    };
                 }
             }
         }
@@ -368,7 +359,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     isEstimated: parts[0] === DATE_APPROXIMATED_ESTIMATED,
                 },
                 date,
-            } as ValueDateApproximated;
+            };
         }
     } else if (parts[0] === DATE_INT) {
         const date = parseDatePart(parts);
@@ -383,7 +374,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     isDateInterpreted: true,
                     date,
                     phrase: text,
-                } as ValueDateInterpreted;
+                };
             }
         }
     } else { // Normal date
@@ -394,7 +385,7 @@ export const parseDate = (value: string | null): ValueDate | null => {
                 ...defaultDateKinds,
                 isDatePunctual: true,
                 date,
-            } as ValueDateNormal;
+            };
         }
     }
     return null; // All other invalid cases

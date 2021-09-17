@@ -1,17 +1,19 @@
-export interface ValuePartYear {
+export interface ValuePartYearBase {
     value: number;
     isBce: boolean;
     isDual: boolean;
 }
 
-export interface ValuePartYearNormal extends ValuePartYear {
+export interface ValuePartYearNormal extends ValuePartYearBase {
     isDual: false;
 }
 
-export interface ValuePartYearDual extends ValuePartYear {
+export interface ValuePartYearDual extends ValuePartYearBase {
     isDual: true;
     valueDual: number;
 }
+
+export type ValuePartYear = ValuePartYearNormal | ValuePartYearDual;
 
 export interface ValuePartCalendar {
     isGregorian: boolean;
@@ -23,7 +25,7 @@ export interface ValuePartCalendar {
 
 export interface ValuePartDateYear {
     calendar: ValuePartCalendar;
-    year: ValuePartYearNormal | ValuePartYearDual;
+    year: ValuePartYear;
 }
 
 export interface ValuePartDateMonth extends ValuePartDateYear {

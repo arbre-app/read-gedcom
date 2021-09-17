@@ -22,7 +22,7 @@ describe('Documentation examples tested on sample Gedcom file', () => {
         return gedcom.getIndividualRecord().filterSelect(individual => {
             const names = individual.getName().valueAsParts()[0];
             if (names !== null) {
-                const namesTokens = (names.filter(v => v) as string[]).flatMap(tokenize);
+                const namesTokens = names.filter((v): v is string => !!v).flatMap(tokenize);
                 return queryTokens.every(s => namesTokens.includes(s));
             }
             return false;

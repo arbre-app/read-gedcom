@@ -5,7 +5,7 @@ const rNameParts = /^(?:([^\/]*)|(?:(?:([^\/]*?) ?)?\/([^\/]*)\/(?: ?([^\/]*))?)
  * @param value
  * @category Value parsers
  */
-export const parseNameParts = (value: string | null): [string, string, string] | [undefined, string, string] | [string, string, undefined] | [undefined, string, undefined] | [string, undefined, undefined] | null => {
+export const parseNameParts = (value: string | null): ((string | undefined)[] & ([string, string, string] | [undefined, string, string] | [string, string, undefined] | [undefined, string, undefined] | [string, undefined, undefined])) | null => {
     if (!value) {
         return null;
     }

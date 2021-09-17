@@ -79,7 +79,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * Calls {@link value} and filters out <code>null</code> values.
      */
     valueNonNull(): string[] {
-        return this.value().filter(v => v !== null) as string[]; // Provably safe
+        return this.value().filter((v): v is string => v !== null);
     }
 
     /**
@@ -325,7 +325,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
 
     static of<N extends SelectionAny>(previous: SelectionAny, nodes: TreeNode[] | TreeNode, Adapter?: AnyConstructor<N>): N {
         const AdapterClass = Adapter != null ? Adapter : SelectionAny as unknown as AnyConstructor<N>;
-        const nodesArray = Array.isArray(nodes) ? nodes : [nodes as TreeNode];
+        const nodesArray = Array.isArray(nodes) ? nodes : [nodes];
         return new AdapterClass(previous.rootNode, nodesArray);
     }
 }

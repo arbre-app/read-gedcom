@@ -4,7 +4,7 @@ const rVersion = /^(0|[1-9][0-9]{0,2})\.(0|[1-9][0-9]{0,2})(?:\.(0|[1-9][0-9]{0,
  * @param value
  * @category Value parsers
  */
-export const parseVersionParts = (value: string | null): [number, number] | [number, number, number] | null => {
+export const parseVersionParts = (value: string | null): (number[] & ([number, number] | [number, number, number])) | null => {
     if (!value) {
         return null;
     }
@@ -12,7 +12,7 @@ export const parseVersionParts = (value: string | null): [number, number] | [num
     if (!groups) {
         return null;
     }
-    const numbers = [];
+    const numbers: number[] = [];
     for (let i = 0; i < 3 && groups[i + 1]; i++) {
         numbers.push(parseInt(groups[i + 1]));
     }

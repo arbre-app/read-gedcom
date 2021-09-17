@@ -38,7 +38,7 @@ export const parseAge = (value: string | null): ValueAge | null => {
                 if ((suffix === 'd' && number > 365) || (suffix === 'm' && number > 11)) {
                     return null;
                 }
-                return [suffix, number];
+                return [suffix, number] as const;
             } else {
                 return null;
             }
