@@ -27,7 +27,7 @@ export class ErrorParse extends ErrorGedcomBase {
 
 export class ErrorInvalidFileType extends ErrorParse {}
 
-export class GedcomErrorDecoding extends ErrorParse {
+export class ErrorGedcomDecoding extends ErrorParse {
     constructor(message: string, public readonly illegalCode: number) {
         super(message);
         patchPrototype(this, new.target);

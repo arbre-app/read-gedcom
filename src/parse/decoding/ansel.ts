@@ -1,4 +1,4 @@
-import { GedcomErrorDecoding } from '../error';
+import { ErrorGedcomDecoding } from '../error';
 import { BYTES_INTERVAL } from './common';
 import { FileDecoder } from './FileDecoder';
 
@@ -42,7 +42,7 @@ export const decodeAnsel: FileDecoder = (buffer, progressCallback?) => {
                 i++;
                 output.push(String.fromCharCode(u));
             } else {
-                throw new GedcomErrorDecoding(`Illegal ANSEL character code: ${code}`, code);
+                throw new ErrorGedcomDecoding(`Illegal ANSEL character code: ${code}`, code);
             }
         } else {
             // One byte

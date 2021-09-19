@@ -14,10 +14,19 @@
         {
           "title": "Advanced Examples",
           "source": "./pages/advanced-examples.md"
-        },
+        }
+      ]
+    },
+    {
+      "title": "Versions",
+      "pages": [
         {
           "title": "Migration",
           "source": "./pages/migration.md"
+        },
+        {
+          "title": "Changelog",
+          "source": "./pages/changelog.md"
         }
       ]
     }

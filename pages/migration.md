@@ -14,13 +14,13 @@ For example:
 * `GedcomValue.Event` becomes `ValueEvent`
 * `GedcomTree.Node` becomes `TreeNode`
 
-The name `Error` was also made a prefix to align with the rest:
+The name `Error` was also made a prefix to align with the rest, for example:
 
 * `GedcomError.TokenizationError` becomes `ErrorTokenization`
 
-The dates types (formerly `GedcomDate`) were also revised; while you refactor the names you are encouraged to review the types.
+The dates types (formerly `GedcomDate`) were also revised; while you refactor the identifiers you are encouraged to review the types.
 
-Other:
+Other changes:
 
 * The root index interface was renamed, it is now `TreeIndexRoot` (~~`TreeRootIndex`~~ is incorrect) 
 * To avoid confusion, the note reference adapter can be found under the name `SelectionNoteReferenceMixed` (~~`SelectionNoteReferenceMixin`~~ is incorrect)
