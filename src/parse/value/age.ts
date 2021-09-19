@@ -1,7 +1,8 @@
 import { ValueAge } from './ValueAge';
 
 /**
- * @param value
+ * Parses an age value.
+ * @param value The value to parse
  * @category Value parsers
  */
 export const parseAge = (value: string | null): ValueAge | null => {

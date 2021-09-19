@@ -13,4 +13,8 @@ export const readGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions = 
     return new SelectionGedcom(rootNode, [rootNode]);
 };
 
+/**
+ * Wrap a Gedcom tree into a {@link SelectionGedcom}.
+ * @param rootNode The Gedcom tree
+ */
 export const selectGedcom = (rootNode: TreeNodeRoot): SelectionGedcom => new SelectionGedcom(rootNode, [rootNode]);

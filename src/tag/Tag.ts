@@ -13,14 +13,26 @@ export const enum Tag {
     AdultChristening = 'CHRA',
     Age = 'AGE',
     Agency = 'AGNC',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     Alias = 'ALIA',
     Ancestors = 'ANCE',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     AncestorInterest = 'ANCI',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     AncestralFileNumber = 'AFN',
     Annulment = 'ANUL',
     Associates = 'ASSO',
     Author = 'AUTH',
     Baptism = 'BAPM',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     BaptismLDS = 'BAPL',
     BarMitzvah = 'BARM',
     BatMitzvah = 'BASM',
@@ -40,6 +52,9 @@ export const enum Tag {
     City = 'CITY',
     Concatenation = 'CONC',
     Confirmation = 'CONF',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     ConfirmationLDS = 'CONL',
     Continuation = 'CONT',
     Copyright = 'COPR',
@@ -50,6 +65,9 @@ export const enum Tag {
     Date = 'DATE',
     Death = 'DEAT',
     Descendants = 'DESC',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     DescendantInt = 'DESI',
     Destination = 'DEST',
     Divorce = 'DIV',
@@ -57,6 +75,9 @@ export const enum Tag {
     Education = 'EDUC',
     Email = 'EMAIL',
     Emigration = 'EMIG',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     Endowment = 'ENDL',
     Engagement = 'ENGA',
     Event = 'EVEN',
@@ -99,6 +120,9 @@ export const enum Tag {
     Object = 'OBJE',
     Occupation = 'OCCU',
     Ordinance = 'ORDI',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     Ordination = 'ORDN',
     Page = 'PAGE',
     Pedigree = 'PEDI',
@@ -118,17 +142,35 @@ export const enum Tag {
     Religion = 'RELI',
     Repository = 'REPO',
     Residence = 'RESI',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     Restriction = 'RESN',
     Retirement = 'RETI',
     Role = 'ROLE',
     Romanized = 'ROMN',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     SealingChild = 'SLGC',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     SealingSpouse = 'SLGS',
     Sex = 'SEX',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     SocialSecurityNumber = 'SSN',
     Source = 'SOUR',
     State = 'STAE',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     Status = 'STAT',
+    /**
+     * Obsoleted in Gedcom 5.5.5
+     */
     Submission = 'SUBN',
     Submitter = 'SUBM',
     Surname = 'SURN',

@@ -1,7 +1,8 @@
 import { ValueExactTime } from './ValueExactTime';
 
 /**
- * @param value
+ * Parses a time of format hours-minutes, optionally containing seconds and even centiseconds information.
+ * @param value The value to parse
  * @category Value parsers
  */
 export const parseExactTime = (value: string | null): ValueExactTime | null => {

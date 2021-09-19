@@ -10,8 +10,8 @@ const PROGRESS_ITERATE_INTERVAL = 5000;
  * This operation is idempotent: applying several times will not have further effects (but will cost resources as the whole tree will be traversed anyway).
  * @param rootNode The root node
  * @param noBackwardsReferencesIndex See {@link GedcomReadingOptions.noBackwardsReferencesIndex}
- * @param progressCallback See {@link GedcomReadingOptions.progressCallback}
  * @param doHideIndex See {@link GedcomReadingOptions.doHideIndex}
+ * @param progressCallback See {@link GedcomReadingOptions.progressCallback}
  * @category Gedcom parser
  */
 export const indexTree = (rootNode: TreeNodeRoot,

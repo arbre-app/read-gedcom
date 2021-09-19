@@ -85,6 +85,8 @@ const isValidDateFrenchRepublican = (year: number, month?: number, day?: number)
 
 /**
  * Parses a Gedcom date. These dates can take many different forms, see {@link ValueDate}.
+ * The dates are checked for validity with respect to their calendar, except for the Hebrew calendar which will assume all dates to be valid due to a missing implementation.
+ * Any unsuccessful parsing or invalid date(s) will result in <code>null</code>.
  * @param value The value to parse
  * @category Value parsers
  */
@@ -392,7 +394,8 @@ export const parseDate = (value: string | null): ValueDate | null => {
 };
 
 /**
- * @param value
+ * Parses a date of format day-month-year.
+ * @param value The value to parse
  * @category Value parsers
  */
 export const parseExactDate = (value: string | null): ValueExactDate | null => {

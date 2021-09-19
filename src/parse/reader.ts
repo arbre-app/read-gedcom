@@ -63,7 +63,15 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
     }
 
     if (options.doFreeze) {
+        if (callback) {
+            callback(GedcomReadingPhase.Freezing, 0);
+        }
+
         deepFreeze(rootNode);
+
+        if (callback) {
+            callback(GedcomReadingPhase.Freezing, 1);
+        }
     }
 
     return rootNode;

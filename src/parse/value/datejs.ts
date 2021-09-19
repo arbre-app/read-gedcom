@@ -2,6 +2,10 @@ import { ValuePartDateYear, ValuePartDateDay, ValuePartDateMonth } from './dates
 import { ValueExactDate } from './ValueExactDate';
 import { ValueExactTime } from './ValueExactTime';
 
+/**
+ * Convert a Julian day number (JDN) into its corresponding JS date.
+ * @param jdn The Julian day number
+ */
 const julianDayNumberToJsDate = (jdn: number): Date => {
     // Conversion of a Julian day number to a Gregorian date
     const j = jdn + 32044;
@@ -29,7 +33,14 @@ const julianDayNumberToJsDate = (jdn: number): Date => {
 };
 
 /**
- * @param date
+ * Converts a parsed Gedcom date to its corresponding JS date (expressed in the Gregorian calendar).
+ * The supported calendars are: Gregorian, Julian and French Republican.
+ * The Hebrew calendar is not yet supported. Unknown calendars are inherently unsupported.
+ * Dual dates will not be converted.
+ * In any of these cases the returned value will be <code>null</code>.
+ * The argument is assumed to be correct, that is of correct format and valid date.
+ * This is already guaranteed by {@link parseDate}.
+ * @param date The parsed date to convert
  * @category Parsed value converters
  */
 export const toJsDate = (date: ValuePartDateYear): Date | null => {
@@ -71,8 +82,9 @@ export const toJsDate = (date: ValuePartDateYear): Date | null => {
 };
 
 /**
- * @param date
- * @param time
+ * Converts a parsed Gedcom date and optional time into the corresponding JS datetime.
+ * @param date The parsed date
+ * @param time And optional parsed time
  * @category Parsed value converters
  */
 export const toJsDateTime = (date: ValueExactDate, time?: ValueExactTime): Date | null => {

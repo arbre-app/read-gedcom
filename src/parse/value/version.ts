@@ -1,7 +1,8 @@
 const rVersion = /^(0|[1-9][0-9]{0,2})\.(0|[1-9][0-9]{0,2})(?:\.(0|[1-9][0-9]{0,2}))?$/;
 
 /**
- * @param value
+ * Parses a version value into version number parts.
+ * @param value The value to parse
  * @category Value parsers
  */
 export const parseVersionParts = (value: string | null): (number[] & ([number, number] | [number, number, number])) | null => {

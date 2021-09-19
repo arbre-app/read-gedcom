@@ -8,20 +8,28 @@ import { SelectionGedcom } from './internal';
 export class SelectionAny implements ArrayLike<TreeNode> {
     /**
      * The number of nodes in the selection.
+     * @category Base
      */
     length: number;
 
     /**
      * The nodes in the selection.
+     * @category Base
      */
     [n: number]: TreeNode; // eslint-disable-line no-undef
 
     /**
      * The common root node of the elements in this selection.
+     * @category Base
      */
     @enumerable(false)
     rootNode: TreeNodeRoot;
 
+    /**
+     * @param rootNode
+     * @param nodes
+     * @category Base
+     */
     constructor(rootNode: TreeNodeRoot, nodes: TreeNode[]) {
         this.rootNode = rootNode;
         this.length = nodes.length;
@@ -33,6 +41,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
     /**
      * Returns a constructor for this selection.
      * @private
+     * @category Base
      */
     selfConstructor(): AnyConstructor<this> {
         if (Object.getPrototypeOf !== undefined) {
@@ -43,7 +52,8 @@ export class SelectionAny implements ArrayLike<TreeNode> {
     }
 
     /**
-     * Returns an array of {@link Node.tag}.
+     * Returns an array of {@link TreeNode.tag}.
+     * @category Base
      */
     tag(): (string | null)[] {
         const array = [];
@@ -54,7 +64,8 @@ export class SelectionAny implements ArrayLike<TreeNode> {
     }
 
     /**
-     * Returns an array of {@link Node.pointer}.
+     * Returns an array of {@link TreeNode.pointer}.
+     * @category Base
      */
     pointer(): (string | null)[] {
         const array = [];
@@ -65,7 +76,8 @@ export class SelectionAny implements ArrayLike<TreeNode> {
     }
 
     /**
-     * Returns an array of {@link Node.value}.
+     * Returns an array of {@link TreeNode.value}.
+     * @category Base
      */
     value(): (string | null)[] {
         const array = [];
@@ -77,6 +89,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
 
     /**
      * Calls {@link value} and filters out <code>null</code> values.
+     * @category Base
      */
     valueNonNull(): string[] {
         return this.value().filter((v): v is string => v !== null);
@@ -85,6 +98,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
     /**
      * Wraps the value of {@link rootNode} in {@link SelectionGedcom}.
      * The selection will contain exactly one node.
+     * @category Base
      */
     root(): SelectionGedcom {
         return new SelectionGedcom(this.rootNode, [this.rootNode]);
@@ -98,6 +112,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * Returns an array of children.
      * @param tag Optionally filter the results by their Gedcom tag
      * @param pointer Optionally filter the result by their pointer value
+     * @category Base
      */
     get(tag?: string | string[] | null, pointer?: string | string[] | null): SelectionAny;
 
@@ -111,6 +126,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @param tag Optionally filter the results by their Gedcom tag
      * @param pointer Optionally filter the result by their pointer value
      * @param adapter The adapter class, see {@link as}
+     * @category Base
      */
     get<N extends SelectionAny>(tag: string | string[] | null, pointer: string | string[] | null, adapter: AnyConstructor<N>): N;
 
@@ -173,6 +189,11 @@ export class SelectionAny implements ArrayLike<TreeNode> {
         return new Adapter(this.rootNode, selection);
     }
 
+    /**
+     * Filter nodes from the selection based on a predicate.
+     * @param f The filtering predicate
+     * @category Base
+     */
     filter(f: (node: TreeNode) => boolean): this {
         const nodes: TreeNode[] = [];
         for (let i = 0; i < this.length; i++) {
@@ -185,6 +206,12 @@ export class SelectionAny implements ArrayLike<TreeNode> {
         return new Constructor(this.rootNode, nodes);
     }
 
+    /**
+     * Filter lifted nodes from the selection based on a predicate.
+     * The argument is a selection of one node.
+     * @param f The filtering predicate
+     * @category Base
+     */
     filterSelect(f: (node: this) => boolean): this {
         const Constructor = this.selfConstructor();
         const nodes: TreeNode[] = [];
@@ -200,6 +227,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
     /**
      * View this selection as a different type. This method can be used to extend functionality for non-standard Gedcom files.
      * @param Adapter The class adapter
+     * @category Base
      */
     as<N extends SelectionAny>(Adapter: AnyConstructor<N>): N {
         return new Adapter(this.rootNode, this);
@@ -208,6 +236,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
     /**
      * Export the selection as an array of nodes.
      * The inverse operation is {@link of}.
+     * @category Base
      */
     array(): TreeNode[] {
         const array = [];
@@ -219,6 +248,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
 
     /**
      * Exports the selection as an array of selections of one element.
+     * @category Base
      */
     arraySelect(): this[] {
         const Constructor = this.selfConstructor();
@@ -234,6 +264,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * The right hand side selection should be a subtype of the left hand side's.
      * The resulting selection will be the same type as the left hand side's.
      * @param other The right hand side selection
+     * @category Base
      */
     concatenate<N extends this>(other: N): this {
         const Constructor = this.selfConstructor();
@@ -252,6 +283,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * The right hand side selection should be a subtype of the left hand side's.
      * The resulting selection will be the same type as the left hand side's, with the elements of the right hand side's first.
      * @param other The right hand side selection
+     * @category Base
      */
     concatenateLeft<N extends this>(other: N): this {
         const Constructor = this.selfConstructor();
@@ -269,6 +301,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * Returns a sorted selection, with respect to the comparator.
      * The default comparator relies on the {@link TreeNode.indexSource} attribute.
      * @param comparator The comparator
+     * @category Base
      */
     sorted(comparator: (a: TreeNode, b: TreeNode) => number = (a, b) => a.indexSource - b.indexSource): this {
         const Constructor = this.selfConstructor();
@@ -284,6 +317,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * Checks whether two selections are equal.
      * Note that the strategy used here is reference equality, hence for this method to return <code>true</code>, the nodes must be the same references (and in the same order).
      * @param other The selection to compare it against
+     * @category Base
      */
     equals(other: SelectionAny): boolean {
         if (this.length !== other.length) {
@@ -299,6 +333,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
 
     /**
      * Returns a string representation for this selection.
+     * @category Base
      */
     toString(): string {
         return this.length > 0 ? this.array().map(nodeToString).join('\n\n') : '(empty selection)';
@@ -310,6 +345,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * The inverse operation is {@link array}.
      * @param previous The previous selection, required to inherit the reference to the root
      * @param nodes The nodes to be included in the selection
+     * @category Base
      */
     static of(previous: SelectionAny, nodes: TreeNode[] | TreeNode): SelectionAny;
 
@@ -320,9 +356,11 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @param previous The previous selection, required to inherit the reference to the root
      * @param nodes The nodes to be included in the selection
      * @param Adapter The adapter class, see {@link as}
+     * @category Base
      */
     static of<N extends SelectionAny>(previous: SelectionAny, nodes: TreeNode[] | TreeNode, Adapter: AnyConstructor<N>): N;
 
+    // Implementation
     static of<N extends SelectionAny>(previous: SelectionAny, nodes: TreeNode[] | TreeNode, Adapter?: AnyConstructor<N>): N {
         const AdapterClass = Adapter != null ? Adapter : SelectionAny as unknown as AnyConstructor<N>;
         const nodesArray = Array.isArray(nodes) ? nodes : [nodes];

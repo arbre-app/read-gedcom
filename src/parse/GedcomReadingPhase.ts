@@ -5,5 +5,5 @@ export const enum GedcomReadingPhase {
     Decoding,
     TokenizationAndStructuring,
     Indexing,
-    /*Freezing,*/
+    Freezing,
 }

@@ -2,6 +2,10 @@
 
 import { TreeNode } from './TreeNode';
 
+/**
+ * Create a Gedcom-like string representation of this Gedcom node.
+ * @param node The Gedcom node
+ */
 export const nodeToString = (node: TreeNode) => {
     const lines: string[] = [];
     const initialIndent = '';

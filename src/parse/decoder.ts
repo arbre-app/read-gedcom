@@ -4,6 +4,9 @@ import { tokenize } from './tokenizer';
 import { buildTree } from './structurer';
 import { decodeUtfBOM } from './decoding';
 
+/**
+ * Supported Gedcom file encoding schemes.
+ */
 export const enum FileEncoding {
     Utf8 = 'UTF-8',
     Ansel = 'ANSEL',
@@ -14,10 +17,26 @@ export const enum FileEncoding {
     Utf16le = 'UTF-16le',
 }
 
+/**
+ * Early detectable file metadata.
+ * Can be used to infer the file encoding with high confidence.
+ */
 export interface FileMetadata {
+    /**
+     * The source encoding value, as defined in the header.
+     */
     sourceEncoding: string | null;
+    /**
+     * The source provider value, as defined in the header.
+     */
     sourceProvider: string | null;
+    /**
+     * The source provider's version value, as defined in the header.
+     */
     sourceProviderVersion: string | null;
+    /**
+     * Whether this file contains a byte order marker (BOM).
+     */
     fileHasBOM: boolean;
 }
 
