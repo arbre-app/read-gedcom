@@ -1,3 +1,7 @@
+## `0.3.1`
+
+* Fixed broken installation due to tests patching
+
 ## `0.3.0`
 
 * Refactored the API: removal of namespaces (**major breaking changes**)

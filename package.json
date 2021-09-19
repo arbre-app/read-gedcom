@@ -1,7 +1,7 @@
 {
   "name": "read-gedcom",
   "description": "Gedcom file reader",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "dist/cjs/index.js",
   "module": "dist/es6/index.js",
   "types": "dist/cjs/index.d.ts",
@@ -21,7 +21,7 @@
     "docs": "typedoc --tsconfig tsconfig-build.json",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "lint": "npx eslint src/ tests/ --ext .ts --fix",
-    "postinstall": "patch-package"
+    "patch": "patch-package"
   },
   "repository": {
     "type": "git",
