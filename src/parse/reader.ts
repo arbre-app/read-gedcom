@@ -42,7 +42,7 @@ export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions =
     } else if (charset === FileEncoding.Cp1252) {
         input = decodeCp1252(buffer, decodingCallback);
     } else if (charset === FileEncoding.Ansel) {
-        input = decodeAnsel(buffer, decodingCallback);
+        input = decodeAnsel(buffer, decodingCallback, !!options.doStrictDecoding);
     } else if (charset === FileEncoding.Macintosh) {
         input = decodeMacintosh(buffer, decodingCallback);
     } else if (charset === FileEncoding.Cp850) {

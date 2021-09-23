@@ -7,7 +7,7 @@ const cSpace = ' ';
 const cDelim = `${cSpace}`;
 const gEscapeText = `[${ccAlphanum}][${ccAlphanum}${cSpace}]*`;
 const gEscape = `@#(?:${gEscapeText})@`;
-const gIdentifierString = `[${ccAlphanum}-]+`; // x: Allow '-'
+const gIdentifierString = `[${ccAlphanum}-_]+`; // x: Allow '-' and '_'
 const gLevel = `[${ccNonZeroDigit}][${ccDigit}]+|[${ccDigit}]`;
 const ccDisallowed = '\\x00-\\x08\\x0A-\\x1F'; // x: include \xFF
 const cCR = '\\r', cLF = '\\n';
@@ -18,7 +18,7 @@ const gXRefId = `@${gIdentifierString}@`;
 const gPointer = `${gXRefId}`;
 const gLineValue = `${gPointer}|(?:${gLineItem})`;
 const gTag = `[${ccAlphanum}]+|_[${ccAlphanum}_]+`; // TODO
-const gTerminator = `${cCR}?${cLF}`;
+const gTerminator = `${cCR}${cLF}?|${cLF}`; // x: Allow \r
 const gGedcomLine = `(${gLevel})(?:${cDelim}(${gXRefId}))?${cDelim}(${gTag})(?:${cDelim}(${gLineValue}))?(?:${gTerminator})`;
 
 /**

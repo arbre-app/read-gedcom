@@ -48,6 +48,13 @@ export interface GedcomReadingOptions {
     forcedCharset?: FileEncoding;
 
     /**
+     * When set to <code>true</code>, illegally encoded data will raise an exception.
+     * This can occur when dealing with ANSEL encoded data.
+     * The default behavior is the insertion of a unicode replacement character.
+     */
+    doStrictDecoding?: boolean;
+
+    /**
      * When set to <code>true</code>, the {@link TreeNode._index} attribute will be non-enumerable.
      * As a consequence, {@link JSON.stringify} will not serialize the index.
      * It is however still possible to recompute the index, by calling {@link indexTree}.

@@ -1,23 +1,14 @@
 import fs from 'fs';
-import { before, describe, it } from 'mocha';
+import { describe, it } from 'mocha';
 import { assert } from 'chai';
 import { parseGedcom, TreeNodeRoot, indexTree } from '../src';
 
 describe('Tree serialization', () => {
-    let gedcomWithIndexShown: TreeNodeRoot, gedcomWithIndexHidden: TreeNodeRoot, gedcomWithoutIndex: TreeNodeRoot, gedcomFrozen: TreeNodeRoot;
-
-    before(function (done) {
-        fs.readFile('./tests/data/sample555.ged', (error, buffer) => {
-            if (error) {
-                throw error;
-            }
-            gedcomWithIndexShown = parseGedcom(buffer);
-            gedcomWithIndexHidden = parseGedcom(buffer, { doHideIndex: true });
-            gedcomWithoutIndex = parseGedcom(buffer, { noIndex: true });
-            gedcomFrozen = parseGedcom(buffer, { doFreeze: true });
-            done();
-        });
-    });
+    const buffer = fs.readFileSync('./tests/data/sample555.ged');
+    const gedcomWithIndexShown: TreeNodeRoot = parseGedcom(buffer),
+        gedcomWithIndexHidden: TreeNodeRoot = parseGedcom(buffer, { doHideIndex: true }),
+        gedcomWithoutIndex: TreeNodeRoot = parseGedcom(buffer, { noIndex: true }),
+        gedcomFrozen: TreeNodeRoot = parseGedcom(buffer, { doFreeze: true });
 
     it('should correctly serialize and deserialize the tree', () => {
         const roundtrip = (obj: any): any => JSON.parse(JSON.stringify(obj));

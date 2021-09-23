@@ -48,7 +48,7 @@ export interface FileMetadata {
  * @param maxPeekBytes Maximum number of bytes to read
  * @param maxPeekLines Maximum number of lines to read
  */
-export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 1000, maxPeekLines = 100): FileMetadata => {
+export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 5000, maxPeekLines = 200): FileMetadata => {
     const { output: inputHead, bomCharset } = decodeUtfBOM(buffer.slice(0, maxPeekBytes)); // Start with UTF-8 since file can contain a BOM
 
     const hasBOM = bomCharset !== null;

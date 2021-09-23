@@ -1,20 +1,10 @@
 import fs from 'fs';
-import { before, describe, it } from 'mocha';
+import { describe, it } from 'mocha';
 import { assert } from 'chai';
 import { readGedcom, SelectionGedcom, SelectionIndividualRecord } from '../src';
 
 describe('Documentation examples tested on sample Gedcom file', () => {
-    let gedcom: SelectionGedcom;
-
-    before(function (done) {
-        fs.readFile('./tests/data/sample555.ged', (error, buffer) => {
-            if (error) {
-                throw error;
-            }
-            gedcom = readGedcom(buffer);
-            done();
-        });
-    });
+    const gedcom: SelectionGedcom = readGedcom(fs.readFileSync('./tests/data/sample555.ged'));
 
     const queryIndividual = (gedcom: SelectionGedcom, query: string): SelectionIndividualRecord => {
         const tokenize = (name: string) => name.trim().toLowerCase().split(/ +/);

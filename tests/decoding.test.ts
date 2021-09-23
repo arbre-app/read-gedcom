@@ -83,12 +83,9 @@ describe('Detect the encoding and decode it accordingly', () => {
 
     it('should parse known files in UTF-16', () => {
         const filenames = ['sample55516be.ged', 'sample55516le.ged'];
-        filenames.map(filename =>
-            fs.readFile(`./tests/data/${filename}`, (error, buffer) => {
-                if (error) {
-                    throw error;
-                }
-                assert(readGedcom(buffer).getSubmitterRecord().getName().value()[0] === 'Reldon Poulson');
-            }));
+        filenames.map(filename => {
+            const buffer = fs.readFileSync(`./tests/data/${filename}`);
+            assert(readGedcom(buffer).getSubmitterRecord().getName().value()[0] === 'Reldon Poulson');
+        });
     });
 });

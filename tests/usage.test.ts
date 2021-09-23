@@ -8,19 +8,9 @@ import {
 } from '../src';
 
 describe('Gedcom sample file', function () {
-    let gedcomWithIndex: SelectionGedcom;
-    let gedcomWithoutIndex: SelectionGedcom;
-
-    before(function (done) {
-        fs.readFile('./tests/data/sample555.ged', (error, buffer) => {
-            if (error) {
-                throw error;
-            }
-            gedcomWithIndex = readGedcom(buffer);
-            gedcomWithoutIndex = readGedcom(buffer, { noIndex: true });
-            done();
-        });
-    });
+    const buffer = fs.readFileSync('./tests/data/sample555.ged');
+    const gedcomWithIndex: SelectionGedcom = readGedcom(buffer);
+    let gedcomWithoutIndex: SelectionGedcom = readGedcom(buffer, { noIndex: true });
 
     const testUsage = (gedcom: SelectionGedcom) => {
         const header = gedcom.getHeader();

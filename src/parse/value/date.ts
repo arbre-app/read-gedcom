@@ -21,9 +21,13 @@ const createIndices = (array: string[], looseCase = false) => {
     return Object.fromEntries(finalEntries);
 };
 
-const MONTHS = createIndices(['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'], true); // Old software format months that way, so we allow them
-const MONTHS_FRENCH = createIndices(['VEND', 'BRUM', 'FRIM', 'NIVO', 'PLUV', 'VENT', 'GERM', 'FLOR', 'PRAI', 'MESS', 'THER', 'FRUC', 'COMP']);
-const MONTHS_HEBREW = createIndices(['TSH', 'CSH', 'KSL', 'TVT', 'SHV', 'ADR', 'ADS', 'NSN', 'IYR', 'SVN', 'TMZ', 'AAV', 'ELL']);
+const MONTHS_VALUES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+const MONTHS_FRENCH_VALUES = ['VEND', 'BRUM', 'FRIM', 'NIVO', 'PLUV', 'VENT', 'GERM', 'FLOR', 'PRAI', 'MESS', 'THER', 'FRUC', 'COMP'];
+const MONTHS_HEBREW_VALUES = ['TSH', 'CSH', 'KSL', 'TVT', 'SHV', 'ADR', 'ADS', 'NSN', 'IYR', 'SVN', 'TMZ', 'AAV', 'ELL'];
+
+const MONTHS = createIndices(MONTHS_VALUES, true); // Old software format months that way, so we allow them
+const MONTHS_FRENCH = createIndices(MONTHS_FRENCH_VALUES);
+const MONTHS_HEBREW = createIndices(MONTHS_HEBREW_VALUES);
 
 const BEFORE_COMMON_ERA = createIndices(['BCE', 'BC', 'B.C.']);
 
@@ -41,7 +45,7 @@ const daysInJulianMonth = (month: number, isBissextile: boolean): number =>
 
 const isValidPartialDateJulian = (isBissextile: boolean, month?: number, day?: number): boolean => {
     if (month != null) {
-        if (month < 1 || month > 12) { // This check is redundant, but included for completeness
+        if (month < 1 || month > MONTHS_VALUES.length) { // This check is redundant, but included for completeness
             return false;
         }
         if (day != null) {
@@ -69,13 +73,31 @@ const isValidDateFrenchRepublican = (year: number, month?: number, day?: number)
         return false;
     }
     if (month != null) {
-        if (month < 1 || month > 13) {
+        if (month < 1 || month > MONTHS_FRENCH_VALUES.length) {
             return false;
         }
         if (day != null) {
             const isBissextile = year % 4 === 3;
             const daysInMonth = month !== 13 ? 30 : 5 + (isBissextile ? 1 : 0);
             if (day < 1 || day > daysInMonth) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
+const isValidHebrew = (year: number, month?: number, day?: number): boolean => {
+    if (year < 1) { // Hebrew calendar is not proleptic
+        return false;
+    }
+    if (month != null) {
+        if (month < 1 || month > MONTHS_HEBREW_VALUES.length) {
+            return false;
+        }
+        if (day != null) {
+            const numberOfDays = 29 + ([1, 5, 6, 8, 10, 12].includes(month) ? 1 : 0) + (month === 2 || month === 3 ? 1 : 0); // TODO: this check is not strict enough
+            if (day < 1 || day > numberOfDays) {
                 return false;
             }
         }
@@ -212,7 +234,8 @@ export const parseDate = (value: string | null): ValueDate | null => {
                 if (year !== null) {
                     if ((isGregorian && !isValidDateGregorian(year.value, monthIndex)) ||
                         (isJulian && !isValidDateJulian(year.value, monthIndex)) ||
-                        (isFrenchRepublican && !isValidDateFrenchRepublican(year.value, monthIndex))) {
+                        (isFrenchRepublican && !isValidDateFrenchRepublican(year.value, monthIndex)) ||
+                        (isHebrew && !isValidHebrew(year.value, monthIndex))) {
                         return null;
                     }
                     return {
@@ -248,7 +271,8 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     if (year !== null) {
                         if ((isGregorian && !isValidDateGregorian(year.value, secondAsMonth, firstAsDay)) ||
                             (isJulian && !isValidDateJulian(year.value, secondAsMonth, firstAsDay)) ||
-                            (isFrenchRepublican && !isValidDateFrenchRepublican(year.value, secondAsMonth, firstAsDay))) {
+                            (isFrenchRepublican && !isValidDateFrenchRepublican(year.value, secondAsMonth, firstAsDay)) ||
+                            (isHebrew && !isValidHebrew(year.value, secondAsMonth, firstAsDay))) {
                             return null;
                         }
                         return {
@@ -262,7 +286,8 @@ export const parseDate = (value: string | null): ValueDate | null => {
                     }
                 } else if (firstAsYear !== null) { // Format year
                     i++;
-                    if (isFrenchRepublican && !isValidDateFrenchRepublican(firstAsYear.value)) {
+                    if ((isFrenchRepublican && !isValidDateFrenchRepublican(firstAsYear.value)) ||
+                        (isHebrew && !isValidHebrew(firstAsYear.value))) {
                         return null;
                     }
                     return {
