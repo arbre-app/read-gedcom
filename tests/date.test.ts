@@ -105,7 +105,7 @@ describe('Dates parsing', () => {
             },
         });
 
-        expect(parseDate('FROM @@#DGREGORIAN@@ 19 BCE TO @@#DGREGORIAN@@ 15 SEP 1951/52')).deep.equal({
+        expect(parseDate('FROM @#DGREGORIAN@ 19 BCE TO @#DGREGORIAN@ 15 SEP 1951/52')).deep.equal({
             ...common,
             hasDate: true,
             isDatePeriod: true,
@@ -171,8 +171,8 @@ describe('Dates parsing', () => {
         test('a1900');
         test('0 MAR 1900');
         test('JAN JAN 1900');
-        test('@@#DGREGORIAN@@');
-        test('@@#DGREGORIAN@@ @@#DGREGORIAN@@ 1900');
+        test('@#DGREGORIAN@');
+        test('@#DGREGORIAN@ @#DGREGORIAN@ 1900');
         test('1900 AND 1901');
         test('JAN');
         test('ABT');

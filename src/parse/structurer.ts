@@ -27,6 +27,8 @@ export const buildTree = (lines: Iterable<RegExpExecArray>,
     const stack: TreeNode[] = [{ tag: null, pointer: null, value: null, indexSource: -1, indexRelative: 0, children: [] }];
     for (const line of lines) {
         const [lineStr, levelStr, pointer, tag, value] = line;
+        // There is an unsolvable ambiguity here, so we just try our best and assume it is correct
+        const valueUnescaped = value ? value.replace(/@@/g, '@') : value;
         charsRead += lineStr.length;
         const level = parseInt(levelStr);
         const isSameOrUpperLevel = level <= currentLevel, isDownLevel = level === currentLevel + 1;
@@ -52,7 +54,7 @@ export const buildTree = (lines: Iterable<RegExpExecArray>,
             if (parent.value == null) {
                 parent.value = '';
             }
-            parent.value += value ?? '';
+            parent.value += valueUnescaped ?? '';
             currentLevel = level - 1;
         } else if (tag === Tag.Continuation && !noInlineContinuations) {
             if (pointer) {
@@ -65,10 +67,10 @@ export const buildTree = (lines: Iterable<RegExpExecArray>,
             if (parent.value == null) {
                 parent.value = '';
             }
-            parent.value += separator + (value ?? '');
+            parent.value += separator + (valueUnescaped ?? '');
             currentLevel = level - 1;
         } else {
-            const child: TreeNode = { tag, pointer: pointer ?? null, value: value ?? null, indexSource: i, indexRelative: parent.children.length, children: [] };
+            const child: TreeNode = { tag, pointer: pointer ?? null, value: valueUnescaped ?? null, indexSource: i, indexRelative: parent.children.length, children: [] };
             siblings.push(child);
 
             if (pointer && level > 0) {

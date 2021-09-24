@@ -31,7 +31,7 @@ const MONTHS_HEBREW = createIndices(MONTHS_HEBREW_VALUES);
 
 const BEFORE_COMMON_ERA = createIndices(['BCE', 'BC', 'B.C.']);
 
-const rDateCalendarEscape = /^(?:@@#(.*)@@|@#(.*)@)$/; // FIXME
+const rDateCalendarEscape = /^@#(.*)@$/; // FIXME
 const rDatePhrase = /^\((.*)\)$/;
 const rDatePhraseEnd = /\((.*)\)$/;
 

@@ -26,7 +26,7 @@ describe('Parsed dates to JS dates conversion', () => {
     });
 
     it('should correctly convert Julian dates to JS dates', () => {
-        const jl = (date: string) => `@@#DJULIAN@@ ${date}`;
+        const jl = (date: string) => `@#DJULIAN@ ${date}`;
         testPunctual(jl('4 OCT 1582'), '1582-10-14'); // Last official day of the Julian calendar
         testPunctual(jl('5 OCT 1582'), '1582-10-15'); // Introduction of the Gregorian calendar
         testPunctual(jl('25 APR 1214'), '1214-05-02'); // Birth of Louix IX
@@ -48,7 +48,7 @@ describe('Parsed dates to JS dates conversion', () => {
 
     it('should correctly convert French Republican dates to JS dates', () => {
         // Source: https://fr.wikipedia.org/wiki/Concordance_des_dates_des_calendriers_r%C3%A9publicain_et_gr%C3%A9gorien
-        const fr = (date: string) => `@@#DFRENCH R@@ ${date}`;
+        const fr = (date: string) => `@#DFRENCH R@ ${date}`;
         testPunctual(fr('4 VEND 2'), '1793-09-25');
         testPunctual(fr('16 VEND 5'), '1796-10-07');
         testPunctual(fr('6 VEND 4'), '1795-09-28');
