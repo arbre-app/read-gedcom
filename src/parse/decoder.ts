@@ -97,7 +97,7 @@ export const detectCharset = (buffer: ArrayBuffer): FileEncoding => {
             return FileEncoding.Cp1252;
         } else if (sourceEncoding === ValueCharacterEncoding.Unicode) {
             return FileEncoding.Utf16be; // RFC 2781
-        } else if (sourceEncoding === 'WINDOWS') {
+        } else if (sourceEncoding === 'WINDOWS' || sourceEncoding === 'IBM WINDOWS') {
             return FileEncoding.Cp1252;
         } else if (sourceEncoding === 'MACINTOSH') {
             return FileEncoding.Macintosh;
@@ -109,6 +109,8 @@ export const detectCharset = (buffer: ArrayBuffer): FileEncoding => {
             return FileEncoding.Cp1252;
         } else if (sourceEncoding === 'UTF8') { // Spelling mistake
             return FileEncoding.Utf8;
+        } else if (sourceEncoding === 'windows-1250') { // Our best guess (Rodokmen Pro)
+            return FileEncoding.Cp1252;
         } else { // Unknown encoding
             return FileEncoding.Utf8; // Defaults to UTF-8
         }

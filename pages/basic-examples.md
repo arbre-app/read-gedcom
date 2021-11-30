@@ -237,6 +237,20 @@ parseDate('24 MAY 1819'); // (ditto)
 
 For more in-depth documentation, we recommend checking the signature of {@link parseDate}.
 
+Finally, it's possible to interpret dates from different calendars:
+
+```javascript
+import { parseDate, toJsDate } from 'read-gedcom';
+
+const interpret = parsedDate =>
+  parsedDate && parsedDate.isDatePunctual && !parsedDate.isDateApproximated ?
+  toJsDate(parsedDate.date) :
+  null;
+
+interpret(parseDate('@#DJULIAN@ 4 OCT 1582')); // 1582-10-14T00:00:00.000Z
+interpret(parseDate('@#DFRENCH R@ 22 FRUC 13')); // 1805-09-09T00:00:00.000Z
+```
+
 ---
 
 You may find more {@page Advanced Examples} on the next page.

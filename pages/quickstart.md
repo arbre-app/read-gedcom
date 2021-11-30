@@ -2,7 +2,15 @@
 
 Install the package from npm:
 
-`$ npm install read-gedcom`
+```
+$ npm install read-gedcom
+```
+
+Or, include it as a javascript file:
+
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/read-gedcom/dist/read-gedcom.min.js"></script>
+```
 
 ## 2. Test code
 
@@ -21,6 +29,9 @@ promise.then(gedcom => {
   console.log(gedcom.getHeader().toString());
 });
 ```
+
+Or, if you have included the library from `read-gedcom.min.js`, all the members will be provided in the global variable `Gedcom`.
+For instance `readGedcom` becomes `Gedcom.readGedcom`. All the following examples assume a npm environment but the required changes will be analogous.
 
 **Note**: If you attempt to load a different URL, make sure that the resource has CORS enabled!
 The example URL is safe to use, feel free to test your code with it.

@@ -20,6 +20,7 @@
   * It's also possible to not use the API, in which case it can be shaken off the tree
 * Strongly typed
 * Zero dependencies; compatible on browser and Node.js
+  * Less than `20kB` gzipped
 * ...and more:
   * Conversion of dates
   * Serialization-friendly
@@ -42,6 +43,20 @@ const promise = fetch('https://mon.arbre.app/gedcoms/royal92.ged')
 promise.then(gedcom => {
   console.log(gedcom.getHeader().toString());
 });
+```
+
+Or, if you simply want to include it as a javascript file, this is also possible:
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/read-gedcom/dist/read-gedcom.min.js"></script>
+<script>
+    const promise = fetch('https://mon.arbre.app/gedcoms/royal92.ged')
+            .then(r => r.arrayBuffer())
+            .then(Gedcom.readGedcom);
+
+    promise.then(gedcom => {
+        console.log(gedcom.getHeader().toString());
+    });
+</script>
 ```
 
 ### Documentation
