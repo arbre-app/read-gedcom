@@ -4,7 +4,40 @@
   "media": "pages/static",
   "readme": "pages/readme.md",
   "excludeExternals": true,
-  "theme": "pages-plugin",
   "includeVersion": true,
-  "categorizeByGroup": true
+  "categorizeByGroup": true,
+  "pluginPages": {
+    "pages": [
+      {
+        "title": "Getting Started",
+        "children": [
+          {
+            "title": "Quick Start",
+            "source": "quickstart.md"
+          },
+          {
+            "title": "Basic Examples",
+            "source": "basic-examples.md"
+          },
+          {
+            "title": "Advanced Examples",
+            "source": "advanced-examples.md"
+          }
+        ]
+      },
+      {
+        "title": "Versions",
+        "children": [
+          {
+            "title": "Migration",
+            "source": "migration.md"
+          },
+          {
+            "title": "Changelog",
+            "source": "changelog.md"
+          }
+        ]
+      }
+    ]
+  }
 }

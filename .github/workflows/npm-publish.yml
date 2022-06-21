@@ -15,6 +15,16 @@ jobs:
       - run: npm ci && npm run patch
       - run: npm run build
       - run: npm test
+      - run: npm run docs
+      - name: Deploy documentation
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr --delete
+          path: docs/
+          remote_path: documentation/read-gedcom
+          remote_host: docs.arbre.app
+          remote_user: github
+          remote_key: ${{ secrets.DEPLOY_KEY }}
 
   publish-npm:
     needs: build

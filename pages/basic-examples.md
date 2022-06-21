@@ -200,7 +200,7 @@ It's also possible to retrieve several events at once:
 
 ```javascript
 [individual.getEventDeath(), individual.getEventBurial(), individual.getEventCremation()]
-    .reduce((acc, e) => acc.concatenate(e));
+  .reduce((acc, e) => acc.concatenate(e));
 
 // Or directly with tags: (less recommended)
 
@@ -253,4 +253,4 @@ interpret(parseDate('@#DFRENCH R@ 22 FRUC 13')); // 1805-09-09T00:00:00.000Z
 
 ---
 
-You may find more {@page Advanced Examples} on the next page.
+You may find more {@page advanced-examples.md} on the next page.

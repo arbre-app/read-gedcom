@@ -90,4 +90,4 @@ fs.readFile('your_file_here.ged', (error, buffer) => {
 
 ## 3. What's next?
 
-You can move to the {@page Basic Examples} page to familiarize yourself with the API.
+You can move to the {@page basic-examples.md} page to familiarize yourself with the API.
