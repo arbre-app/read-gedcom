@@ -11,5 +11,6 @@ module.exports = {
     library: 'Gedcom',
     umdNamedDefine: true,
   },
+  target: 'browserslist',
   devtool: 'source-map',
 };
