@@ -14,7 +14,7 @@ export const SelectionWithNoteMixin = <C extends AnyConstructor<SelectionAny>>(B
          *  <tr><th>Multiplicity</th><td><code>*</code></td></tr>
          * </table>
          */
-        getNote(): SelectionAny {
+        getNote() {
             return this.get(Tag.Note, null, SelectionNoteReferenceMixed);
         }
     };

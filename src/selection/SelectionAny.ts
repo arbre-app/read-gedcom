@@ -43,7 +43,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @private
      * @category Base
      */
-    selfConstructor(): AnyConstructor<this> {
+    #selfConstructor(): AnyConstructor<this> {
         if (Object.getPrototypeOf !== undefined) {
             return Object.getPrototypeOf(this).constructor as AnyConstructor<this>;
         } else {
@@ -202,7 +202,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
                 nodes.push(node);
             }
         }
-        const Constructor = this.selfConstructor();
+        const Constructor = this.#selfConstructor();
         return new Constructor(this.rootNode, nodes);
     }
 
@@ -213,7 +213,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @category Base
      */
     filterSelect(f: (node: this) => boolean): this {
-        const Constructor = this.selfConstructor();
+        const Constructor = this.#selfConstructor();
         const nodes: TreeNode[] = [];
         for (let i = 0; i < this.length; i++) {
             const node = this[i];
@@ -251,7 +251,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @category Base
      */
     arraySelect(): this[] {
-        const Constructor = this.selfConstructor();
+        const Constructor = this.#selfConstructor();
         const array = [];
         for (let i = 0; i < this.length; i++) {
             array.push(new Constructor(this.rootNode, [this[i]]));
@@ -267,7 +267,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @category Base
      */
     concatenate<N extends this>(other: N): this {
-        const Constructor = this.selfConstructor();
+        const Constructor = this.#selfConstructor();
         const nodes: TreeNode[] = [];
         for (let i = 0; i < this.length; i++) {
             nodes.push(this[i]);
@@ -286,7 +286,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @category Base
      */
     concatenateLeft<N extends this>(other: N): this {
-        const Constructor = this.selfConstructor();
+        const Constructor = this.#selfConstructor();
         const nodes: TreeNode[] = [];
         for (let i = 0; i < other.length; i++) {
             nodes.push(other[i]);
@@ -304,7 +304,7 @@ export class SelectionAny implements ArrayLike<TreeNode> {
      * @category Base
      */
     sorted(comparator: (a: TreeNode, b: TreeNode) => number = (a, b) => a.indexSource - b.indexSource): this {
-        const Constructor = this.selfConstructor();
+        const Constructor = this.#selfConstructor();
         const nodes: TreeNode[] = [];
         for (let i = 0; i < this.length; i++) {
             nodes.push(this[i]);
