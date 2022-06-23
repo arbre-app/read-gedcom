@@ -1,15 +1,17 @@
-import { AnyConstructor, Mixin } from '../../meta';
+import { AnyConstructor } from '../../meta';
 import { SelectionAny, SelectionMultimediaReference } from '../internal';
 import { Tag } from '../../tag';
 
 /**
  * @ignore
  */
-export const SelectionWithMultimediaMixin = <C extends AnyConstructor<SelectionAny>>(Base: C) =>
-    class extends Base {
+export const SelectionWithMultimediaMixin = <C extends AnyConstructor<SelectionAny>>(Base: C): C & AnyConstructor<SelectionWithMultimediaMixin> =>
+    class extends Base implements SelectionWithMultimediaMixin {
         getMultimedia() {
             return this.get(Tag.Object, null, SelectionMultimediaReference);
         }
     };
 
-export type SelectionWithMultimediaMixin = Mixin<typeof SelectionWithMultimediaMixin>
+export interface SelectionWithMultimediaMixin {
+    getMultimedia(): SelectionMultimediaReference;
+}

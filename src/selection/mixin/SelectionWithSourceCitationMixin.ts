@@ -1,12 +1,12 @@
-import { AnyConstructor, Mixin } from '../../meta';
+import { AnyConstructor } from '../../meta';
 import { SelectionAny, SelectionSourceCitation } from '../internal';
 import { Tag } from '../../tag';
 
 /**
  * @ignore
  */
-export const SelectionWithSourceCitationMixin = <C extends AnyConstructor<SelectionAny>>(Base: C) =>
-    class extends Base {
+export const SelectionWithSourceCitationMixin = <C extends AnyConstructor<SelectionAny>>(Base: C): C & AnyConstructor<SelectionWithSourceCitationMixin> =>
+    class extends Base implements SelectionWithSourceCitationMixin {
         /**
          * Source citations related to this entity.
          * <table>
@@ -19,4 +19,6 @@ export const SelectionWithSourceCitationMixin = <C extends AnyConstructor<Select
         }
     };
 
-export type SelectionWithSourceCitationMixin = Mixin<typeof SelectionWithSourceCitationMixin>
+export interface SelectionWithSourceCitationMixin {
+    getSourceCitation(): SelectionSourceCitation;
+}
