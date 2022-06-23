@@ -19,7 +19,7 @@ const gPointer = `${gXRefId}`;
 const gLineValue = `${gPointer}|(?:${gLineItem})`;
 const gTag = `[${ccAlphanum}]+|_[${ccAlphanum}_]+`; // TODO
 const gTerminator = `${cCR}${cLF}?|${cLF}`; // x: Allow \r
-const gGedcomLine = `(${gLevel})(?:${cDelim}(${gXRefId}))?${cDelim}(${gTag})(?:${cDelim}(${gLineValue}))?(?:${gTerminator})`;
+const gGedcomLine = `(${gLevel})(?:${cDelim}(${gXRefId}))?${cDelim}(${gTag})(?:${cDelim}(${gLineValue}))?(${gTerminator}|$)`; // x: Allow no trailing newline
 
 /**
  * The tokenizer implementation.
@@ -40,7 +40,10 @@ class GedcomTokenizer implements IterableIterator<RegExpExecArray> {
 
     next(): IteratorResult<RegExpExecArray, null> {
         const result = this.rGedcomLines.exec(this.input);
-        if (result === null) {
+        if (result === null || (result[5].length === 0 && this.charactersRead + result[0].length !== this.input.length)) {
+            if(result !== null) {
+                this.charactersRead += result[0].length;
+            }
             const success = this.charactersRead === this.input.length;
             if (this.strict && !success) {
                 const printCharactersMax = 256; // Avoid printing a super long line
