@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import { assert } from 'chai';
-import {ErrorInvalidFileType, ErrorTokenization, parseGedcom} from '../src';
+import { ErrorInvalidFileType, ErrorTokenization, parseGedcom } from '../src';
 
 describe('Gedcom file with and without trailing newlines', () => {
     const lines = [

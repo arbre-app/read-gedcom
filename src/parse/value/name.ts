@@ -1,3 +1,5 @@
+import { ValueNameParts } from './ValueNameParts';
+
 // eslint-disable-next-line
 const rNameParts = /^(?:([^\/]*)|(?:(?:([^\/]*?) ?)?\/([^\/]*)\/(?: ?([^\/]*))?))$/;
 
@@ -6,7 +8,7 @@ const rNameParts = /^(?:([^\/]*)|(?:(?:([^\/]*?) ?)?\/([^\/]*)\/(?: ?([^\/]*))?)
  * @param value The value to parse
  * @category Value parsers
  */
-export const parseNameParts = (value: string | null): ((string | undefined)[] & ([string, string, string] | [undefined, string, string] | [string, string, undefined] | [undefined, string, undefined] | [string, undefined, undefined])) | null => {
+export const parseNameParts = (value: string | null): ValueNameParts | null => {
     if (!value) {
         return null;
     }

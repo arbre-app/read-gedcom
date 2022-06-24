@@ -41,7 +41,7 @@ class GedcomTokenizer implements IterableIterator<RegExpExecArray> {
     next(): IteratorResult<RegExpExecArray, null> {
         const result = this.rGedcomLines.exec(this.input);
         if (result === null || (result[5].length === 0 && this.charactersRead + result[0].length !== this.input.length)) {
-            if(result !== null) {
+            if (result !== null) {
                 this.charactersRead += result[0].length;
             }
             const success = this.charactersRead === this.input.length;

@@ -13,7 +13,7 @@ import {
     decodeMacintosh,
     decodeUtf,
 } from './decoding';
-import { ErrorEmptyTree, ErrorInvalidFileType, ErrorTreeStructure, ErrorUnsupportedCharset } from './error';
+import { ErrorInvalidFileType, ErrorTreeStructure, ErrorUnsupportedCharset } from './error';
 import { GedcomReadingOptions } from './GedcomReadingOptions';
 import { GedcomReadingPhase } from './GedcomReadingPhase';
 import { indexTree } from './indexer';
@@ -119,9 +119,7 @@ const checkMagicHeader = (buffer: ArrayBuffer) => {
  */
 const checkTreeStructure = (rootNode: TreeNodeRoot): void => {
     const root = rootNode.children;
-    if (root.length === 0) {
-        throw new ErrorEmptyTree('The tree is empty');
-    }
+    // Assumes that `root.length > 0`
     const header = root[0];
     if (header.tag !== Tag.Header) {
         throw new ErrorTreeStructure(`First node is not a header (got ${header.tag})`);

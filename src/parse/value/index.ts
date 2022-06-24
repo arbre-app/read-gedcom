@@ -9,6 +9,10 @@ export { ValueExactTime } from './ValueExactTime';
 /**
  * @category Parsed values
  */
+export { ValueNameParts } from './ValueNameParts';
+/**
+ * @category Parsed values
+ */
 export { ValueAge } from './ValueAge';
 export { parseAge } from './age';
 /**

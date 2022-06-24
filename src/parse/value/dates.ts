@@ -13,6 +13,13 @@ export interface ValuePartYearDual extends ValuePartYearBase {
     valueDual: number;
 }
 
+/**
+ * Stores information about the year.
+ * Note that the field {@link value} is always a positive integer; if the date is
+ * BCE then it is indicated by {@link isBce}. The year can also be "dual": although uncommon
+ * in practice, this means that there is an ambiguity between two years. In that case the second
+ * year is expressed as a two-digit number and stored in {@link valueDual}.
+ */
 export type ValuePartYear = ValuePartYearNormal | ValuePartYearDual;
 
 export interface ValuePartCalendar {
@@ -37,6 +44,12 @@ export interface ValuePartDateDay extends ValuePartDateMonth {
     day: number;
 }
 
+/**
+ * Represents a known date or partially known date expressed in a certain calendar.
+ * It is guaranteed that the fields {@link calendar} and {@link year} are defined.
+ * Note that the year is not a value but an object, because it contains more information (see {@link ValuePartYear}).
+ * If defined, both the month and the day start at value 1.
+ */
 export type ValuePartDate = ValuePartDateYear | ValuePartDateMonth | ValuePartDateDay;
 
 /**

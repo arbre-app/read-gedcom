@@ -1,10 +1,9 @@
-import { describe, it, xit } from 'mocha';
+import { describe, xit } from 'mocha';
 import { assert } from 'chai';
 import fs from 'fs';
-import {readGedcom, SelectionAny, Tag, TreeNode} from '../src';
+import { readGedcom, SelectionAny, Tag, TreeNode } from '../src';
 
 describe('Gedcom selection API coverage', () => {
-
     const filenames = ['sample555.ged', 'TGC55C.ged', 'TGC551.ged'];
 
     xit('should find a method to select every node', () => {
@@ -25,7 +24,7 @@ describe('Gedcom selection API coverage', () => {
             const getMethods = (object: any): string[] => {
                 const methods = [];
                 for (const member in object) {
-                    if((typeof object[member]) === 'function') {
+                    if ((typeof object[member]) === 'function') {
                         methods.push(member);
                     }
                 }

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { before, describe, it } from 'mocha';
+import { describe, it } from 'mocha';
 import { assert, expect } from 'chai';
 import {
     readGedcom,
@@ -10,7 +10,7 @@ import {
 describe('Gedcom sample file', function () {
     const buffer = fs.readFileSync('./tests/data/sample555.ged');
     const gedcomWithIndex: SelectionGedcom = readGedcom(buffer);
-    let gedcomWithoutIndex: SelectionGedcom = readGedcom(buffer, { noIndex: true });
+    const gedcomWithoutIndex: SelectionGedcom = readGedcom(buffer, { noIndex: true });
 
     const testUsage = (gedcom: SelectionGedcom) => {
         const header = gedcom.getHeader();
