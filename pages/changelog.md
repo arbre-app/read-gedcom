@@ -1,3 +1,17 @@
+## `0.3.2`
+
+* Improved tests coverage
+* Unescaping of `@@` in values
+* Added a standalone build with reasonable compatibility and minified
+* Updated the Typedoc documentation, use a different plugin for pages
+* Fixed an incorrect return type on `getNote`
+* Made the self constructor truly private
+* Fixed the types of inherited mixin methods
+* Files are now allowed to end without a trailing newline
+* Compressed the decoding lookup tables
+* Replaced the parent date type by an alias to avoid confusion
+* Deprecation notice for `getRecord`
+
 ## `0.3.1`
 
 * Fixed broken installation due to tests patching
