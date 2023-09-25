@@ -1,6 +1,6 @@
 import { Tag } from '../tag';
 import { TreeNodeRoot } from '../tree';
-import { detectCharset, FileEncoding } from './decoder';
+import { detectCharset, FileEncoding, type FileEncodingType } from './decoder';
 import {
     BOM_UTF16_BE,
     BOM_UTF16_LE,
@@ -30,7 +30,7 @@ import { tokenize } from './tokenizer';
 export const parseGedcom = (buffer: ArrayBuffer, options: GedcomReadingOptions = {}): TreeNodeRoot => {
     checkMagicHeader(buffer);
 
-    const charset: FileEncoding = options.forcedCharset == null ? detectCharset(buffer) : options.forcedCharset;
+    const charset: FileEncodingType = options.forcedCharset == null ? detectCharset(buffer) : options.forcedCharset;
 
     const callback = options.progressCallback;
 

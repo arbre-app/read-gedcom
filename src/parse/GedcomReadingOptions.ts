@@ -1,4 +1,4 @@
-import { FileEncoding } from './decoder';
+import { type FileEncodingType } from './decoder';
 import { GedcomReadingPhase } from './GedcomReadingPhase';
 
 /**
@@ -45,7 +45,7 @@ export interface GedcomReadingOptions {
      * When set, disables the automatic charset detection mechanism and forces the parser to decode the file using the specified charset.
      * This is an escape hatch and its usage is not recommended; if you encounter issues with the detection mechanism please open a ticket instead.
      */
-    forcedCharset?: FileEncoding;
+    forcedCharset?: FileEncodingType;
 
     /**
      * When set to <code>true</code>, illegally encoded data will raise an exception.

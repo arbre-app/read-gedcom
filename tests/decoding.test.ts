@@ -4,9 +4,10 @@ import { assert } from 'chai';
 import { TextDecoder } from 'util';
 import { readGedcom, Tag, ValueCharacterEncoding } from '../src';
 import { BOM_UTF16_BE, BOM_UTF16_LE, BOM_UTF8 } from '../src/parse/decoding';
+import { type ValueCharacterEncodingType } from '../src/value/ValueCharacterEncoding';
 
 describe('Detect the encoding and decode it accordingly', () => {
-    type FileBuilderOptions = { charset: ValueCharacterEncoding | string, bom?: number[], reencode?: string };
+    type FileBuilderOptions = { charset: ValueCharacterEncodingType | string, bom?: number[], reencode?: string };
 
     const buildFileBuffer = (textEncoded: number[], options: FileBuilderOptions) => {
         let allBytes = [
