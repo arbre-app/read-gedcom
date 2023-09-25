@@ -1,3 +1,3 @@
-export const enum ValueEvent {
+export enum ValueEvent {
     Yes = 'Y'
 }

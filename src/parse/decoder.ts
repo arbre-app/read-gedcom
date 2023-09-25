@@ -7,7 +7,7 @@ import { decodeUtfBOM } from './decoding';
 /**
  * Supported Gedcom file encoding schemes.
  */
-export const enum FileEncoding {
+export enum FileEncoding {
     Utf8 = 'UTF-8',
     Ansel = 'ANSEL',
     Cp1252 = 'Cp1252',
