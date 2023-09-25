@@ -1,5 +1,5 @@
-export const enum ValuePedigreeLinkageType {
-    Adopted = 'adopted',
-    Birth = 'birth',
-    Foster = 'foster'
-}
+export const ValuePedigreeLinkageType = {
+    Adopted: 'adopted',
+    Birth: 'birth',
+    Foster: 'foster',
+} as const;

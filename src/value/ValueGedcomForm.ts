@@ -1,3 +1,3 @@
-export const enum ValueGedcomForm {
-    LineageLinked = 'LINEAGE-LINKED'
-}
+export const ValueGedcomForm = {
+    LineageLinked: 'LINEAGE-LINKED',
+} as const;
