@@ -1,4 +1,4 @@
-export const enum ValuePedigreeLinkageType {
+export enum ValuePedigreeLinkageType {
     Adopted = 'adopted',
     Birth = 'birth',
     Foster = 'foster'

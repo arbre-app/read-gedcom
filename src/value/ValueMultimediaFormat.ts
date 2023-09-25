@@ -1,4 +1,4 @@
-export const enum ValueMultimediaFormat {
+export enum ValueMultimediaFormat {
     Aac = 'AAC',
     Avi = 'AVI',
     Bmp = 'BMP',

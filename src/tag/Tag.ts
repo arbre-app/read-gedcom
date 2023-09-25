@@ -3,7 +3,7 @@
 /**
  * All the standard Gedcom tags.
  */
-export const enum Tag {
+export enum Tag {
     Abbreviation = 'ABBR',
     Address = 'ADDR',
     Address1 = 'ADR1',
