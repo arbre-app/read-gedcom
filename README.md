@@ -61,10 +61,10 @@ Or, if you simply want to include it as a javascript file, this is also possible
 
 ### Documentation
 
-* **[Quick Start](https://docs.arbre.app/read-gedcom/pages/Getting%20Started/quickstart)**
-* **[Basic Examples](https://docs.arbre.app/read-gedcom/pages/Getting%20Started/basic-examples)**
-* **[Advanced Examples](https://docs.arbre.app/read-gedcom/pages/Getting%20Started/advanced-examples)**
-* **[API](https://docs.arbre.app/read-gedcom/modules)**
+* **[Quick Start](https://docs.arbre.app/read-gedcom/pages/quickstart.html)**
+* **[Basic Examples](https://docs.arbre.app/read-gedcom/pages/basic-examples.html)**
+* **[Advanced Examples](https://docs.arbre.app/read-gedcom/pages/advanced-examples.html)**
+* **[API](https://docs.arbre.app/read-gedcom/modules.html)**
 
 ### Bug report
 
