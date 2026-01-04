@@ -1,4 +1,4 @@
-export const enum ValueRomanizationMethod {
+export enum ValueRomanizationMethod {
     Pinyin = 'pinyin',
     Romaji = 'romaji',
     Wadegiles = 'wadegiles'

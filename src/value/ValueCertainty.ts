@@ -1,4 +1,4 @@
-export const enum ValueCertainty {
+export enum ValueCertainty {
     Unreliable = 0,
     Questionable = 1,
     Secondary = 2,

@@ -1,4 +1,4 @@
-export const enum ValueSex {
+export enum ValueSex {
     Male = 'M',
     Female = 'F',
     Intersex = 'X',
