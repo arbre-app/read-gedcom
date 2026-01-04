@@ -7,15 +7,17 @@ import { decodeUtfBOM } from './decoding';
 /**
  * Supported Gedcom file encoding schemes.
  */
-export const enum FileEncoding {
-    Utf8 = 'UTF-8',
-    Ansel = 'ANSEL',
-    Cp1252 = 'Cp1252',
-    Macintosh = 'Macintosh',
-    Cp850 = 'Cp850',
-    Utf16be = 'UTF-16be',
-    Utf16le = 'UTF-16le',
-}
+export const FileEncoding = {
+    Utf8: 'UTF-8',
+    Ansel: 'ANSEL',
+    Cp1252: 'Cp1252',
+    Macintosh: 'Macintosh',
+    Cp850: 'Cp850',
+    Utf16be: 'UTF-16be',
+    Utf16le: 'UTF-16le',
+} as const;
+
+export type FileEncodingType = typeof FileEncoding[keyof typeof FileEncoding];
 
 /**
  * Early detectable file metadata.
@@ -81,7 +83,7 @@ export const getFileMetadata = (buffer: ArrayBuffer, maxPeekBytes = 5000, maxPee
  * at: https://github.com/arbre-app/read-gedcom/issues.
  * @param buffer The content of the file
  */
-export const detectCharset = (buffer: ArrayBuffer): FileEncoding => {
+export const detectCharset = (buffer: ArrayBuffer): FileEncodingType => {
     // eslint-disable-next-line
     const { sourceEncoding, sourceProvider, sourceProviderVersion, fileHasBOM } = getFileMetadata(buffer);
 

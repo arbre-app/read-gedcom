@@ -2,6 +2,7 @@ import { describe, xit } from 'mocha';
 import { assert } from 'chai';
 import fs from 'fs';
 import { readGedcom, SelectionAny, Tag, TreeNode } from '../src';
+import { type TagType } from '../src/tag/Tag';
 
 describe('Gedcom selection API coverage', () => {
     const filenames = ['sample555.ged', 'TGC55C.ged', 'TGC551.ged'];
@@ -56,7 +57,7 @@ describe('Gedcom selection API coverage', () => {
             };
             exploreApi(gedcom);
 
-            const ignoredTags: (Tag | string)[] = [
+            const ignoredTags: (TagType | string)[] = [
                 // Useless
                 Tag.Trailer,
                 // Obsoleted in 5.5.5
@@ -79,7 +80,7 @@ describe('Gedcom selection API coverage', () => {
                 // Non standard tags
                 '_HME',
             ];
-            const ignoredPaths: (Tag | string)[][] = [
+            const ignoredPaths: (TagType | string)[][] = [
                 // Duplicate/obsolete
                 [Tag.Submitter, Tag.Language],
                 [Tag.Submitter, Tag.RecordFileNumber],

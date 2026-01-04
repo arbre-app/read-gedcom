@@ -1,9 +1,9 @@
-export const enum ValueRole {
+export const ValueRole = {
     // Due to TS limitations, we cannot reuse values from `Tag`
-    Child = 'CHIL',
-    Husband = 'HUSB',
-    Wife = 'WIFE',
-    Mother = 'MOTH',
-    Father = 'FATH',
-    Spouse = 'SPOU'
-}
+    Child: 'CHIL',
+    Husband: 'HUSB',
+    Wife: 'WIFE',
+    Mother: 'MOTH',
+    Father: 'FATH',
+    Spouse: 'SPOU',
+} as const;
